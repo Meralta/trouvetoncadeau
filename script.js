@@ -7,8 +7,21 @@
 'use strict';
 
 /* =========================================================
-   BASE DE DONNÉES CADEAUX
-   Structure : { id, titre, emoji, desc, genre[], age[], budget, interets[], originalite }
+   BASE DE DONNÉES CADEAUX — V2
+   Structure complète (Amélioration N°6 — préparation affiliation) :
+   {
+     id          : number        — identifiant unique
+     titre       : string        — nom du cadeau
+     emoji       : string        — icône emoji
+     desc        : string        — description courte
+     genre       : string[]      — 'homme'|'femme'|'couple'|'enfant'
+     age         : string[]      — '18-25'|'26-35'|'36-50'|'50+'
+     budget      : string        — '<20'|'20-50'|'50-100'|'>100'
+     interets    : string[]      — centres d'intérêt correspondants
+     originalite : number        — score 1-10
+     image       : string        — URL image produit (optionnel, '' si vide)
+     affiliateLink: string       — lien affilié (optionnel, '' = Google Search fallback)
+   }
    budget : '<20' | '20-50' | '50-100' | '>100'
    genre  : 'homme' | 'femme' | 'couple' | 'enfant'
    ========================================================= */
@@ -221,6 +234,18 @@ const state = {
   interets: []
 };
 
+/**
+ * Résultats actuellement affichés (IDs) — pour éviter les doublons lors du remplacement
+ * Amélioration N°1
+ */
+let displayedIds = [];
+
+/**
+ * Pool complet de résultats scorés (peut être > 10) — réserve pour le remplacement
+ * Amélioration N°1
+ */
+let resultsPool = [];
+
 /* =========================================================
    PROGRESSION
    ========================================================= */
@@ -392,8 +417,9 @@ function scoreGift(cadeau) {
 }
 
 /**
- * Calcule et retourne les 10 meilleurs résultats
- * @returns {Array} liste de cadeaux triés
+ * Calcule et retourne les 10 meilleurs résultats.
+ * Alimente également resultsPool (tous les compatibles) pour le remplacement.
+ * @returns {Array} liste de cadeaux (10 premiers)
  */
 function computeResults() {
   const scored = CADEAUX
@@ -401,8 +427,13 @@ function computeResults() {
     .filter(c => c.score > 0)
     .sort((a, b) => b.score - a.score);
 
-  // Prendre les 10 premiers
-  return scored.slice(0, 10);
+  // Mémoriser le pool complet (réserve pour "Pas pour moi")
+  resultsPool = scored;
+
+  // Retourner les 10 premiers
+  const top10 = scored.slice(0, 10);
+  displayedIds = top10.map(c => c.id);
+  return top10;
 }
 
 /* =========================================================
@@ -454,21 +485,63 @@ function showResults(results) {
     results.forEach((gift, idx) => {
       const card = createCard(gift, idx + 1);
       card.style.animationDelay = `${idx * 0.06}s`;
+      card.dataset.giftId = gift.id;
       grid.appendChild(card);
     });
   }
+  // Mettre à jour le compteur de favoris dans le bouton
+  refreshFavCount();
 
   section.classList.remove('hidden');
   section.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 /**
- * Crée un élément carte cadeau
+ * Crée un élément carte cadeau (V2 avec toutes les améliorations)
+ * @param {Object} gift   — objet cadeau
+ * @param {number} num    — numéro affiché (#1-#10)
+ * @param {boolean} inModal — true si affiché dans le modal favoris (cache skip/buy)
  */
-function createCard(gift, num) {
+function createCard(gift, num, inModal = false) {
   const card = document.createElement('article');
   card.className = 'gift-card';
   card.setAttribute('aria-label', `Idée cadeau ${num} : ${gift.titre}`);
+  card.dataset.giftId = gift.id;
+
+  // ── AMÉLIORATION N°3 : Raisons dynamiques ──
+  const whyItems = buildWhyReasons(gift);
+  const whyHTML = whyItems.length ? `
+    <div class="card-why">
+      <p class="card-why-title">Pourquoi ce cadeau ?</p>
+      <ul class="card-why-list">
+        ${whyItems.map(r => `<li>✔ ${r}</li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  // ── AMÉLIORATION N°4 : État favori ──
+  const isFav   = isFavorite(gift.id);
+  const favLabel = isFav ? '❤️ Sauvegardé' : '🤍 Favori';
+  const favClass = isFav ? 'btn-fav is-fav' : 'btn-fav';
+
+  // ── AMÉLIORATION N°2 : Lien produit ──
+  // Structure prête pour affiliation : gift.affiliateLink prioritaire, sinon Google Search
+  const productUrl = (gift.affiliateLink && gift.affiliateLink !== '')
+    ? gift.affiliateLink
+    : `https://www.google.com/search?q=${encodeURIComponent(gift.titre)}`;
+
+  // ── Boutons d'action (masqués dans le modal) ──
+  const actionsHTML = inModal ? '' : `
+    <div class="card-actions">
+      <button class="btn-skip" onclick="skipCard(${gift.id}, this)" aria-label="Remplacer cette idée">
+        ❌ Pas pour moi
+      </button>
+      <a class="btn-buy" href="${productUrl}" target="_blank" rel="noopener noreferrer" aria-label="Voir le produit ${gift.titre}">
+        🛒 Voir le produit
+      </a>
+      <button class="${favClass}" onclick="toggleFavorite(${gift.id}, this)" aria-label="Ajouter aux favoris">
+        ${favLabel}
+      </button>
+    </div>`;
 
   card.innerHTML = `
     <div class="card-header">
@@ -477,6 +550,7 @@ function createCard(gift, num) {
       <h3 class="card-title">${gift.titre}</h3>
     </div>
     <p class="card-desc">${gift.desc}</p>
+    ${whyHTML}
     <div class="card-footer">
       <span class="card-badge budget">💰 ${budgetLabel(gift.budget)}</span>
       <div class="originality">
@@ -485,9 +559,247 @@ function createCard(gift, num) {
         <span class="originality-score">${gift.originalite}/10</span>
       </div>
     </div>
+    ${actionsHTML}
   `;
 
   return card;
+}
+
+/* =========================================================
+   AMÉLIORATION N°3 : RAISONS DYNAMIQUES
+   ========================================================= */
+/**
+ * Génère un tableau de raisons textuelles pour justifier la recommandation
+ * @param {Object} gift
+ * @returns {string[]}
+ */
+function buildWhyReasons(gift) {
+  const reasons = [];
+
+  // Budget
+  reasons.push(`Compatible avec votre budget (${budgetLabel(gift.budget)})`);
+
+  // Intérêts communs
+  if (state.interets && state.interets.length > 0) {
+    const INTERESTS_FR = {
+      'jeux-video':'Jeux vidéo', 'manga':'Manga / Anime', 'technologie':'Technologie',
+      'voyage':'Voyage', 'lecture':'Lecture', 'cuisine':'Cuisine',
+      'animaux':'Animaux', 'sport':'Sport', 'musique':'Musique', 'cinema':'Cinéma'
+    };
+    const matches = state.interets
+      .filter(i => gift.interets.includes(i))
+      .map(i => INTERESTS_FR[i] || i);
+
+    if (matches.length > 0) {
+      reasons.push(`Correspond à vos centres d'intérêt : ${matches.join(', ')}`);
+    }
+  }
+
+  // Âge
+  if (state.age && gift.age.includes(state.age)) {
+    reasons.push(`Adapté à la tranche d'âge ${state.age} ans`);
+  }
+
+  // Originalité élevée
+  if (gift.originalite >= 8) {
+    reasons.push(`Note d'originalité élevée (${gift.originalite}/10)`);
+  }
+
+  return reasons;
+}
+
+/* =========================================================
+   AMÉLIORATION N°1 : PAS POUR MOI — REMPLACEMENT
+   ========================================================= */
+/**
+ * Remplace une carte par un nouveau cadeau compatible du pool
+ * @param {number} giftId  — ID du cadeau à remplacer
+ * @param {HTMLElement} btn — bouton cliqué (pour remonter à la carte)
+ */
+function skipCard(giftId, btn) {
+  const card = btn.closest('.gift-card');
+  if (!card) return;
+
+  // Chercher un remplaçant dans le pool (non affiché, non encore rejeté)
+  const rejectedIds = card.closest('#cardsGrid')
+    ? Array.from(card.closest('#cardsGrid').querySelectorAll('[data-gift-id]'))
+        .map(el => Number(el.dataset.giftId))
+    : displayedIds.slice();
+
+  const replacement = resultsPool.find(c => !rejectedIds.includes(c.id) && c.id !== giftId);
+
+  if (!replacement) {
+    showFavToast('😔 Plus aucune autre idée disponible pour ce profil !');
+    return;
+  }
+
+  // Récupérer le numéro actuel de la carte
+  const numEl  = card.querySelector('.card-num');
+  const cardNum = numEl ? parseInt(numEl.textContent.replace('#','')) : 1;
+
+  // Animation de sortie/entrée
+  card.classList.add('replacing');
+
+  setTimeout(() => {
+    // Mettre à jour displayedIds
+    const oldIdx = displayedIds.indexOf(giftId);
+    if (oldIdx !== -1) displayedIds[oldIdx] = replacement.id;
+
+    // Reconstruire la carte avec le nouveau cadeau
+    const newCard = createCard(replacement, cardNum);
+    newCard.dataset.giftId = replacement.id;
+    newCard.style.animationDelay = '0s';
+    card.replaceWith(newCard);
+  }, 220); // mi-chemin de l'animation cardOut
+}
+
+/* =========================================================
+   AMÉLIORATION N°4 : FAVORIS (localStorage)
+   ========================================================= */
+const FAV_KEY = 'ttc_favorites_v1';
+
+/** Lit les favoris depuis localStorage */
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+  } catch { return []; }
+}
+
+/** Écrit les favoris dans localStorage */
+function saveFavorites(favs) {
+  try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch {}
+}
+
+/** Vérifie si un cadeau est en favori */
+function isFavorite(id) {
+  return getFavorites().some(f => f.id === id);
+}
+
+/**
+ * Bascule l'état favori d'un cadeau
+ * @param {number} giftId
+ * @param {HTMLElement} btn
+ */
+function toggleFavorite(giftId, btn) {
+  const gift = CADEAUX.find(c => c.id === giftId);
+  if (!gift) return;
+
+  let favs = getFavorites();
+  const idx = favs.findIndex(f => f.id === giftId);
+
+  if (idx === -1) {
+    // Ajouter
+    favs.push(gift);
+    saveFavorites(favs);
+    btn.textContent = '❤️ Sauvegardé';
+    btn.classList.add('is-fav');
+    showFavToast(`❤️ "${gift.titre}" ajouté aux favoris !`);
+  } else {
+    // Retirer
+    favs.splice(idx, 1);
+    saveFavorites(favs);
+    btn.textContent = '🤍 Favori';
+    btn.classList.remove('is-fav');
+    showFavToast(`💔 "${gift.titre}" retiré des favoris.`);
+  }
+
+  refreshFavCount();
+}
+
+/** Met à jour le badge compteur de favoris */
+function refreshFavCount() {
+  const count = getFavorites().length;
+  const el    = document.getElementById('favCount');
+  if (!el) return;
+  el.textContent = count;
+  el.classList.toggle('visible', count > 0);
+}
+
+/** Ouvre le modal favoris */
+function openFavoritesModal() {
+  const modal   = document.getElementById('favModal');
+  const grid    = document.getElementById('favGrid');
+  const emptyEl = document.getElementById('favEmpty');
+  const favs    = getFavorites();
+
+  grid.innerHTML = '';
+
+  if (favs.length === 0) {
+    emptyEl.classList.remove('hidden');
+  } else {
+    emptyEl.classList.add('hidden');
+    favs.forEach((gift, idx) => {
+      const card = createCard(gift, idx + 1, true); // inModal = true
+      grid.appendChild(card);
+    });
+  }
+
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden'; // bloquer le scroll fond
+}
+
+/** Ferme le modal favoris */
+function closeFavoritesModal() {
+  document.getElementById('favModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/** Efface tous les favoris */
+function clearAllFavorites() {
+  if (!confirm('Effacer tous vos favoris ?')) return;
+  saveFavorites([]);
+  refreshFavCount();
+  // Mettre à jour les boutons des cartes affichées
+  document.querySelectorAll('.btn-fav.is-fav').forEach(btn => {
+    btn.textContent = '🤍 Favori';
+    btn.classList.remove('is-fav');
+  });
+  openFavoritesModal(); // Rafraîchir le modal (affichera le message vide)
+}
+
+/** Toast spécifique aux favoris */
+function showFavToast(msg) {
+  const toast = document.getElementById('favToast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/* =========================================================
+   AMÉLIORATION N°5 : SURPRENDS-MOI
+   ========================================================= */
+/**
+ * Génère un profil aléatoire complet et lance directement les résultats
+ */
+function surpriseMe() {
+  const genres   = ['homme','femme','couple','enfant'];
+  const ages     = ['18-25','26-35','36-50','50+'];
+  const budgets  = ['<20','20-50','50-100','>100'];
+  const interets = ['jeux-video','manga','technologie','voyage','lecture','cuisine','animaux','sport','musique','cinema'];
+
+  // Profil aléatoire
+  state.genre  = genres[Math.floor(Math.random() * genres.length)];
+  state.age    = ages[Math.floor(Math.random() * ages.length)];
+  state.budget = budgets[Math.floor(Math.random() * budgets.length)];
+
+  // 1 à 3 intérêts aléatoires
+  const shuffled = [...interets].sort(() => Math.random() - .5);
+  state.interets = shuffled.slice(0, 1 + Math.floor(Math.random() * 3));
+
+  // Masquer le quiz, afficher le chargement
+  document.getElementById('quiz-section').classList.add('hidden');
+  document.getElementById('results-section').classList.add('hidden');
+  const loadingSection = document.getElementById('loading-section');
+  loadingSection.classList.remove('hidden');
+
+  const msgEl = document.getElementById('loadingMsg');
+  msgEl.textContent = `Profil aléatoire : ${genreLabel(state.genre)}, ${state.age} ans, budget ${budgetLabel(state.budget)}…`;
+
+  setTimeout(() => {
+    const results = computeResults();
+    showResults(results);
+  }, 1800);
 }
 
 /* =========================================================
@@ -541,6 +853,10 @@ function restartQuiz() {
   state.budget = null;
   state.interets = [];
 
+  // Réinitialiser les pools de résultats (Amélioration N°1)
+  displayedIds = [];
+  resultsPool  = [];
+
   // Désélectionner toutes les options
   document.querySelectorAll('.option-btn.selected, .interest-btn.selected')
     .forEach(b => b.classList.remove('selected'));
@@ -568,6 +884,26 @@ function restartQuiz() {
    INITIALISATION
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
+  // ── Amélioration N°6 : normaliser la base (ajouter image & affiliateLink si absents) ──
+  CADEAUX.forEach(c => {
+    if (!('image'        in c)) c.image         = '';
+    if (!('affiliateLink' in c)) c.affiliateLink = '';
+  });
+
   updateProgress(1);
-  console.log(`🎁 TrouveTonCadeau — ${CADEAUX.length} idées cadeaux chargées.`);
+
+  // ── Amélioration N°4 : afficher le compteur de favoris dès le chargement ──
+  refreshFavCount();
+
+  // ── Fermeture du modal favoris avec la touche Escape ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeFavoritesModal();
+  });
+
+  // ── Clic sur l'overlay du modal pour le fermer ──
+  document.getElementById('favModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeFavoritesModal();
+  });
+
+  console.log(`🎁 TrouveTonCadeau V2 — ${CADEAUX.length} idées cadeaux chargées.`);
 });
