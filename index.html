@@ -71,7 +71,13 @@
         <span class="logo-icon">🎁</span>
         <span class="logo-text">TrouveTon<strong>Cadeau</strong></span>
       </div>
-      <p class="tagline">Le cadeau parfait en moins de 60 secondes</p>
+      <div class="header-right">
+        <p class="tagline">Le cadeau parfait en moins de 60 secondes</p>
+        <!-- AMÉLIORATION N°5 : Surprends-moi -->
+        <button class="btn-surprise" onclick="surpriseMe()" title="Générer une sélection aléatoire sans questionnaire">
+          🎲 Surprends-moi !
+        </button>
+      </div>
     </div>
   </header>
 
@@ -223,6 +229,10 @@
           <p class="results-subtitle" id="resultsSummary"></p>
           <div class="results-actions">
             <button class="btn-share" onclick="shareResults()">📤 Partager</button>
+            <!-- AMÉLIORATION N°4 : bouton Voir mes favoris -->
+            <button class="btn-favorites" onclick="openFavoritesModal()" id="btnOpenFavorites">
+              ❤️ Mes favoris <span class="fav-count" id="favCount"></span>
+            </button>
             <button class="btn-restart" onclick="restartQuiz()">🔄 Nouvelle recherche</button>
           </div>
         </div>
@@ -265,6 +275,27 @@
 
   <!-- Toast de partage -->
   <div class="toast" id="shareToast" aria-live="polite">✅ Lien copié dans le presse-papiers !</div>
+
+  <!-- Toast favori -->
+  <div class="toast toast-fav" id="favToast" aria-live="polite"></div>
+
+  <!-- ===== MODAL FAVORIS (Amélioration N°4) ===== -->
+  <div class="modal-overlay hidden" id="favModal" role="dialog" aria-modal="true" aria-label="Mes cadeaux favoris">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">❤️ Mes cadeaux favoris</h2>
+        <button class="modal-close" onclick="closeFavoritesModal()" aria-label="Fermer">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="favGrid" class="fav-grid"></div>
+        <p class="fav-empty hidden" id="favEmpty">Vous n'avez pas encore de favoris.<br>Cliquez sur ❤️ sous une idée cadeau pour la sauvegarder !</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-restart" onclick="closeFavoritesModal()">Fermer</button>
+        <button class="btn-clear-favs" onclick="clearAllFavorites()">🗑️ Tout effacer</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
