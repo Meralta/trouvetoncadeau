@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>TrouveTonCadeau – Idées Cadeaux Personnalisées en 1 Minute | Homme, Femme, Enfant</title>
+  <meta name="description" content="Trouvez l'idée cadeau parfaite en quelques secondes ! TrouveTonCadeau vous propose 10 idées personnalisées selon le profil, l'âge, le budget et les centres d'intérêt. Cadeau original garanti." />
+  <meta name="keywords" content="idée cadeau, cadeau personnalisé, trouver cadeau, cadeau homme, cadeau femme, cadeau enfant, cadeau original, cadeau pas cher" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://trouvetoncadeau.fr/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TrouveTonCadeau – Idées Cadeaux Personnalisées en 1 Minute" />
+  <meta property="og:description" content="Trouvez l'idée cadeau parfaite en quelques secondes selon le profil, l'âge et le budget." />
+  <meta property="og:url" content="https://trouvetoncadeau.fr/" />
+  <meta property="og:image" content="https://trouvetoncadeau.fr/og-image.jpg" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TrouveTonCadeau – Idées Cadeaux Personnalisées" />
+  <meta name="twitter:description" content="10 idées cadeaux sur-mesure en 1 minute chrono !" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Données structurées JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TrouveTonCadeau",
+    "url": "https://trouvetoncadeau.fr",
+    "description": "Outil de recommandation d'idées cadeaux personnalisées selon le profil, l'âge, le budget et les centres d'intérêt.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "inLanguage": "fr-FR",
+    "author": {
+      "@type": "Organization",
+      "name": "TrouveTonCadeau"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ===== BANNIÈRE PUB HAUT ===== -->
+  <div class="ad-banner ad-top" aria-label="Espace publicitaire">
+    <div class="ad-placeholder">
+      <span class="ad-label">Publicité</span>
+      <span class="ad-size">728×90 — Leaderboard</span>
+      <!-- Insérez ici votre code Google AdSense ou autre régie -->
+      <!-- Exemple : <ins class="adsbygoogle" ... ></ins> -->
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">
+        <span class="logo-icon">🎁</span>
+        <span class="logo-text">TrouveTon<strong>Cadeau</strong></span>
+      </div>
+      <p class="tagline">Le cadeau parfait en moins de 60 secondes</p>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- ===== SECTION QUESTIONNAIRE ===== -->
+      <section id="quiz-section" class="quiz-section" aria-label="Questionnaire cadeau">
+
+        <!-- Barre de progression -->
+        <div class="progress-wrapper" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="4">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-steps">
+            <span class="step-dot active" data-step="1">1</span>
+            <span class="step-dot" data-step="2">2</span>
+            <span class="step-dot" data-step="3">3</span>
+            <span class="step-dot" data-step="4">4</span>
+          </div>
+          <p class="progress-label" id="progressLabel">Étape 1 sur 4</p>
+        </div>
+
+        <!-- Étape 1 : Pour qui ? -->
+        <div class="quiz-step active" id="step-1">
+          <h1 class="step-question">Pour qui est le cadeau ?</h1>
+          <p class="step-hint">Sélectionnez le destinataire du cadeau</p>
+          <div class="options-grid" role="group" aria-label="Destinataire">
+            <button class="option-btn" data-key="genre" data-value="homme" onclick="selectOption(this, 'genre', 'homme')">
+              <span class="option-icon">👨</span>
+              <span class="option-label">Homme</span>
+            </button>
+            <button class="option-btn" data-key="genre" data-value="femme" onclick="selectOption(this, 'genre', 'femme')">
+              <span class="option-icon">👩</span>
+              <span class="option-label">Femme</span>
+            </button>
+            <button class="option-btn" data-key="genre" data-value="couple" onclick="selectOption(this, 'genre', 'couple')">
+              <span class="option-icon">💑</span>
+              <span class="option-label">Couple</span>
+            </button>
+            <button class="option-btn" data-key="genre" data-value="enfant" onclick="selectOption(this, 'genre', 'enfant')">
+              <span class="option-icon">🧒</span>
+              <span class="option-label">Enfant</span>
+            </button>
+          </div>
+          <div class="step-nav">
+            <button class="btn-next" id="next-1" onclick="nextStep(2)" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- Étape 2 : Âge -->
+        <div class="quiz-step" id="step-2">
+          <h2 class="step-question">Quel âge a-t-il / elle ?</h2>
+          <p class="step-hint">La tranche d'âge aide à affiner les suggestions</p>
+          <div class="options-grid" role="group" aria-label="Tranche d'âge">
+            <button class="option-btn" data-key="age" data-value="18-25" onclick="selectOption(this, 'age', '18-25')">
+              <span class="option-icon">🎓</span>
+              <span class="option-label">18 – 25 ans</span>
+            </button>
+            <button class="option-btn" data-key="age" data-value="26-35" onclick="selectOption(this, 'age', '26-35')">
+              <span class="option-icon">💼</span>
+              <span class="option-label">26 – 35 ans</span>
+            </button>
+            <button class="option-btn" data-key="age" data-value="36-50" onclick="selectOption(this, 'age', '36-50')">
+              <span class="option-icon">🏡</span>
+              <span class="option-label">36 – 50 ans</span>
+            </button>
+            <button class="option-btn" data-key="age" data-value="50+" onclick="selectOption(this, 'age', '50+')">
+              <span class="option-icon">🌟</span>
+              <span class="option-label">50 ans et +</span>
+            </button>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(1)">← Retour</button>
+            <button class="btn-next" id="next-2" onclick="nextStep(3)" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- Étape 3 : Budget -->
+        <div class="quiz-step" id="step-3">
+          <h2 class="step-question">Quel est votre budget ?</h2>
+          <p class="step-hint">Toutes les idées respecteront votre enveloppe</p>
+          <div class="options-grid" role="group" aria-label="Budget">
+            <button class="option-btn" data-key="budget" data-value="<20" onclick="selectOption(this, 'budget', '<20')">
+              <span class="option-icon">💶</span>
+              <span class="option-label">Moins de 20€</span>
+            </button>
+            <button class="option-btn" data-key="budget" data-value="20-50" onclick="selectOption(this, 'budget', '20-50')">
+              <span class="option-icon">💰</span>
+              <span class="option-label">20€ à 50€</span>
+            </button>
+            <button class="option-btn" data-key="budget" data-value="50-100" onclick="selectOption(this, 'budget', '50-100')">
+              <span class="option-icon">💳</span>
+              <span class="option-label">50€ à 100€</span>
+            </button>
+            <button class="option-btn" data-key="budget" data-value=">100" onclick="selectOption(this, 'budget', '>100')">
+              <span class="option-icon">💎</span>
+              <span class="option-label">Plus de 100€</span>
+            </button>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(2)">← Retour</button>
+            <button class="btn-next" id="next-3" onclick="nextStep(4)" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- Étape 4 : Centres d'intérêt -->
+        <div class="quiz-step" id="step-4">
+          <h2 class="step-question">Quels sont ses centres d'intérêt ?</h2>
+          <p class="step-hint">Choisissez un ou plusieurs (optionnel)</p>
+          <div class="interests-grid" role="group" aria-label="Centres d'intérêt">
+            <button class="interest-btn" data-value="jeux-video" onclick="toggleInterest(this, 'jeux-video')">🎮 Jeux vidéo</button>
+            <button class="interest-btn" data-value="manga" onclick="toggleInterest(this, 'manga')">🇯🇵 Manga / Anime</button>
+            <button class="interest-btn" data-value="technologie" onclick="toggleInterest(this, 'technologie')">💻 Technologie</button>
+            <button class="interest-btn" data-value="voyage" onclick="toggleInterest(this, 'voyage')">✈️ Voyage</button>
+            <button class="interest-btn" data-value="lecture" onclick="toggleInterest(this, 'lecture')">📚 Lecture</button>
+            <button class="interest-btn" data-value="cuisine" onclick="toggleInterest(this, 'cuisine')">🍳 Cuisine</button>
+            <button class="interest-btn" data-value="animaux" onclick="toggleInterest(this, 'animaux')">🐾 Animaux</button>
+            <button class="interest-btn" data-value="sport" onclick="toggleInterest(this, 'sport')">⚽ Sport</button>
+            <button class="interest-btn" data-value="musique" onclick="toggleInterest(this, 'musique')">🎵 Musique</button>
+            <button class="interest-btn" data-value="cinema" onclick="toggleInterest(this, 'cinema')">🎬 Cinéma</button>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(3)">← Retour</button>
+            <button class="btn-next btn-submit" onclick="submitQuiz()">🔍 Trouver mes idées !</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===== ÉCRAN DE CHARGEMENT ===== -->
+      <section id="loading-section" class="loading-section hidden" aria-live="polite">
+        <div class="loading-content">
+          <div class="loading-gift">🎁</div>
+          <h2 class="loading-title">Recherche des meilleures idées…</h2>
+          <p class="loading-subtitle" id="loadingMsg">Analyse de votre profil en cours…</p>
+          <div class="loading-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECTION RÉSULTATS ===== -->
+      <section id="results-section" class="results-section hidden" aria-label="Résultats">
+
+        <div class="results-header">
+          <h2 class="results-title">🎉 Vos 10 idées cadeaux</h2>
+          <p class="results-subtitle" id="resultsSummary"></p>
+          <div class="results-actions">
+            <button class="btn-share" onclick="shareResults()">📤 Partager</button>
+            <button class="btn-restart" onclick="restartQuiz()">🔄 Nouvelle recherche</button>
+          </div>
+        </div>
+
+        <!-- PUB MILIEU (entre résultats) -->
+        <div class="ad-banner ad-mid" aria-label="Espace publicitaire">
+          <div class="ad-placeholder">
+            <span class="ad-label">Publicité</span>
+            <span class="ad-size">728×90 — Mid-Content</span>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid"></div>
+
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+
+    <!-- BANNIÈRE PUB BAS -->
+    <div class="ad-banner ad-bottom" aria-label="Espace publicitaire">
+      <div class="ad-placeholder">
+        <span class="ad-label">Publicité</span>
+        <span class="ad-size">728×90 — Footer Leaderboard</span>
+      </div>
+    </div>
+
+    <div class="container footer-inner">
+      <p class="footer-copy">© 2025 <strong>TrouveTonCadeau</strong> — Tous droits réservés</p>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Toast de partage -->
+  <div class="toast" id="shareToast" aria-live="polite">✅ Lien copié dans le presse-papiers !</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
