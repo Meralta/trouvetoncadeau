@@ -16,11 +16,19 @@
   <meta property="og:title" content="TrouveTonCadeau – Idées Cadeaux Personnalisées en 1 Minute" />
   <meta property="og:description" content="Trouvez l'idée cadeau parfaite en quelques secondes selon le profil, l'âge et le budget." />
   <meta property="og:url" content="https://trouvetoncadeau.fr/" />
-  <meta property="og:image" content="https://trouvetoncadeau.fr/og-image.jpg" />
+  <meta property="og:image" content="og-image.png" />
   <meta property="og:locale" content="fr_FR" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TrouveTonCadeau – Idées Cadeaux Personnalisées" />
   <meta name="twitter:description" content="10 idées cadeaux sur-mesure en 1 minute chrono !" />
+  <meta name="twitter:image" content="og-image.png" />
+  <meta name="theme-color" content="#7C3AED" />
+
+  <!-- Icônes / PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="manifest" href="manifest.json" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,6 +36,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
+
+  <!-- ===========================================================
+       GOOGLE ADSENSE — à activer une fois votre compte approuvé.
+       1) Remplacez ca-pub-XXXXXXXXXXXXXXXX par votre ID éditeur.
+       2) Retirez les balises <!-- et --> qui commentent ce script.
+       =========================================================== -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
 
   <!-- Données structurées JSON-LD -->
   <script type="application/ld+json">
@@ -59,8 +76,11 @@
     <div class="ad-placeholder">
       <span class="ad-label">Publicité</span>
       <span class="ad-size">728×90 — Leaderboard</span>
-      <!-- Insérez ici votre code Google AdSense ou autre régie -->
-      <!-- Exemple : <ins class="adsbygoogle" ... ></ins> -->
+      <!--
+        Une fois votre compte AdSense approuvé, remplacez ce bloc par :
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="VOTRE_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      -->
     </div>
   </div>
 
@@ -73,10 +93,12 @@
       </div>
       <div class="header-right">
         <p class="tagline">Le cadeau parfait en moins de 60 secondes</p>
-        <!-- AMÉLIORATION N°5 : Surprends-moi -->
-        <button class="btn-surprise" onclick="surpriseMe()" title="Générer une sélection aléatoire sans questionnaire">
-          🎲 Surprends-moi !
-        </button>
+        <div class="header-buttons">
+          <button class="btn-surprise" onclick="surpriseMe()" title="Générer une sélection aléatoire sans questionnaire">
+            🎲 Surprends-moi !
+          </button>
+          <button class="theme-toggle" id="themeToggle" title="Mode sombre / clair" aria-label="Changer de thème">🌙</button>
+        </div>
       </div>
     </div>
   </header>
@@ -84,6 +106,28 @@
   <!-- ===== MAIN ===== -->
   <main class="site-main">
     <div class="container">
+
+      <!-- ===== SECTIONS D'ACCUEIL (nouveautés v1) ===== -->
+      <div id="homeSections">
+
+        <!-- Cadeau du jour -->
+        <section class="gotd-section" aria-label="Cadeau du jour">
+          <div class="gotd-card" id="giftOfDay"><!-- généré en JS --></div>
+        </section>
+
+        <!-- Occasions rapides -->
+        <section class="occasions-section" aria-label="Occasions">
+          <h2 class="section-title">Une occasion précise ?</h2>
+          <div class="occasions-chips" id="occasionsChips"><!-- généré en JS --></div>
+        </section>
+
+        <!-- Tendances -->
+        <section class="trending-section" aria-label="Idées tendance">
+          <h2 class="section-title">🔥 Les idées les plus originales</h2>
+          <div class="trending-row" id="trendingRow"><!-- généré en JS --></div>
+        </section>
+
+      </div>
 
       <!-- ===== SECTION QUESTIONNAIRE ===== -->
       <section id="quiz-section" class="quiz-section" aria-label="Questionnaire cadeau">
@@ -242,6 +286,8 @@
           <div class="ad-placeholder">
             <span class="ad-label">Publicité</span>
             <span class="ad-size">728×90 — Mid-Content</span>
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="VOTRE_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
           </div>
         </div>
 
@@ -252,6 +298,68 @@
     </div><!-- /container -->
   </main>
 
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter-section" aria-label="Newsletter">
+    <div class="container newsletter-inner">
+      <div class="newsletter-text">
+        <h2>📬 Ne ratez plus aucune bonne idée</h2>
+        <p>Recevez nos meilleures idées cadeaux par email, selon les saisons et occasions.</p>
+      </div>
+      <form id="newsletterForm" class="newsletter-form">
+        <input type="email" id="newsletterEmail" placeholder="Votre adresse email" required aria-label="Adresse email" />
+        <button type="submit" class="btn-newsletter">S'inscrire</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section" aria-label="Questions fréquentes">
+    <div class="container">
+      <h2 class="section-title">Questions fréquentes</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Comment fonctionne TrouveTonCadeau ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Répondez à 4 questions rapides (destinataire, âge, budget, centres d'intérêt) et notre algorithme sélectionne 10 idées cadeaux adaptées parmi plus de 160 références, classées par pertinence et originalité.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Est-ce vraiment gratuit ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui, l'outil est 100% gratuit et sans inscription. Le site se finance via des liens marchands : si vous achetez via un de nos liens, cela ne change rien à votre prix mais peut nous reverser une petite commission.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Mes favoris sont-ils sauvegardés ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui, vos favoris sont enregistrés directement dans votre navigateur (aucune création de compte nécessaire). Ils restent disponibles tant que vous ne videz pas les données de ce site.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Puis-je refaire le quiz pour une autre personne ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Bien sûr ! Cliquez sur « Nouvelle recherche » à la fin des résultats, ou sur le bouton flottant « Trouver un cadeau » pour relancer le questionnaire autant de fois que vous le souhaitez.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
 
@@ -260,24 +368,43 @@
       <div class="ad-placeholder">
         <span class="ad-label">Publicité</span>
         <span class="ad-size">728×90 — Footer Leaderboard</span>
+        <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="VOTRE_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
       </div>
     </div>
 
     <div class="container footer-inner">
       <p class="footer-copy">© 2025 <strong>TrouveTonCadeau</strong> — Tous droits réservés</p>
       <nav class="footer-nav" aria-label="Navigation pied de page">
-        <a href="#">Mentions légales</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">Contact</a>
+        <a href="#" onclick="openLegalModal('mentions'); return false;">Mentions légales</a>
+        <a href="#" onclick="openLegalModal('confidentialite'); return false;">Confidentialité</a>
+        <a href="#" onclick="openLegalModal('contact'); return false;">Contact</a>
       </nav>
     </div>
   </footer>
+
+  <!-- Bouton flottant -->
+  <button class="sticky-cta" id="stickyCta">🎁 Trouver un cadeau</button>
 
   <!-- Toast de partage -->
   <div class="toast" id="shareToast" aria-live="polite">✅ Lien copié dans le presse-papiers !</div>
 
   <!-- Toast favori -->
   <div class="toast toast-fav" id="favToast" aria-live="polite"></div>
+
+  <!-- ===== MODAL MENTIONS LÉGALES / CONFIDENTIALITÉ / CONTACT ===== -->
+  <div class="modal-overlay hidden" id="legalModal" role="dialog" aria-modal="true" aria-label="Informations légales">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="legalTitle">Titre</h2>
+        <button class="modal-close" onclick="closeLegalModal()" aria-label="Fermer">✕</button>
+      </div>
+      <div class="modal-body" id="legalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-restart" onclick="closeLegalModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== MODAL FAVORIS (Amélioration N°4) ===== -->
   <div class="modal-overlay hidden" id="favModal" role="dialog" aria-modal="true" aria-label="Mes cadeaux favoris">

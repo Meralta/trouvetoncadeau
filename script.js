@@ -224,6 +224,213 @@ const CADEAUX = [
 ];
 
 /* =========================================================
+   IMAGES RÉELLES — mapping catégorie → mots-clés photo
+   (sert à charger une vraie photo pertinente par carte ;
+   remplacez ces URLs par vos propres photos produit / liens
+   d'affiliation dès que vous en aurez, via le champ "image"
+   de chaque cadeau dans CADEAUX)
+   ========================================================= */
+const IMAGE_KEYWORDS = {
+  'jeux-video':  'gaming,controller',
+  'manga':       'anime,manga',
+  'technologie': 'technology,gadget',
+  'voyage':      'travel,suitcase',
+  'lecture':     'books,reading',
+  'cuisine':     'cooking,kitchen',
+  'animaux':     'pet,dog',
+  'sport':       'fitness,sport',
+  'musique':     'music,vinyl',
+  'cinema':      'cinema,movie',
+};
+
+const GENRE_FALLBACK_KEYWORDS = {
+  'homme':  'giftbox,present',
+  'femme':  'giftbox,present',
+  'couple': 'couple,gift',
+  'enfant': 'toys,kids',
+};
+
+/* =========================================================
+   IMAGES RÉELLES — mots-clés précis par titre, repli par catégorie
+   (Le matching par titre donne une photo bien plus proche du
+   produit réel que le simple repli par catégorie utilisé en v1.
+   Remplacez par vos propres photos produit via le champ "image"
+   de chaque cadeau dans CADEAUX dès que vous en aurez.)
+   ========================================================= */
+const TITLE_KEYWORDS = [
+  [/manette|dualsense/i, 'gamepad,controller'],
+  [/xbox|game pass/i, 'xbox,gaming'],
+  [/steam/i, 'pc gaming,keyboard'],
+  [/switch lite|nintendo/i, 'nintendo switch'],
+  [/amiibo|figurine funko|funko pop/i, 'action figure,collectible'],
+  [/chaise gaming/i, 'gaming chair'],
+  [/casque gaming/i, 'gaming headset'],
+  [/casque.*r[ée]alit[ée] virtuelle|r[ée]alit[ée] virtuelle/i, 'virtual reality headset'],
+  [/casque/i, 'headphones'],
+  [/tapis de souris/i, 'mousepad'],
+  [/jeu de soci[ée]t[ée]|catan|chouette coop/i, 'board game'],
+  [/histoire des jeux vid[ée]o/i, 'retro video games'],
+  [/box manga|one piece/i, 'manga,comics'],
+  [/crunchyroll/i, 'anime streaming'],
+  [/artbook|dragon ball/i, 'manga artbook'],
+  [/t-shirt manga/i, 't-shirt,apparel'],
+  [/tasse thermo|mug/i, 'coffee mug'],
+  [/dessin manga|cours de dessin\/peinture/i, 'drawing class'],
+  [/oreiller peluche/i, 'plush pillow'],
+  [/[ée]couteurs/i, 'wireless earbuds'],
+  [/montre connect[ée]e|montre gps/i, 'smartwatch'],
+  [/montre m[ée]canique/i, 'vintage wristwatch'],
+  [/chargeur sans fil|powerbank/i, 'phone charger'],
+  [/enceinte/i, 'bluetooth speaker'],
+  [/projecteur/i, 'mini projector'],
+  [/lampe led bureau|lampe de lecture/i, 'desk lamp'],
+  [/domotique/i, 'smart home'],
+  [/c[âa]ble usb/i, 'usb cable'],
+  [/disque dur|ssd/i, 'external hard drive'],
+  [/robot aspirateur/i, 'robot vacuum'],
+  [/valise/i, 'suitcase,luggage'],
+  [/lonely planet|guide.*voyage/i, 'travel guidebook'],
+  [/sac à dos/i, 'travel backpack'],
+  [/carte du monde/i, 'world map'],
+  [/adaptateur universel/i, 'travel adapter'],
+  [/trousse de toilette/i, 'toiletry bag'],
+  [/parachutisme/i, 'skydiving'],
+  [/spa|thalasso|bien.?[êe]tre|wellness/i, 'spa wellness'],
+  [/carnet de voyage|carnet bullet|carnet de recettes/i, 'leather notebook'],
+  [/kindle unlimited|liseuse/i, 'ereader'],
+  [/box livres/i, 'stack of books'],
+  [/marque-pages/i, 'bookmark'],
+  [/librairie/i, 'bookstore'],
+  [/dictionnaire/i, 'dictionary book'],
+  [/pr[ée]commande livre|auteur pr[ée]f[ée]r[ée]|encyclop[ée]die|pop-up encyclop[ée]dique/i, 'hardcover book'],
+  [/cours de cuisine/i, 'cooking class'],
+  [/robot cuiseur/i, 'food processor'],
+  [/couteaux japonais/i, 'chef knife'],
+  [/[ée]pices/i, 'spices market'],
+  [/p[âa]tes fra[îi]ches/i, 'pasta maker'],
+  [/tablier/i, 'kitchen apron'],
+  [/huiles d.olive/i, 'olive oil'],
+  [/\bwok\b/i, 'wok pan'],
+  [/macarons/i, 'macarons'],
+  [/boulangerie/i, 'fresh bread bakery'],
+  [/kombucha/i, 'kombucha bottle'],
+  [/whisky/i, 'whisky glass'],
+  [/bi[èe]res artisanales/i, 'craft beer'],
+  [/vin|vignoble|oenologie/i, 'wine bottle'],
+  [/th[ée] grand cru/i, 'tea ceremony'],
+  [/photo professionnelle avec son animal|portrait.*animal/i, 'pet photography'],
+  [/friandises chien|chat/i, 'dog cat treats'],
+  [/gps tracker pour chien/i, 'dog collar'],
+  [/croquettes/i, 'dog food bowl'],
+  [/fontaine.*chat/i, 'cat drinking fountain'],
+  [/langage de son chien/i, 'dog training book'],
+  [/aquarium/i, 'aquarium fish tank'],
+  [/salle de sport/i, 'gym fitness'],
+  [/tapis de yoga/i, 'yoga mat'],
+  [/escalade/i, 'rock climbing'],
+  [/foam roller/i, 'foam roller fitness'],
+  [/v[ée]lo électrique/i, 'electric bike'],
+  [/v[ée]lo enfant/i, 'kids bicycle'],
+  [/musculation|[ée]lastiques/i, 'resistance bands'],
+  [/strava/i, 'running tracker'],
+  [/natation enfant/i, 'swimming pool'],
+  [/ukul[ée]l[ée]/i, 'ukulele'],
+  [/vinyle|platine/i, 'vinyl record player'],
+  [/spotify|deezer/i, 'music streaming headphones'],
+  [/concert|match de foot|ligue 1/i, 'live concert crowd'],
+  [/cours de chant/i, 'singing microphone'],
+  [/netflix|abonnement.*podcast|audible/i, 'streaming tv'],
+  [/blu-ray|star wars/i, 'movie collection'],
+  [/cin[ée]ma|ugc illimit[ée]/i, 'cinema theater'],
+  [/pyjama cin[ée]ma/i, 'movie night popcorn'],
+  [/sc[ée]nario/i, 'screenwriting typewriter'],
+  [/affiche cin[ée]ma/i, 'vintage movie poster'],
+  [/week-end romantique|gîte/i, 'romantic cottage'],
+  [/d[îi]ner gastronomique/i, 'fine dining restaurant'],
+  [/poterie/i, 'pottery ceramics'],
+  [/escape game/i, 'escape room'],
+  [/massage/i, 'spa massage'],
+  [/bijou/i, 'fine jewelry'],
+  [/\blego\b/i, 'lego bricks'],
+  [/microscope/i, 'microscope science'],
+  [/kit robotique/i, 'robotics kit'],
+  [/tente de jeu/i, 'kids play tent'],
+  [/coffret magie/i, 'magic tricks'],
+  [/table lumineuse/i, 'light table drawing'],
+  [/aquarelle/i, 'watercolor painting set'],
+  [/journal papier/i, 'newspaper'],
+  [/jardinage|jardin botanique/i, 'garden plants'],
+  [/puzzle/i, 'jigsaw puzzle'],
+  [/radio dab/i, 'retro radio'],
+  [/bougie/i, 'scented candle'],
+  [/porte-monnaie|portefeuille/i, 'leather wallet'],
+  [/plante succulente/i, 'succulent plant'],
+  [/carte scratch/i, 'scratch poster'],
+  [/pilotage voiture/i, 'sports car race track'],
+  [/montgolfi[èe]re/i, 'hot air balloon'],
+  [/surf/i, 'surfing beach'],
+  [/toile photo/i, 'photo canvas print'],
+  [/lunch box/i, 'lunch box'],
+  [/coloriage anti-stress/i, 'coloring book'],
+  [/coffret bain/i, 'bath salts'],
+  [/cours de langue/i, 'language learning'],
+  [/cocktails/i, 'cocktail bar'],
+  [/cosm[ée]tiques bio/i, 'natural cosmetics'],
+  [/drone/i, 'camera drone'],
+  [/sac à main/i, 'leather handbag'],
+  [/set [ée]criture|stylo.*calligraphie/i, 'fountain pen'],
+  [/tableau ardoise/i, 'chalkboard'],
+  [/lunettes de soleil/i, 'sunglasses'],
+  [/bo[îi]te cadeau surprise/i, 'gift box'],
+  [/pass mus[ée]e/i, 'museum art'],
+  [/rallye|randonn[ée]e/i, 'hiking trail'],
+  [/playstation/i, 'playstation console'],
+  [/photographie de rue|formation photo/i, 'street photography camera'],
+  [/panneau lumineux/i, 'neon sign'],
+];
+
+/**
+ * Retourne une URL de vraie photo (libre de droits, servie via LoremFlickr)
+ * pertinente pour un cadeau donné : on cherche d'abord un mot-clé précis
+ * correspondant au titre, puis on retombe sur la catégorie générale.
+ * Le paramètre "lock" fixe une image stable par cadeau (pas de changement
+ * aléatoire à chaque rechargement).
+ * @param {Object} gift
+ * @returns {string} URL d'image
+ */
+function getGiftImage(gift) {
+  if (gift.image && gift.image !== '') return gift.image;
+
+  let keyword = null;
+  for (const [regex, kw] of TITLE_KEYWORDS) {
+    if (regex.test(gift.titre)) { keyword = kw; break; }
+  }
+  if (!keyword) {
+    keyword = (gift.interets && gift.interets.length)
+      ? (IMAGE_KEYWORDS[gift.interets[0]] || 'gift,present')
+      : (GENRE_FALLBACK_KEYWORDS[gift.genre[0]] || 'gift,present');
+  }
+  return `https://loremflickr.com/480/360/${encodeURIComponent(keyword)}?lock=${gift.id}`;
+}
+
+/* =========================================================
+   CONFIGURATION AFFILIATION & MONÉTISATION
+   ⚠️ À REMPLIR avant mise en ligne pour toucher des commissions.
+   ========================================================= */
+// Votre identifiant Amazon Associates (ex: "votreid-21"). Laissez vide
+// pour des liens Amazon simples (sans commission).
+const AMAZON_AFFILIATE_TAG = '';
+
+/**
+ * Construit un lien de recherche Amazon.fr pour un titre de produit,
+ * en ajoutant automatiquement votre tag d'affiliation s'il est renseigné.
+ */
+function buildAmazonLink(titre) {
+  const base = `https://www.amazon.fr/s?k=${encodeURIComponent(titre)}`;
+  return AMAZON_AFFILIATE_TAG ? `${base}&tag=${encodeURIComponent(AMAZON_AFFILIATE_TAG)}` : base;
+}
+
+/* =========================================================
    ÉTAT DE L'APPLICATION
    ========================================================= */
 const state = {
@@ -352,6 +559,8 @@ const LOADING_MESSAGES = [
 function submitQuiz() {
   // Masquer quiz, afficher loading
   document.getElementById('quiz-section').classList.add('hidden');
+  const homeSections = document.getElementById('homeSections');
+  if (homeSections) homeSections.classList.add('hidden');
   const loadingSection = document.getElementById('loading-section');
   loadingSection.classList.remove('hidden');
 
@@ -494,6 +703,7 @@ function showResults(results) {
 
   section.classList.remove('hidden');
   section.scrollIntoView({ behavior:'smooth', block:'start' });
+  if (results.length > 0) fireConfetti();
 }
 
 /**
@@ -523,11 +733,17 @@ function createCard(gift, num, inModal = false) {
   const favLabel = isFav ? '❤️ Sauvegardé' : '🤍 Favori';
   const favClass = isFav ? 'btn-fav is-fav' : 'btn-fav';
 
-  // ── AMÉLIORATION N°2 : Lien produit ──
-  // Structure prête pour affiliation : gift.affiliateLink prioritaire, sinon Google Search
+  // ── AMÉLIORATION N°2 : Liens produit RÉELS ──
+  // Priorité : lien d'affiliation renseigné manuellement (gift.affiliateLink),
+  // sinon recherche réelle sur Amazon.fr (lien fonctionnel, pas un faux lien).
+  // Astuce monétisation : remplacez par vos liens Amazon Associates / Awin.
   const productUrl = (gift.affiliateLink && gift.affiliateLink !== '')
     ? gift.affiliateLink
-    : `https://www.google.com/search?q=${encodeURIComponent(gift.titre)}`;
+    : buildAmazonLink(gift.titre);
+  const compareUrl = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(gift.titre)}`;
+
+  // ── Image réelle (vraie photo) ──
+  const imgUrl = getGiftImage(gift);
 
   // ── Boutons d'action (masqués dans le modal) ──
   const actionsHTML = inModal ? '' : `
@@ -535,8 +751,11 @@ function createCard(gift, num, inModal = false) {
       <button class="btn-skip" onclick="skipCard(${gift.id}, this)" aria-label="Remplacer cette idée">
         ❌ Pas pour moi
       </button>
-      <a class="btn-buy" href="${productUrl}" target="_blank" rel="noopener noreferrer" aria-label="Voir le produit ${gift.titre}">
-        🛒 Voir le produit
+      <a class="btn-buy" href="${productUrl}" target="_blank" rel="noopener noreferrer sponsored" aria-label="Voir le produit ${gift.titre} sur Amazon">
+        🛒 Voir sur Amazon
+      </a>
+      <a class="btn-compare" href="${compareUrl}" target="_blank" rel="noopener noreferrer" aria-label="Comparer les prix de ${gift.titre}" title="Comparer les prix">
+        🔎
       </a>
       <button class="${favClass}" onclick="toggleFavorite(${gift.id}, this)" aria-label="Ajouter aux favoris">
         ${favLabel}
@@ -544,22 +763,26 @@ function createCard(gift, num, inModal = false) {
     </div>`;
 
   card.innerHTML = `
-    <div class="card-header">
+    <div class="card-image">
+      <img src="${imgUrl}" alt="${gift.titre}" loading="lazy"
+           onerror="this.closest('.card-image').classList.add('img-fallback')">
+      <span class="card-emoji-badge">${gift.emoji}</span>
       <span class="card-num">#${num}</span>
-      <span class="card-emoji">${gift.emoji}</span>
+    </div>
+    <div class="card-body">
       <h3 class="card-title">${gift.titre}</h3>
-    </div>
-    <p class="card-desc">${gift.desc}</p>
-    ${whyHTML}
-    <div class="card-footer">
-      <span class="card-badge budget">💰 ${budgetLabel(gift.budget)}</span>
-      <div class="originality">
-        <span class="originality-label">Originalité :</span>
-        <span class="stars">${genStars(gift.originalite)}</span>
-        <span class="originality-score">${gift.originalite}/10</span>
+      <p class="card-desc">${gift.desc}</p>
+      ${whyHTML}
+      <div class="card-footer">
+        <span class="card-badge budget">💰 ${budgetLabel(gift.budget)}</span>
+        <div class="originality">
+          <span class="originality-label">Originalité :</span>
+          <span class="stars">${genStars(gift.originalite)}</span>
+          <span class="originality-score">${gift.originalite}/10</span>
+        </div>
       </div>
+      ${actionsHTML}
     </div>
-    ${actionsHTML}
   `;
 
   return card;
@@ -790,6 +1013,8 @@ function surpriseMe() {
   // Masquer le quiz, afficher le chargement
   document.getElementById('quiz-section').classList.add('hidden');
   document.getElementById('results-section').classList.add('hidden');
+  const homeSections = document.getElementById('homeSections');
+  if (homeSections) homeSections.classList.add('hidden');
   const loadingSection = document.getElementById('loading-section');
   loadingSection.classList.remove('hidden');
 
@@ -874,10 +1099,282 @@ function restartQuiz() {
   document.getElementById('results-section').classList.add('hidden');
   document.getElementById('loading-section').classList.add('hidden');
   document.getElementById('quiz-section').classList.remove('hidden');
+  const homeSections = document.getElementById('homeSections');
+  if (homeSections) homeSections.classList.remove('hidden');
 
   updateProgress(1);
 
   document.getElementById('quiz-section').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* =========================================================
+   NOUVEAUTÉ : CADEAU DU JOUR
+   Un pick déterministe qui change chaque jour à minuit —
+   donne une raison de revenir tous les jours.
+   ========================================================= */
+function getDaySeed() {
+  const d = new Date();
+  return Number(`${d.getFullYear()}${d.getMonth()}${d.getDate()}`);
+}
+
+function seededIndex(seed, max) {
+  // petit générateur pseudo-aléatoire déterministe
+  const x = Math.sin(seed) * 10000;
+  return Math.floor((x - Math.floor(x)) * max);
+}
+
+function renderGiftOfDay() {
+  const wrap = document.getElementById('giftOfDay');
+  if (!wrap) return;
+  const seed = getDaySeed();
+  const gift = CADEAUX[seededIndex(seed, CADEAUX.length)];
+  const img  = getGiftImage(gift);
+
+  wrap.innerHTML = `
+    <div class="gotd-image">
+      <img src="${img}" alt="${gift.titre}" loading="lazy" onerror="this.closest('.gotd-image').classList.add('img-fallback')">
+      <span class="gotd-emoji">${gift.emoji}</span>
+    </div>
+    <div class="gotd-info">
+      <span class="gotd-tag">🎁 Cadeau du jour</span>
+      <h3>${gift.titre}</h3>
+      <p>${gift.desc}</p>
+      <div class="gotd-actions">
+        <a class="btn-buy" href="${(gift.affiliateLink || buildAmazonLink(gift.titre))}" target="_blank" rel="noopener noreferrer sponsored">🛒 Voir sur Amazon</a>
+        <span class="gotd-timer" id="gotdTimer"></span>
+      </div>
+    </div>`;
+
+  updateMidnightCountdown();
+  clearInterval(window._gotdInterval);
+  window._gotdInterval = setInterval(updateMidnightCountdown, 60000);
+}
+
+function updateMidnightCountdown() {
+  const el = document.getElementById('gotdTimer');
+  if (!el) return;
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24,0,0,0);
+  const diffMs = midnight - now;
+  const h = Math.floor(diffMs / 3600000);
+  const m = Math.floor((diffMs % 3600000) / 60000);
+  el.textContent = `⏳ Nouveau cadeau dans ${h}h ${m}min`;
+}
+
+/* =========================================================
+   NOUVEAUTÉ : OCCASIONS RAPIDES + COMPTE À REBOURS
+   Raccourcis qui pré-remplissent un profil et sautent direct
+   aux résultats. Bon pour le SEO saisonnier + clics rapides.
+   ========================================================= */
+const OCCASIONS = [
+  { key:'noel',      label:'🎄 Noël',          month:11, day:25, profile:{genre:'homme', budget:'50-100', interets:[]} },
+  { key:'valentin',  label:'💖 St-Valentin',    month:1,  day:14, profile:{genre:'couple', budget:'50-100', interets:[]} },
+  { key:'meres',     label:'🌷 Fête des Mères', month:4,  day:26, profile:{genre:'femme', budget:'20-50', interets:[]} },
+  { key:'peres',     label:'👔 Fête des Pères', month:5,  day:15, profile:{genre:'homme', budget:'20-50', interets:[]} },
+  { key:'anniv',     label:'🎂 Anniversaire',   month:null, day:null, profile:{genre:'homme', budget:'20-50', interets:[]} },
+];
+
+function daysUntil(month, day) {
+  if (month === null) return null;
+  const now = new Date();
+  let target = new Date(now.getFullYear(), month, day);
+  if (target < now) target = new Date(now.getFullYear() + 1, month, day);
+  return Math.ceil((target - now) / 86400000);
+}
+
+function renderOccasions() {
+  const wrap = document.getElementById('occasionsChips');
+  if (!wrap) return;
+  wrap.innerHTML = OCCASIONS.map(o => {
+    const d = daysUntil(o.month, o.day);
+    const sub = d !== null ? `<span class="occasion-days">J-${d}</span>` : '';
+    return `<button class="occasion-chip" onclick='quickOccasion("${o.key}")'>${o.label}${sub}</button>`;
+  }).join('');
+}
+
+function quickOccasion(key) {
+  const occ = OCCASIONS.find(o => o.key === key);
+  if (!occ) return;
+
+  state.genre   = occ.profile.genre;
+  state.age     = '26-35';
+  state.budget  = occ.profile.budget;
+  state.interets = [];
+
+  document.getElementById('quiz-section').classList.add('hidden');
+  document.getElementById('results-section').classList.add('hidden');
+  const homeSections = document.getElementById('homeSections');
+  if (homeSections) homeSections.classList.add('hidden');
+  const loadingSection = document.getElementById('loading-section');
+  loadingSection.classList.remove('hidden');
+  document.getElementById('loadingMsg').textContent = `Recherche d'idées pour ${occ.label.replace(/^[^\s]+\s/,'')}…`;
+
+  setTimeout(() => {
+    const results = computeResults();
+    showResults(results);
+  }, 1400);
+}
+
+/* =========================================================
+   NOUVEAUTÉ : TENDANCES (idées les plus originales)
+   Permet de parcourir sans faire le quiz → plus de clics.
+   ========================================================= */
+function renderTrending() {
+  const wrap = document.getElementById('trendingRow');
+  if (!wrap) return;
+  const top = [...CADEAUX].sort((a,b) => b.originalite - a.originalite).slice(0, 8);
+
+  wrap.innerHTML = top.map(g => {
+    const img = getGiftImage(g);
+    const url = g.affiliateLink || buildAmazonLink(g.titre);
+    return `
+      <a class="trend-card" href="${url}" target="_blank" rel="noopener noreferrer sponsored" aria-label="${g.titre}">
+        <div class="trend-img"><img src="${img}" alt="${g.titre}" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')"><span>${g.emoji}</span></div>
+        <p class="trend-title">${g.titre}</p>
+        <span class="trend-stars">${genStars(g.originalite)}</span>
+      </a>`;
+  }).join('');
+}
+
+/* =========================================================
+   NOUVEAUTÉ : MODE SOMBRE
+   ========================================================= */
+const THEME_KEY = 'ttc_theme';
+
+function initDarkMode() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  applyTheme(theme);
+
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+/* =========================================================
+   NOUVEAUTÉ : CONFETTIS À L'AFFICHAGE DES RÉSULTATS
+   ========================================================= */
+function fireConfetti() {
+  const colors = ['#7C3AED', '#F59E0B', '#10B981', '#EC4899'];
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 36; i++) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = (Math.random() * 0.4) + 's';
+    piece.style.animationDuration = (1.8 + Math.random() * 1.2) + 's';
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 3200);
+}
+
+/* =========================================================
+   NOUVEAUTÉ : NEWSLETTER (front uniquement)
+   Branchez un service (Brevo, Mailchimp, etc.) sur ce formulaire
+   pour collecter réellement les emails.
+   ========================================================= */
+function submitNewsletter(event) {
+  event.preventDefault();
+  const input = document.getElementById('newsletterEmail');
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    showToast2('⚠️ Merci d\'entrer un email valide.');
+    return;
+  }
+  showToast2('✅ Merci ! Vous recevrez nos meilleures idées cadeaux.');
+  input.value = '';
+}
+
+function showToast2(msg) {
+  showFavToast(msg);
+}
+
+/* =========================================================
+   NOUVEAUTÉ : FAQ ACCORDÉON
+   ========================================================= */
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* =========================================================
+   NOUVEAUTÉ : MODAL MENTIONS LÉGALES / CONFIDENTIALITÉ / CONTACT
+   Contenu générique à personnaliser avec vos vraies informations.
+   ========================================================= */
+const LEGAL_CONTENT = {
+  mentions: {
+    title: '📄 Mentions légales',
+    body: `<p><strong>Éditeur du site :</strong> TrouveTonCadeau — à compléter avec votre raison sociale, adresse et SIRET.</p>
+           <p><strong>Hébergement :</strong> à compléter avec le nom et l'adresse de votre hébergeur.</p>
+           <p><strong>Directeur de publication :</strong> à compléter.</p>
+           <p>Ce texte est un modèle de départ : remplacez-le par vos informations réelles avant mise en ligne.</p>`
+  },
+  confidentialite: {
+    title: '🔒 Confidentialité',
+    body: `<p>TrouveTonCadeau utilise le stockage local de votre navigateur pour mémoriser vos favoris : aucune donnée n'est envoyée à un serveur.</p>
+           <p>Si vous ajoutez un formulaire de newsletter ou des publicités, pensez à informer vos visiteurs sur les cookies/trackers utilisés (bannière de consentement, politique RGPD) et à indiquer les destinataires réels de leurs données.</p>`
+  },
+  contact: {
+    title: '✉️ Contact',
+    body: `<p>Une question, une suggestion de cadeau ? Écrivez-nous à <a href="mailto:contact@trouvetoncadeau.fr">contact@trouvetoncadeau.fr</a> (adresse à remplacer par la vôtre).</p>`
+  }
+};
+
+function openLegalModal(key) {
+  const data = LEGAL_CONTENT[key];
+  if (!data) return;
+  document.getElementById('legalTitle').textContent = data.title;
+  document.getElementById('legalBody').innerHTML = data.body;
+  document.getElementById('legalModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLegalModal() {
+  document.getElementById('legalModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* =========================================================
+   NOUVEAUTÉ : BOUTON FLOTTANT "TROUVER UN CADEAU"
+   Apparaît quand on scrolle loin du quiz → relance l'action.
+   ========================================================= */
+function initStickyCta() {
+  const cta = document.getElementById('stickyCta');
+  if (!cta) return;
+  let lastShown = false;
+  window.addEventListener('scroll', () => {
+    const quiz = document.getElementById('quiz-section');
+    if (!quiz) return;
+    const rect = quiz.getBoundingClientRect();
+    const shouldShow = rect.bottom < -80 && !document.getElementById('results-section').classList.contains('hidden') === false;
+    const pastHero = rect.bottom < -80;
+    if (pastHero !== lastShown) {
+      cta.classList.toggle('visible', pastHero);
+      lastShown = pastHero;
+    }
+  });
+  cta.addEventListener('click', () => {
+    document.getElementById('quiz-section').classList.remove('hidden');
+    document.getElementById('results-section').classList.add('hidden');
+    document.getElementById('quiz-section').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
 }
 
 /* =========================================================
@@ -897,13 +1394,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Fermeture du modal favoris avec la touche Escape ──
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeFavoritesModal();
+    if (e.key === 'Escape') { closeFavoritesModal(); closeLegalModal(); }
   });
 
   // ── Clic sur l'overlay du modal pour le fermer ──
   document.getElementById('favModal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeFavoritesModal();
   });
+  const legalModalEl = document.getElementById('legalModal');
+  if (legalModalEl) legalModalEl.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLegalModal();
+  });
 
-  console.log(`🎁 TrouveTonCadeau V2 — ${CADEAUX.length} idées cadeaux chargées.`);
+  // ── Nouvelles fonctionnalités v1 ──
+  initDarkMode();
+  renderGiftOfDay();
+  renderOccasions();
+  renderTrending();
+  initStickyCta();
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) newsletterForm.addEventListener('submit', submitNewsletter);
+
+  console.log(`🎁 TrouveTonCadeau V1 FINAL — ${CADEAUX.length} idées cadeaux chargées.`);
 });
