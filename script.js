@@ -15,7 +15,7 @@
      emoji       : string        — icône emoji
      desc        : string        — description courte
      genre       : string[]      — 'homme'|'femme'|'couple'|'enfant'
-     age         : string[]      — '18-25'|'26-35'|'36-50'|'50+'
+     age         : string[]      — tranches adultes ou enfant selon le profil
      budget      : string        — '<20'|'20-50'|'50-100'|'>100'
      interets    : string[]      — centres d'intérêt correspondants
      originalite : number        — score 1-10
@@ -221,7 +221,85 @@ const CADEAUX = [
   { id:159, titre:"Panneau lumineux LED personnalisé", emoji:"💡", desc:"Enseigne lumineuse LED avec un mot, prénom ou slogan choisi. Décoration unique et moderne.", genre:["femme","homme"], age:["18-25","26-35"], budget:"50-100", interets:["cinema","musique"], originalite:8 },
   { id:160, titre:"Coffret whisky dégustation (5 miniatures)", emoji:"🥃", desc:"5 mignonnettes de whiskies single malt de régions différentes avec fiches aromatiques et carnet notes.", genre:["homme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine","voyage"], originalite:8 },
 
+  /* ── COMPLÉMENTS ENFANT V1.2 ── */
+  { id:161, titre:"Livre d'éveil sensoriel", emoji:"📘", desc:"Livre souple avec textures, couleurs contrastées et activités adaptées aux premières découvertes.", genre:["enfant"], age:["0-3"], budget:"<20", interets:["lecture"], originalite:7 },
+  { id:162, titre:"Porteur évolutif enfant", emoji:"🚗", desc:"Porteur stable et transformable pour développer l'équilibre et accompagner les premières aventures.", genre:["enfant"], age:["0-3","4-7"], budget:"50-100", interets:["sport"], originalite:7 },
+  { id:163, titre:"Tour d'observation Montessori", emoji:"🪜", desc:"Marchepied sécurisé et réglable pour participer aux activités du quotidien à hauteur d'adulte.", genre:["enfant"], age:["0-3","4-7"], budget:">100", interets:["cuisine"], originalite:8 },
+  { id:164, titre:"Kit créatif lavable", emoji:"🖍️", desc:"Coffret de feutres, tampons et peintures lavables pour créer librement sans matériel compliqué.", genre:["enfant"], age:["4-7","8-12"], budget:"<20", interets:["manga"], originalite:7 },
+  { id:165, titre:"Maison de jeu modulable", emoji:"🏠", desc:"Structure intérieure transformable en cabane, boutique ou théâtre pour stimuler les jeux d'imagination.", genre:["enfant"], age:["4-7","8-12"], budget:">100", interets:[], originalite:8 },
+
 ];
+
+/* =========================================================
+   PROFIL ENFANT — adaptation V1.2
+   Les cadeaux enfant existants reçoivent des âges cohérents.
+   Quelques cadeaux déjà présents dans la base deviennent aussi
+   compatibles avec les enfants, sans dupliquer les 160 entrées.
+   ========================================================= */
+const CHILD_AGE_OVERRIDES = {
+  4:   ['8-12','13-17'],
+  91:  ['8-12','13-17'],
+  92:  ['8-12','13-17'],
+  93:  ['8-12','13-17'],
+  94:  ['4-7','8-12'],
+  95:  ['4-7','8-12','13-17'],
+  96:  ['0-3','4-7'],
+  97:  ['4-7','8-12','13-17'],
+  98:  ['4-7','8-12'],
+  99:  ['4-7','8-12','13-17'],
+  100: ['8-12','13-17'],
+};
+
+const CHILD_COMPATIBLE_GIFTS = {
+  5:   ['8-12','13-17'],
+  9:   ['8-12','13-17'],
+  12:  ['8-12','13-17'],
+  16:  ['8-12','13-17'],
+  17:  ['8-12','13-17'],
+  18:  ['4-7','8-12','13-17'],
+  21:  ['13-17'],
+  30:  ['13-17'],
+  32:  ['8-12','13-17'],
+  40:  ['13-17'],
+  43:  ['8-12','13-17'],
+  45:  ['13-17'],
+  61:  ['8-12','13-17'],
+  65:  ['8-12','13-17'],
+  70:  ['8-12','13-17'],
+  78:  ['13-17'],
+  79:  ['13-17'],
+  85:  ['8-12','13-17'],
+  87:  ['8-12','13-17'],
+  107: ['8-12','13-17'],
+  112: ['13-17'],
+  113: ['8-12','13-17'],
+  115: ['8-12','13-17'],
+  123: ['8-12','13-17'],
+  147: ['13-17'],
+  154: ['13-17'],
+};
+
+const ADULT_AGES = ['18-25','26-35','36-50','50+'];
+const CHILD_AGES = ['0-3','4-7','8-12','13-17'];
+
+function normalizeGiftDatabase() {
+  CADEAUX.forEach(gift => {
+    if (!('image' in gift)) gift.image = '';
+    if (!('affiliateLink' in gift)) gift.affiliateLink = '';
+
+    if (CHILD_AGE_OVERRIDES[gift.id]) {
+      const hasAdultAudience = gift.genre.some(genre => genre !== 'enfant');
+      gift.age = hasAdultAudience
+        ? [...new Set([...gift.age, ...CHILD_AGE_OVERRIDES[gift.id]])]
+        : [...CHILD_AGE_OVERRIDES[gift.id]];
+    }
+
+    if (CHILD_COMPATIBLE_GIFTS[gift.id]) {
+      if (!gift.genre.includes('enfant')) gift.genre.push('enfant');
+      gift.age = [...new Set([...gift.age, ...CHILD_COMPATIBLE_GIFTS[gift.id]])];
+    }
+  });
+}
 
 /* =========================================================
    IMAGES RÉELLES — mapping catégorie → mots-clés photo
@@ -421,13 +499,40 @@ function getGiftImage(gift) {
 // pour des liens Amazon simples (sans commission).
 const AMAZON_AFFILIATE_TAG = '';
 
+function addAmazonAffiliateTag(url) {
+  if (!AMAZON_AFFILIATE_TAG) return url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname === 'amazon.fr' || parsed.hostname.endsWith('.amazon.fr')) {
+      parsed.searchParams.set('tag', AMAZON_AFFILIATE_TAG);
+    }
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
+
 /**
  * Construit un lien de recherche Amazon.fr pour un titre de produit,
  * en ajoutant automatiquement votre tag d'affiliation s'il est renseigné.
  */
 function buildAmazonLink(titre) {
   const base = `https://www.amazon.fr/s?k=${encodeURIComponent(titre)}`;
-  return AMAZON_AFFILIATE_TAG ? `${base}&tag=${encodeURIComponent(AMAZON_AFFILIATE_TAG)}` : base;
+  return addAmazonAffiliateTag(base);
+}
+
+function getProductUrl(gift) {
+  const url = gift.affiliateLink || buildAmazonLink(gift.titre);
+  return addAmazonAffiliateTag(url);
+}
+
+/* =========================================================
+   ANALYTICS V1.2 — événements essentiels uniquement
+   ========================================================= */
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, params);
+  }
 }
 
 /* =========================================================
@@ -441,6 +546,8 @@ const state = {
   interets: []
 };
 
+let quizStarted = false;
+
 /**
  * Résultats actuellement affichés (IDs) — pour éviter les doublons lors du remplacement
  * Amélioration N°1
@@ -452,6 +559,9 @@ let displayedIds = [];
  * Amélioration N°1
  */
 let resultsPool = [];
+
+/** Cadeaux refusés pendant la recherche courante. */
+const rejectedIds = new Set();
 
 /* =========================================================
    PROGRESSION
@@ -465,7 +575,7 @@ function updateProgress(step) {
   const label = document.getElementById('progressLabel');
   const dots  = document.querySelectorAll('.step-dot');
 
-  const pct = ((step - 1) / 4) * 100;
+  const pct = (step / 4) * 100;
   fill.style.width = pct + '%';
   label.textContent = `Étape ${step} sur 4`;
 
@@ -476,12 +586,36 @@ function updateProgress(step) {
   });
 
   document.querySelector('.progress-wrapper')
-    .setAttribute('aria-valuenow', step - 1);
+    .setAttribute('aria-valuenow', step);
 }
 
 /* =========================================================
    NAVIGATION ENTRE ÉTAPES
    ========================================================= */
+function getAgesForGenre(genre) {
+  return genre === 'enfant' ? CHILD_AGES : ADULT_AGES;
+}
+
+function ageLabel(age) {
+  return age === '50+' ? '50 ans et +' : `${age.replace('-', ' – ')} ans`;
+}
+
+function renderAgeOptions(genre) {
+  const wrap = document.getElementById('ageOptions');
+  if (!wrap) return;
+
+  const icons = genre === 'enfant' ? ['🧸','🧩','🎒','🎧'] : ['🎓','💼','🏡','🌟'];
+  wrap.innerHTML = getAgesForGenre(genre).map((age, index) => `
+    <button class="option-btn" data-key="age" data-value="${age}" onclick="selectOption(this, 'age', '${age}')">
+      <span class="option-icon">${icons[index]}</span>
+      <span class="option-label">${ageLabel(age)}</span>
+    </button>`).join('');
+
+  state.age = null;
+  const next = document.getElementById('next-2');
+  if (next) next.disabled = true;
+}
+
 /**
  * Sélectionne une option (radio unique par catégorie)
  */
@@ -493,6 +627,14 @@ function selectOption(btn, key, value) {
 
   // Enregistrer dans l'état
   state[key] = value;
+
+  if (key === 'genre') {
+    renderAgeOptions(value);
+    if (!quizStarted) {
+      quizStarted = true;
+      trackEvent('quiz_start', { source: 'questionnaire', genre: value });
+    }
+  }
 
   // Activer bouton suivant
   const nextBtn = document.getElementById(`next-${state.currentStep}`);
@@ -547,7 +689,7 @@ function prevStep(toStep) {
    ========================================================= */
 const LOADING_MESSAGES = [
   "Analyse de votre profil en cours…",
-  "Parcours de notre base de 160 cadeaux…",
+  "Parcours de notre base de plus de 160 cadeaux…",
   "Sélection des idées les plus originales…",
   "Application du filtre budget…",
   "Finalisation de votre liste personnalisée…",
@@ -557,6 +699,16 @@ const LOADING_MESSAGES = [
  * Lance le processus de recherche avec chargement animé
  */
 function submitQuiz() {
+  if (!state.genre || !state.age || !state.budget) return;
+
+  rejectedIds.clear();
+  trackEvent('quiz_complete', {
+    genre: state.genre,
+    age: state.age,
+    budget: state.budget,
+    interest_count: state.interets.length,
+  });
+
   // Masquer quiz, afficher loading
   document.getElementById('quiz-section').classList.add('hidden');
   const homeSections = document.getElementById('homeSections');
@@ -576,12 +728,12 @@ function submitQuiz() {
     }, 150);
   }, 700);
 
-  // Simuler un délai de "calcul" (UX)
+  // Courte transition visuelle, sans ralentir artificiellement l'utilisateur
   setTimeout(() => {
     clearInterval(msgInterval);
     const results = computeResults();
     showResults(results);
-  }, 2600);
+  }, 350);
 }
 
 /* =========================================================
@@ -603,9 +755,9 @@ function scoreGift(cadeau) {
   if (cadeau.budget === state.budget) score += 25;
   else return -1; // Exclusion stricte
 
-  // Âge (important)
+  // Âge (obligatoire pour éviter les recommandations incohérentes)
   if (cadeau.age.includes(state.age)) score += 20;
-  else score -= 5; // Pénalité légère
+  else return -1;
 
   // Intérêts (bonus)
   if (state.interets.length > 0) {
@@ -681,6 +833,12 @@ function showResults(results) {
   const section = document.getElementById('results-section');
   const grid    = document.getElementById('cardsGrid');
   const summary = document.getElementById('resultsSummary');
+  const title   = document.getElementById('resultsTitle');
+
+  const countLabel = results.length === 1 ? 'idée cadeau' : 'idées cadeaux';
+  title.textContent = results.length
+    ? `🎉 Vos ${results.length} ${countLabel}`
+    : '😕 Aucune idée trouvée';
 
   // Résumé de la recherche
   summary.textContent = `Pour un·e ${genreLabel(state.genre)} · Budget ${budgetLabel(state.budget)}${state.interets.length ? ' · ' + state.interets.length + ' intérêt(s) sélectionné(s)' : ''}`;
@@ -737,16 +895,22 @@ function createCard(gift, num, inModal = false) {
   // Priorité : lien d'affiliation renseigné manuellement (gift.affiliateLink),
   // sinon recherche réelle sur Amazon.fr (lien fonctionnel, pas un faux lien).
   // Astuce monétisation : remplacez par vos liens Amazon Associates / Awin.
-  const productUrl = (gift.affiliateLink && gift.affiliateLink !== '')
-    ? gift.affiliateLink
-    : buildAmazonLink(gift.titre);
+  const productUrl = getProductUrl(gift);
   const compareUrl = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(gift.titre)}`;
 
   // ── Image réelle (vraie photo) ──
   const imgUrl = getGiftImage(gift);
 
   // ── Boutons d'action (masqués dans le modal) ──
-  const actionsHTML = inModal ? '' : `
+  const actionsHTML = inModal ? `
+    <div class="card-actions">
+      <a class="btn-buy" href="${productUrl}" target="_blank" rel="noopener noreferrer sponsored" aria-label="Voir le produit ${gift.titre} sur Amazon">
+        🛒 Voir sur Amazon
+      </a>
+      <button class="btn-fav is-fav" onclick="removeFavorite(${gift.id})" aria-label="Retirer ${gift.titre} des favoris">
+        💔 Retirer
+      </button>
+    </div>` : `
     <div class="card-actions">
       <button class="btn-skip" onclick="skipCard(${gift.id}, this)" aria-label="Remplacer cette idée">
         ❌ Pas pour moi
@@ -784,6 +948,13 @@ function createCard(gift, num, inModal = false) {
       ${actionsHTML}
     </div>
   `;
+
+  const amazonLink = card.querySelector('.btn-buy');
+  if (amazonLink) {
+    amazonLink.addEventListener('click', () => {
+      trackEvent('amazon_click', { gift_id: gift.id, gift_title: gift.titre, placement: inModal ? 'favorites' : 'results' });
+    });
+  }
 
   return card;
 }
@@ -843,13 +1014,20 @@ function skipCard(giftId, btn) {
   const card = btn.closest('.gift-card');
   if (!card) return;
 
+  rejectedIds.add(giftId);
+  const rejectedGift = CADEAUX.find(c => c.id === giftId);
+  trackEvent('gift_rejected', {
+    gift_id: giftId,
+    gift_title: rejectedGift ? rejectedGift.titre : '',
+  });
+
   // Chercher un remplaçant dans le pool (non affiché, non encore rejeté)
-  const rejectedIds = card.closest('#cardsGrid')
+  const visibleIds = card.closest('#cardsGrid')
     ? Array.from(card.closest('#cardsGrid').querySelectorAll('[data-gift-id]'))
         .map(el => Number(el.dataset.giftId))
     : displayedIds.slice();
 
-  const replacement = resultsPool.find(c => !rejectedIds.includes(c.id) && c.id !== giftId);
+  const replacement = resultsPool.find(c => !visibleIds.includes(c.id) && !rejectedIds.has(c.id));
 
   if (!replacement) {
     showFavToast('😔 Plus aucune autre idée disponible pour ce profil !');
@@ -881,21 +1059,31 @@ function skipCard(giftId, btn) {
    ========================================================= */
 const FAV_KEY = 'ttc_favorites_v1';
 
-/** Lit les favoris depuis localStorage */
-function getFavorites() {
+/** Lit et normalise les IDs favoris depuis localStorage (migration V1 incluse). */
+function getFavoriteIds() {
   try {
-    return JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+    const parsed = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return [...new Set(parsed
+      .map(item => Number(typeof item === 'object' && item !== null ? item.id : item))
+      .filter(id => Number.isInteger(id) && CADEAUX.some(gift => gift.id === id)))];
   } catch { return []; }
 }
 
-/** Écrit les favoris dans localStorage */
-function saveFavorites(favs) {
-  try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch {}
+/** Retourne les cadeaux favoris à jour depuis la base courante. */
+function getFavorites() {
+  const ids = getFavoriteIds();
+  return ids.map(id => CADEAUX.find(gift => gift.id === id)).filter(Boolean);
+}
+
+/** Écrit uniquement des IDs afin d'éviter les données obsolètes. */
+function saveFavorites(ids) {
+  try { localStorage.setItem(FAV_KEY, JSON.stringify(ids)); } catch {}
 }
 
 /** Vérifie si un cadeau est en favori */
 function isFavorite(id) {
-  return getFavorites().some(f => f.id === id);
+  return getFavoriteIds().includes(id);
 }
 
 /**
@@ -907,26 +1095,47 @@ function toggleFavorite(giftId, btn) {
   const gift = CADEAUX.find(c => c.id === giftId);
   if (!gift) return;
 
-  let favs = getFavorites();
-  const idx = favs.findIndex(f => f.id === giftId);
+  const favoriteIds = getFavoriteIds();
+  const idx = favoriteIds.indexOf(giftId);
+  let action = 'removed';
 
   if (idx === -1) {
     // Ajouter
-    favs.push(gift);
-    saveFavorites(favs);
+    favoriteIds.push(giftId);
+    saveFavorites(favoriteIds);
     btn.textContent = '❤️ Sauvegardé';
     btn.classList.add('is-fav');
     showFavToast(`❤️ "${gift.titre}" ajouté aux favoris !`);
+    action = 'added';
   } else {
     // Retirer
-    favs.splice(idx, 1);
-    saveFavorites(favs);
+    favoriteIds.splice(idx, 1);
+    saveFavorites(favoriteIds);
     btn.textContent = '🤍 Favori';
     btn.classList.remove('is-fav');
     showFavToast(`💔 "${gift.titre}" retiré des favoris.`);
   }
 
+  trackEvent('gift_favorite', { gift_id: giftId, gift_title: gift.titre, action });
   refreshFavCount();
+}
+
+function removeFavorite(giftId) {
+  const gift = CADEAUX.find(c => c.id === giftId);
+  const favoriteIds = getFavoriteIds().filter(id => id !== giftId);
+  saveFavorites(favoriteIds);
+  refreshFavCount();
+
+  document.querySelectorAll(`.gift-card[data-gift-id="${giftId}"] .btn-fav`).forEach(btn => {
+    btn.textContent = '🤍 Favori';
+    btn.classList.remove('is-fav');
+  });
+
+  if (gift) {
+    trackEvent('gift_favorite', { gift_id: giftId, gift_title: gift.titre, action: 'removed' });
+    showFavToast(`💔 "${gift.titre}" retiré des favoris.`);
+  }
+  openFavoritesModal();
 }
 
 /** Met à jour le badge compteur de favoris */
@@ -997,18 +1206,35 @@ function showFavToast(msg) {
  */
 function surpriseMe() {
   const genres   = ['homme','femme','couple','enfant'];
-  const ages     = ['18-25','26-35','36-50','50+'];
   const budgets  = ['<20','20-50','50-100','>100'];
   const interets = ['jeux-video','manga','technologie','voyage','lecture','cuisine','animaux','sport','musique','cinema'];
 
-  // Profil aléatoire
-  state.genre  = genres[Math.floor(Math.random() * genres.length)];
-  state.age    = ages[Math.floor(Math.random() * ages.length)];
-  state.budget = budgets[Math.floor(Math.random() * budgets.length)];
+  // Ne retenir que les profils capables de fournir 10 résultats cohérents.
+  const validProfiles = [];
+  genres.forEach(genre => {
+    getAgesForGenre(genre).forEach(age => {
+      budgets.forEach(budget => {
+        const count = CADEAUX.filter(gift =>
+          gift.genre.includes(genre) &&
+          gift.age.includes(age) &&
+          gift.budget === budget
+        ).length;
+        if (count >= 10) validProfiles.push({ genre, age, budget });
+      });
+    });
+  });
+
+  if (validProfiles.length === 0) return;
+  const profile = validProfiles[Math.floor(Math.random() * validProfiles.length)];
+  state.genre  = profile.genre;
+  state.age    = profile.age;
+  state.budget = profile.budget;
 
   // 1 à 3 intérêts aléatoires
   const shuffled = [...interets].sort(() => Math.random() - .5);
   state.interets = shuffled.slice(0, 1 + Math.floor(Math.random() * 3));
+  rejectedIds.clear();
+  trackEvent('surprise_click', { genre: state.genre, age: state.age, budget: state.budget });
 
   // Masquer le quiz, afficher le chargement
   document.getElementById('quiz-section').classList.add('hidden');
@@ -1024,7 +1250,7 @@ function surpriseMe() {
   setTimeout(() => {
     const results = computeResults();
     showResults(results);
-  }, 1800);
+  }, 300);
 }
 
 /* =========================================================
@@ -1035,11 +1261,12 @@ function surpriseMe() {
  */
 function shareResults() {
   const url = window.location.href;
+  trackEvent('share_click', { result_count: displayedIds.length });
 
   if (navigator.share) {
     navigator.share({
       title: 'TrouveTonCadeau — Mes idées cadeaux personnalisées',
-      text: `Découvrez mes 10 idées cadeaux sur TrouveTonCadeau !`,
+      text: `Découvrez mes ${displayedIds.length} idée${displayedIds.length > 1 ? 's' : ''} cadeau${displayedIds.length > 1 ? 'x' : ''} sur TrouveTonCadeau !`,
       url
     }).catch(() => {});
   } else {
@@ -1081,6 +1308,8 @@ function restartQuiz() {
   // Réinitialiser les pools de résultats (Amélioration N°1)
   displayedIds = [];
   resultsPool  = [];
+  rejectedIds.clear();
+  quizStarted = false;
 
   // Désélectionner toutes les options
   document.querySelectorAll('.option-btn.selected, .interest-btn.selected')
@@ -1095,6 +1324,7 @@ function restartQuiz() {
   // Afficher étape 1, masquer le reste
   document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-1').classList.add('active');
+  renderAgeOptions('homme');
 
   document.getElementById('results-section').classList.add('hidden');
   document.getElementById('loading-section').classList.add('hidden');
@@ -1140,14 +1370,21 @@ function renderGiftOfDay() {
       <h3>${gift.titre}</h3>
       <p>${gift.desc}</p>
       <div class="gotd-actions">
-        <a class="btn-buy" href="${(gift.affiliateLink || buildAmazonLink(gift.titre))}" target="_blank" rel="noopener noreferrer sponsored">🛒 Voir sur Amazon</a>
+        <a class="btn-buy" href="${getProductUrl(gift)}" target="_blank" rel="noopener noreferrer sponsored">🛒 Voir sur Amazon</a>
         <span class="gotd-timer" id="gotdTimer"></span>
       </div>
     </div>`;
 
+  wrap.querySelector('.btn-buy').addEventListener('click', () => {
+    trackEvent('amazon_click', { gift_id: gift.id, gift_title: gift.titre, placement: 'gift_of_day' });
+  });
+
   updateMidnightCountdown();
   clearInterval(window._gotdInterval);
-  window._gotdInterval = setInterval(updateMidnightCountdown, 60000);
+  window._gotdInterval = setInterval(() => {
+    if (getDaySeed() !== seed) renderGiftOfDay();
+    else updateMidnightCountdown();
+  }, 60000);
 }
 
 function updateMidnightCountdown() {
@@ -1201,6 +1438,9 @@ function quickOccasion(key) {
   state.age     = '26-35';
   state.budget  = occ.profile.budget;
   state.interets = [];
+  rejectedIds.clear();
+  trackEvent('quiz_start', { source: 'occasion', occasion: key });
+  trackEvent('quiz_complete', { source: 'occasion', occasion: key, genre: state.genre, age: state.age, budget: state.budget });
 
   document.getElementById('quiz-section').classList.add('hidden');
   document.getElementById('results-section').classList.add('hidden');
@@ -1213,7 +1453,7 @@ function quickOccasion(key) {
   setTimeout(() => {
     const results = computeResults();
     showResults(results);
-  }, 1400);
+  }, 300);
 }
 
 /* =========================================================
@@ -1227,14 +1467,21 @@ function renderTrending() {
 
   wrap.innerHTML = top.map(g => {
     const img = getGiftImage(g);
-    const url = g.affiliateLink || buildAmazonLink(g.titre);
+    const url = getProductUrl(g);
     return `
-      <a class="trend-card" href="${url}" target="_blank" rel="noopener noreferrer sponsored" aria-label="${g.titre}">
+      <a class="trend-card" data-gift-id="${g.id}" href="${url}" target="_blank" rel="noopener noreferrer sponsored" aria-label="${g.titre}">
         <div class="trend-img"><img src="${img}" alt="${g.titre}" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')"><span>${g.emoji}</span></div>
         <p class="trend-title">${g.titre}</p>
         <span class="trend-stars">${genStars(g.originalite)}</span>
       </a>`;
   }).join('');
+
+  wrap.querySelectorAll('.trend-card').forEach(link => {
+    link.addEventListener('click', () => {
+      const gift = CADEAUX.find(g => g.id === Number(link.dataset.giftId));
+      if (gift) trackEvent('amazon_click', { gift_id: gift.id, gift_title: gift.titre, placement: 'trending' });
+    });
+  });
 }
 
 /* =========================================================
@@ -1363,7 +1610,6 @@ function initStickyCta() {
     const quiz = document.getElementById('quiz-section');
     if (!quiz) return;
     const rect = quiz.getBoundingClientRect();
-    const shouldShow = rect.bottom < -80 && !document.getElementById('results-section').classList.contains('hidden') === false;
     const pastHero = rect.bottom < -80;
     if (pastHero !== lastShown) {
       cta.classList.toggle('visible', pastHero);
@@ -1377,15 +1623,19 @@ function initStickyCta() {
   });
 }
 
+function initFooter() {
+  const year = document.getElementById('currentYear');
+  if (year) year.textContent = new Date().getFullYear();
+
+  const disclosure = document.getElementById('amazonDisclosure');
+  if (disclosure) disclosure.classList.toggle('hidden', !AMAZON_AFFILIATE_TAG);
+}
+
 /* =========================================================
    INITIALISATION
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Amélioration N°6 : normaliser la base (ajouter image & affiliateLink si absents) ──
-  CADEAUX.forEach(c => {
-    if (!('image'        in c)) c.image         = '';
-    if (!('affiliateLink' in c)) c.affiliateLink = '';
-  });
+  normalizeGiftDatabase();
 
   updateProgress(1);
 
@@ -1412,9 +1662,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOccasions();
   renderTrending();
   initStickyCta();
+  initFooter();
 
   const newsletterForm = document.getElementById('newsletterForm');
   if (newsletterForm) newsletterForm.addEventListener('submit', submitNewsletter);
 
-  console.log(`🎁 TrouveTonCadeau V1 FINAL — ${CADEAUX.length} idées cadeaux chargées.`);
+  console.log(`🎁 TrouveTonCadeau V1.2 — ${CADEAUX.length} idées cadeaux chargées.`);
 });

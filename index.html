@@ -14,7 +14,7 @@
 
   <!-- SEO -->
   <title>TrouveTonCadeau – Idées Cadeaux Personnalisées en 1 Minute | Homme, Femme, Enfant</title>
-  <meta name="description" content="Trouvez l'idée cadeau parfaite en quelques secondes ! TrouveTonCadeau vous propose 10 idées personnalisées selon le profil, l'âge, le budget et les centres d'intérêt. Cadeau original garanti." />
+  <meta name="description" content="Trouvez l'idée cadeau parfaite en quelques secondes ! TrouveTonCadeau vous propose jusqu'à 10 idées personnalisées selon le profil, l'âge, le budget et les centres d'intérêt." />
   <meta name="keywords" content="idée cadeau, cadeau personnalisé, trouver cadeau, cadeau homme, cadeau femme, cadeau enfant, cadeau original, cadeau pas cher" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://trouvetoncadeau.fr/" />
@@ -28,7 +28,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TrouveTonCadeau – Idées Cadeaux Personnalisées" />
-  <meta name="twitter:description" content="10 idées cadeaux sur-mesure en 1 minute chrono !" />
+  <meta name="twitter:description" content="Jusqu'à 10 idées cadeaux sur-mesure en moins d'une minute !" />
   <meta name="twitter:image" content="og-image.png" />
   <meta name="theme-color" content="#7C3AED" />
 
@@ -45,7 +45,9 @@
 
   <link rel="stylesheet" href="style.css" />
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- ADSENSE V1.2
+       Aucun script n'est chargé tant qu'un identifiant réel n'est pas configuré.
+       Ajouter ici le script officiel AdSense au moment de l'activation. -->
 
   <!-- Données structurées JSON-LD -->
   <script type="application/ld+json">
@@ -73,7 +75,7 @@
 <body>
 
   <!-- ===== BANNIÈRE PUB HAUT ===== -->
-  <div class="ad-banner ad-top" aria-label="Espace publicitaire">
+  <div class="ad-banner ad-top hidden" aria-label="Espace publicitaire">
     <div class="ad-placeholder">
       <span class="ad-label">Publicité</span>
       <span class="ad-size">728×90 — Leaderboard</span>
@@ -129,7 +131,7 @@
       <section id="quiz-section" class="quiz-section" aria-label="Questionnaire cadeau">
 
         <!-- Barre de progression -->
-        <div class="progress-wrapper" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="4">
+        <div class="progress-wrapper" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
           <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
           </div>
@@ -173,7 +175,7 @@
         <div class="quiz-step" id="step-2">
           <h2 class="step-question">Quel âge a-t-il / elle ?</h2>
           <p class="step-hint">La tranche d'âge aide à affiner les suggestions</p>
-          <div class="options-grid" role="group" aria-label="Tranche d'âge">
+          <div class="options-grid" id="ageOptions" role="group" aria-label="Tranche d'âge">
             <button class="option-btn" data-key="age" data-value="18-25" onclick="selectOption(this, 'age', '18-25')">
               <span class="option-icon">🎓</span>
               <span class="option-label">18 – 25 ans</span>
@@ -265,7 +267,7 @@
       <section id="results-section" class="results-section hidden" aria-label="Résultats">
 
         <div class="results-header">
-          <h2 class="results-title">🎉 Vos 10 idées cadeaux</h2>
+          <h2 class="results-title" id="resultsTitle">🎉 Vos idées cadeaux</h2>
           <p class="results-subtitle" id="resultsSummary"></p>
           <div class="results-actions">
             <button class="btn-share" onclick="shareResults()">📤 Partager</button>
@@ -278,12 +280,10 @@
         </div>
 
         <!-- PUB MILIEU (entre résultats) -->
-        <div class="ad-banner ad-mid" aria-label="Espace publicitaire">
+        <div class="ad-banner ad-mid hidden" aria-label="Espace publicitaire">
           <div class="ad-placeholder">
             <span class="ad-label">Publicité</span>
             <span class="ad-size">728×90 — Mid-Content</span>
-            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="VOTRE_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
           </div>
         </div>
 
@@ -295,7 +295,8 @@
   </main>
 
   <!-- ===== NEWSLETTER ===== -->
-  <section class="newsletter-section" aria-label="Newsletter">
+  <!-- Newsletter masquée en V1.2 tant qu'aucun service réel n'est connecté. -->
+  <section class="newsletter-section hidden" aria-label="Newsletter">
     <div class="container newsletter-inner">
       <div class="newsletter-text">
         <h2>📬 Ne ratez plus aucune bonne idée</h2>
@@ -319,7 +320,7 @@
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>Répondez à 4 questions rapides (destinataire, âge, budget, centres d'intérêt) et notre algorithme sélectionne 10 idées cadeaux adaptées parmi plus de 160 références, classées par pertinence et originalité.</p>
+          <p>Répondez à 4 questions rapides (destinataire, âge, budget, centres d'intérêt) et notre algorithme sélectionne jusqu'à 10 idées cadeaux adaptées parmi plus de 160 références, classées par pertinence et originalité.</p>
         </div>
       </div>
 
@@ -360,17 +361,19 @@
   <footer class="site-footer">
 
     <!-- BANNIÈRE PUB BAS -->
-    <div class="ad-banner ad-bottom" aria-label="Espace publicitaire">
+    <div class="ad-banner ad-bottom hidden" aria-label="Espace publicitaire">
       <div class="ad-placeholder">
         <span class="ad-label">Publicité</span>
         <span class="ad-size">728×90 — Footer Leaderboard</span>
-        <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="VOTRE_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
-             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
       </div>
     </div>
 
     <div class="container footer-inner">
-      <p class="footer-copy">© 2025 <strong>TrouveTonCadeau</strong> — Tous droits réservés</p>
+      <div class="footer-copy-wrap">
+        <p class="footer-copy">© <span id="currentYear">2026</span> <strong>TrouveTonCadeau</strong> — Tous droits réservés</p>
+        <!-- Affiché automatiquement dès que AMAZON_AFFILIATE_TAG est renseigné dans script.js. -->
+        <p class="amazon-disclosure hidden" id="amazonDisclosure">En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.</p>
+      </div>
       <nav class="footer-nav" aria-label="Navigation pied de page">
         <a href="#" onclick="openLegalModal('mentions'); return false;">Mentions légales</a>
         <a href="#" onclick="openLegalModal('confidentialite'); return false;">Confidentialité</a>

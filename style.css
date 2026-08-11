@@ -734,6 +734,19 @@ body {
   color: var(--clr-muted);
 }
 
+.footer-copy-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.amazon-disclosure {
+  max-width: 520px;
+  font-size: .68rem;
+  line-height: 1.45;
+  color: var(--clr-muted);
+}
+
 .footer-nav {
   display: flex;
   gap: 20px;
