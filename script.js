@@ -497,7 +497,7 @@ function getGiftImage(gift) {
    ========================================================= */
 // Votre identifiant Amazon Associates (ex: "votreid-21"). Laissez vide
 // pour des liens Amazon simples (sans commission).
-const AMAZON_AFFILIATE_TAG = '';
+const AMAZON_AFFILIATE_TAG = 'trouvetonca05-21';
 
 function addAmazonAffiliateTag(url) {
   if (!AMAZON_AFFILIATE_TAG) return url;
