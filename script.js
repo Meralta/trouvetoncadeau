@@ -1573,24 +1573,28 @@ function toggleFaq(btn) {
 
 /* =========================================================
    NOUVEAUTÉ : MODAL MENTIONS LÉGALES / CONFIDENTIALITÉ / CONTACT
-   Contenu générique à personnaliser avec vos vraies informations.
    ========================================================= */
 const LEGAL_CONTENT = {
   mentions: {
     title: '📄 Mentions légales',
-    body: `<p><strong>Éditeur du site :</strong> TrouveTonCadeau — à compléter avec votre raison sociale, adresse et SIRET.</p>
-           <p><strong>Hébergement :</strong> à compléter avec le nom et l'adresse de votre hébergeur.</p>
-           <p><strong>Directeur de publication :</strong> à compléter.</p>
-           <p>Ce texte est un modèle de départ : remplacez-le par vos informations réelles avant mise en ligne.</p>`
+    body: `<p><strong>Site :</strong> TrouveTonCadeau, accessible à l'adresse <a href="https://trouveuncadeau.fr/">trouveuncadeau.fr</a>.</p>
+           <p><strong>Contact :</strong> <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a>.</p>
+           <p><strong>Informations concernant l'éditeur :</strong> l'identité ou la raison sociale, l'adresse postale et le numéro SIRET éventuel doivent être renseignés séparément par le propriétaire du site.</p>
+           <p><strong>Directeur de publication :</strong> cette information doit être renseignée séparément par le propriétaire du site.</p>
+           <p><strong>Hébergement :</strong> le nom, la raison sociale et l'adresse de l'hébergeur doivent être renseignés séparément par le propriétaire du site.</p>`
   },
   confidentialite: {
     title: '🔒 Confidentialité',
-    body: `<p>TrouveTonCadeau utilise le stockage local de votre navigateur pour mémoriser vos favoris : aucune donnée n'est envoyée à un serveur.</p>
-           <p>Si vous ajoutez un formulaire de newsletter ou des publicités, pensez à informer vos visiteurs sur les cookies/trackers utilisés (bannière de consentement, politique RGPD) et à indiquer les destinataires réels de leurs données.</p>`
+    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveTonCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème. Ces informations restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
+           <p><strong>Mesure d'audience :</strong> le site utilise Google Analytics afin de comprendre son utilisation et d'améliorer l'expérience proposée. Ce service peut déposer ou lire des cookies et traiter des données techniques, notamment des informations relatives au navigateur, à l'appareil et aux pages consultées.</p>
+           <p><strong>Publicité :</strong> le site utilise Google AdSense. Google et ses partenaires peuvent utiliser des cookies ou technologies similaires pour diffuser, mesurer et personnaliser des annonces, selon vos choix de consentement et les réglages applicables.</p>
+           <p><strong>Affiliation Amazon :</strong> certains liens vers Amazon sont des liens affiliés. Lorsque vous les utilisez, Amazon peut traiter des données conformément à sa propre politique de confidentialité. En tant que Partenaire Amazon, TrouveTonCadeau réalise un bénéfice sur les achats remplissant les conditions requises, sans modifier le prix payé.</p>
+           <p><strong>Liens externes :</strong> lorsque vous quittez TrouveTonCadeau pour consulter un service tiers, les règles de confidentialité de ce service s'appliquent.</p>
+           <p><strong>Vos choix et vos demandes :</strong> vous pouvez gérer ou supprimer les cookies depuis les réglages de votre navigateur et effacer les données locales du site à tout moment. Pour toute question relative à vos données personnelles, écrivez à <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a>.</p>`
   },
   contact: {
     title: '✉️ Contact',
-    body: `<p>Une question, une suggestion de cadeau ? Écrivez-nous à <a href="mailto:contact@trouvetoncadeau.fr">contact@trouvetoncadeau.fr</a> (adresse à remplacer par la vôtre).</p>`
+    body: `<p>Une question, une suggestion ou un problème ? Écrivez-nous à <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a></p>`
   }
 };
 
