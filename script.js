@@ -1577,11 +1577,10 @@ function toggleFaq(btn) {
 const LEGAL_CONTENT = {
   mentions: {
     title: '📄 Mentions légales',
-    body: `<p><strong>Site :</strong> TrouveTonCadeau, accessible à l'adresse <a href="https://trouveuncadeau.fr/">trouveuncadeau.fr</a>.</p>
+    body: `<p><strong>Site :</strong> TrouveTonCadeau — <a href="https://trouveuncadeau.fr/">trouveuncadeau.fr</a></p>
            <p><strong>Contact :</strong> <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a>.</p>
-           <p><strong>Informations concernant l'éditeur :</strong> l'identité ou la raison sociale, l'adresse postale et le numéro SIRET éventuel doivent être renseignés séparément par le propriétaire du site.</p>
-           <p><strong>Directeur de publication :</strong> cette information doit être renseignée séparément par le propriétaire du site.</p>
-           <p><strong>Hébergement :</strong> le nom, la raison sociale et l'adresse de l'hébergeur doivent être renseignés séparément par le propriétaire du site.</p>`
+           <p><strong>Éditeur :</strong> Site édité à titre non professionnel. L'éditeur a choisi de préserver son anonymat conformément aux dispositions applicables de la LCEN.</p>
+           <p><strong>Hébergement :</strong> GitHub, Inc. — service GitHub Pages — 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, États-Unis.</p>`
   },
   confidentialite: {
     title: '🔒 Confidentialité',
