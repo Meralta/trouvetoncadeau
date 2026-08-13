@@ -969,37 +969,47 @@ function createCard(gift, num, inModal = false) {
  */
 function buildWhyReasons(gift) {
   const reasons = [];
-
-  // Budget
-  reasons.push(`Compatible avec votre budget (${budgetLabel(gift.budget)})`);
+  const INTERESTS_FR = {
+    'jeux-video':'les jeux vidéo', 'manga':'les mangas et les anime',
+    'technologie':'la technologie', 'voyage':'le voyage',
+    'lecture':'la lecture', 'cuisine':'la cuisine', 'animaux':'les animaux',
+    'sport':'le sport', 'musique':'la musique', 'cinema':'le cinéma'
+  };
 
   // Intérêts communs
   if (state.interets && state.interets.length > 0) {
-    const INTERESTS_FR = {
-      'jeux-video':'Jeux vidéo', 'manga':'Manga / Anime', 'technologie':'Technologie',
-      'voyage':'Voyage', 'lecture':'Lecture', 'cuisine':'Cuisine',
-      'animaux':'Animaux', 'sport':'Sport', 'musique':'Musique', 'cinema':'Cinéma'
-    };
     const matches = state.interets
       .filter(i => gift.interets.includes(i))
       .map(i => INTERESTS_FR[i] || i);
 
     if (matches.length > 0) {
-      reasons.push(`Correspond à vos centres d'intérêt : ${matches.join(', ')}`);
+      reasons.push(`Prolonge un intérêt déjà présent pour ${matches.join(' et ')}`);
     }
   }
 
-  // Âge
-  if (state.age && gift.age.includes(state.age)) {
-    reasons.push(`Adapté à la tranche d'âge ${state.age} ans`);
+  // Usage cohérent avec le profil sélectionné
+  if (state.genre === 'couple') {
+    reasons.push('Peut créer un moment à partager plutôt qu’un simple objet à ranger');
+  } else if (state.genre === 'enfant') {
+    reasons.push('Choisi pour rester accessible et stimulant à cette étape de l’enfance');
+  } else if (gift.interets.length > 0) {
+    const firstInterest = INTERESTS_FR[gift.interets[0]];
+    if (firstInterest) reasons.push(`S’intègre facilement au quotidien de quelqu’un qui aime ${firstInterest}`);
+  } else {
+    reasons.push('Une attention facile à offrir et à utiliser au quotidien');
   }
 
-  // Originalité élevée
+  // Niveau de surprise
   if (gift.originalite >= 8) {
-    reasons.push(`Note d'originalité élevée (${gift.originalite}/10)`);
+    reasons.push('Assez inattendu pour créer une vraie surprise sans être un gadget gratuit');
+  } else {
+    reasons.push('Une valeur sûre qui mise davantage sur l’usage que sur l’effet de mode');
   }
 
-  return reasons;
+  // Budget formulé comme un bénéfice concret, sans inventer de prix exact
+  reasons.push(`Reste cohérent avec l’enveloppe choisie (${budgetLabel(gift.budget)})`);
+
+  return reasons.slice(0, 4);
 }
 
 /* =========================================================
