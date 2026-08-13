@@ -1,6 +1,6 @@
 {
-  "name": "TrouveTonCadeau",
-  "short_name": "TonCadeau",
+  "name": "TrouveUnCadeau",
+  "short_name": "UnCadeau",
   "description": "Trouvez l'idée cadeau parfaite en moins de 60 secondes.",
   "start_url": "./index.html",
   "display": "standalone",

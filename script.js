@@ -1,5 +1,5 @@
 /* =========================================================
-   TrouveTonCadeau — script.js
+   TrouveUnCadeau — script.js
    Base de données : 160+ idées cadeaux
    Logique : questionnaire 4 étapes + recommandation
    ========================================================= */
@@ -1275,8 +1275,8 @@ function shareResults() {
 
   if (navigator.share) {
     navigator.share({
-      title: 'TrouveTonCadeau — Mes idées cadeaux personnalisées',
-      text: `Découvrez mes ${displayedIds.length} idée${displayedIds.length > 1 ? 's' : ''} cadeau${displayedIds.length > 1 ? 'x' : ''} sur TrouveTonCadeau !`,
+      title: 'TrouveUnCadeau — Mes idées cadeaux personnalisées',
+      text: `Découvrez mes ${displayedIds.length} idée${displayedIds.length > 1 ? 's' : ''} cadeau${displayedIds.length > 1 ? 'x' : ''} sur TrouveUnCadeau !`,
       url
     }).catch(() => {});
   } else {
@@ -1577,18 +1577,18 @@ function toggleFaq(btn) {
 const LEGAL_CONTENT = {
   mentions: {
     title: '📄 Mentions légales',
-    body: `<p><strong>Site :</strong> TrouveTonCadeau — <a href="https://trouveuncadeau.fr/">trouveuncadeau.fr</a></p>
+    body: `<p><strong>Site :</strong> TrouveUnCadeau — <a href="https://trouveuncadeau.fr/">trouveuncadeau.fr</a></p>
            <p><strong>Contact :</strong> <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a>.</p>
            <p><strong>Éditeur :</strong> Site édité à titre non professionnel. L'éditeur a choisi de préserver son anonymat conformément aux dispositions applicables de la LCEN.</p>
            <p><strong>Hébergement :</strong> GitHub, Inc. — service GitHub Pages — 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, États-Unis.</p>`
   },
   confidentialite: {
     title: '🔒 Confidentialité',
-    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveTonCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème. Ces informations restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
+    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveUnCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème. Ces informations restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
            <p><strong>Mesure d'audience :</strong> le site utilise Google Analytics afin de comprendre son utilisation et d'améliorer l'expérience proposée. Ce service peut déposer ou lire des cookies et traiter des données techniques, notamment des informations relatives au navigateur, à l'appareil et aux pages consultées.</p>
            <p><strong>Publicité :</strong> le site utilise Google AdSense. Google et ses partenaires peuvent utiliser des cookies ou technologies similaires pour diffuser, mesurer et personnaliser des annonces, selon vos choix de consentement et les réglages applicables.</p>
-           <p><strong>Affiliation Amazon :</strong> certains liens vers Amazon sont des liens affiliés. Lorsque vous les utilisez, Amazon peut traiter des données conformément à sa propre politique de confidentialité. En tant que Partenaire Amazon, TrouveTonCadeau réalise un bénéfice sur les achats remplissant les conditions requises, sans modifier le prix payé.</p>
-           <p><strong>Liens externes :</strong> lorsque vous quittez TrouveTonCadeau pour consulter un service tiers, les règles de confidentialité de ce service s'appliquent.</p>
+           <p><strong>Affiliation Amazon :</strong> certains liens vers Amazon sont des liens affiliés. Lorsque vous les utilisez, Amazon peut traiter des données conformément à sa propre politique de confidentialité. En tant que Partenaire Amazon, TrouveUnCadeau réalise un bénéfice sur les achats remplissant les conditions requises, sans modifier le prix payé.</p>
+           <p><strong>Liens externes :</strong> lorsque vous quittez TrouveUnCadeau pour consulter un service tiers, les règles de confidentialité de ce service s'appliquent.</p>
            <p><strong>Vos choix et vos demandes :</strong> vous pouvez gérer ou supprimer les cookies depuis les réglages de votre navigateur et effacer les données locales du site à tout moment. Pour toute question relative à vos données personnelles, écrivez à <a href="mailto:contact@trouveuncadeau.fr">contact@trouveuncadeau.fr</a>.</p>`
   },
   contact: {
@@ -1680,5 +1680,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const newsletterForm = document.getElementById('newsletterForm');
   if (newsletterForm) newsletterForm.addEventListener('submit', submitNewsletter);
 
-  console.log(`🎁 TrouveTonCadeau V1.2 — ${CADEAUX.length} idées cadeaux chargées.`);
+  console.log(`🎁 TrouveUnCadeau V1.2 — ${CADEAUX.length} idées cadeaux chargées.`);
 });
