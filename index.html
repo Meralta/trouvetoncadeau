@@ -91,6 +91,11 @@
         <span class="logo-icon">🎁</span>
         <span class="logo-text">TrouveUn<strong>Cadeau</strong></span>
       </div>
+      <nav class="header-nav" aria-label="Navigation principale">
+        <a href="#quiz-section">Trouver un cadeau</a>
+        <a href="#guides-cadeaux">Guides cadeaux</a>
+        <button type="button" onclick="openFavoritesModal()">Favoris</button>
+      </nav>
       <div class="header-right">
         <p class="tagline">Le cadeau parfait en moins de 60 secondes</p>
         <div class="header-buttons">
@@ -107,7 +112,7 @@
   <main class="site-main">
     <div class="container">
 
-      <!-- ===== SECTIONS D'ACCUEIL (nouveautés v1) ===== -->
+      <!-- ===== SECTIONS D'ACCUEIL ===== -->
       <div id="homeSections">
 
         <!-- Cadeau du jour -->
@@ -121,16 +126,21 @@
           <div class="occasions-chips" id="occasionsChips"><!-- généré en JS --></div>
         </section>
 
-        <!-- Tendances -->
-        <section class="trending-section" aria-label="Idées tendance">
-          <h2 class="section-title">🔥 Les idées les plus originales</h2>
-          <div class="trending-row" id="trendingRow"><!-- généré en JS --></div>
-        </section>
-
       </div>
 
       <!-- ===== SECTION QUESTIONNAIRE ===== -->
       <section id="quiz-section" class="quiz-section" aria-label="Questionnaire cadeau">
+
+        <div class="quiz-intro">
+          <p class="quiz-intro-title">Trouvez le cadeau parfait en moins de <span>60 secondes</span></p>
+          <p class="quiz-intro-subtitle">Répondez à quelques questions et découvrez des idées personnalisées qui feront vraiment plaisir.</p>
+          <div class="trust-list" aria-label="Avantages du générateur">
+            <span>✓ Gratuit</span>
+            <span>✓ Sans inscription</span>
+            <span>✓ Résultats en quelques secondes</span>
+            <span>✓ Liens Amazon directs</span>
+          </div>
+        </div>
 
         <!-- Barre de progression -->
         <div class="progress-wrapper" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
@@ -293,6 +303,12 @@
 
       </section>
 
+      <!-- Tendances -->
+      <section class="trending-section" aria-label="Idées tendance">
+        <h2 class="section-title">🔥 Les idées les plus originales</h2>
+        <div class="trending-row" id="trendingRow"><!-- généré en JS --></div>
+      </section>
+
       <!-- ===== CONSEILS ÉDITORIAUX ===== -->
       <section class="editorial-section" aria-labelledby="editorialTitle">
         <div class="editorial-heading">
@@ -380,7 +396,7 @@
           </details>
         </div>
 
-        <aside class="guides-callout" aria-labelledby="guideLinksTitle">
+        <aside class="guides-callout" id="guides-cadeaux" aria-labelledby="guideLinksTitle">
           <div>
             <span class="editorial-kicker">Pour aller plus loin</span>
             <h3 id="guideLinksTitle">Nos guides par destinataire</h3>
