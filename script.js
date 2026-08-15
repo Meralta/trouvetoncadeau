@@ -1697,7 +1697,7 @@ function applyTheme(theme) {
    NOUVEAUTÉ : CONFETTIS À L'AFFICHAGE DES RÉSULTATS
    ========================================================= */
 function fireConfetti() {
-  const colors = ['#7C3AED', '#F59E0B', '#10B981', '#EC4899'];
+  const colors = ['#172B49', '#E9911A', '#16765A', '#294466'];
   const container = document.createElement('div');
   container.className = 'confetti-container';
   document.body.appendChild(container);

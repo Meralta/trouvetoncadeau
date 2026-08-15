@@ -4,8 +4,8 @@
   "description": "Trouvez l'idée cadeau parfaite en moins de 60 secondes.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FAFAF8",
-  "theme_color": "#7C3AED",
+  "background_color": "#F7F8FA",
+  "theme_color": "#17233C",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
