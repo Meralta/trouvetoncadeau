@@ -756,6 +756,8 @@ let resultsPool = [];
 
 /** Cadeaux refusés pendant la recherche courante. */
 const rejectedIds = new Set();
+/** Idées aimées dans cette recherche : visibles jusqu'à la prochaine génération, puis exclues. */
+const likedIds = new Set();
 
 /* =========================================================
    PROGRESSION
@@ -902,6 +904,7 @@ function submitQuiz() {
   if (!state.genre || !state.age || !state.budget) return;
 
   rejectedIds.clear();
+  likedIds.clear();
   trackEvent('quiz_complete', {
     genre: state.genre,
     age: state.age,
@@ -954,7 +957,8 @@ function scoreGift(cadeau) {
  * @returns {Array} liste de cadeaux (10 premiers)
  */
 function computeResults() {
-  const selection = GiftEngine.select(CADEAUX,state,recommendationMemory,{rejected:rejectedIds});
+  const selection = GiftEngine.select(CADEAUX,state,recommendationMemory,
+    {rejected:new Set([...rejectedIds,...likedIds])});
   resultsPool = selection.pool;
   displayedIds = selection.results.map(c => c.id);
   GiftEngine.remember(recommendationMemory,selection.results);
@@ -967,6 +971,7 @@ function regenerateResults() {
 function resetRecommendationPreferences() {
   recommendationMemory = {history:[],feedback:{}};
   rejectedIds.clear();
+  likedIds.clear();
   saveRecommendationMemory();
   document.querySelectorAll('.gift-feedback [aria-pressed]').forEach(btn => {
     btn.setAttribute('aria-pressed','false');
@@ -979,9 +984,10 @@ function giveGiftFeedback(id,kind,btn) {
   GiftEngine.feedback(recommendationMemory,state,id,kind);
   const saved = saveRecommendationMemory();
   if (kind === 'good') {
+    likedIds.add(id);
     btn.setAttribute('aria-pressed','true');
     btn.textContent = '❤️ Noté !';
-    showFavToast(saved ? 'Bonne idée retenue pour ce profil.' : 'Avis retenu pour cette visite (stockage indisponible).');
+    showFavToast(saved ? 'On affine les prochaines idées. Cliquez sur « D’autres idées ».' : 'On affine les prochaines idées pour cette visite.');
   } else {
     skipCard(id,btn);
   }
@@ -1234,7 +1240,7 @@ function skipCard(giftId, btn) {
   // Chercher un remplaçant dans le pool (non affiché, non encore rejeté)
   const visibleIds = displayedIds.slice();
   const replacement = GiftEngine.select(CADEAUX,state,recommendationMemory,
-    {limit:1,rejected:rejectedIds,exclude:visibleIds}).results[0];
+    {limit:1,rejected:new Set([...rejectedIds,...likedIds]),exclude:visibleIds}).results[0];
 
   if (!replacement) {
     displayedIds = displayedIds.filter(id => id !== giftId);
@@ -1452,6 +1458,7 @@ function surpriseMe() {
   state.unknownInterests = false;
   state.mode = 'surprise';
   rejectedIds.clear();
+  likedIds.clear();
   trackEvent('surprise_click', { genre: state.genre, age: state.age, budget: state.budget });
 
   // Masquer le quiz, afficher le chargement
@@ -1530,6 +1537,7 @@ function restartQuiz() {
   displayedIds = [];
   resultsPool  = [];
   rejectedIds.clear();
+  likedIds.clear();
   quizStarted = false;
 
   // Désélectionner toutes les options
@@ -1663,6 +1671,7 @@ function quickOccasion(key) {
   state.mode = 'occasion';
   state.unknownInterests = false;
   rejectedIds.clear();
+  likedIds.clear();
   trackEvent('quiz_start', { source: 'occasion', occasion: key });
   trackEvent('quiz_complete', { source: 'occasion', occasion: key, genre: state.genre, age: state.age, budget: state.budget });
 

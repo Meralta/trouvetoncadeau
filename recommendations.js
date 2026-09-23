@@ -101,6 +101,12 @@ const GiftEngine = (() => {
     return gift.genre.includes(profile.genre) && gift.age.includes(profile.age) && gift.budget === profile.budget &&
       !rejected.has(gift.id) && feedbackFor(memory, profile, gift.id) !== 'owned';
   }
+  function similarity(a, b) {
+    const sharedInterests = a.interets.filter(i => b.interets.includes(i)).length;
+    const sharedTraits = a.traits.filter(t => !['passion','original','utile','pratique'].includes(t) && b.traits.includes(t)).length;
+    return Math.min(12, sharedInterests * 4 + (a.family === b.family ? 3 : 0) +
+      (a.univers === b.univers ? 2 : 0) + Math.min(sharedTraits, 2) * 2);
+  }
   function score(gift, profile, memory, catalog, random = Math.random) {
     if (!eligible(gift,profile,memory)) return -Infinity;
     const interests = (profile.interets || []).filter(i => i in INTERESTS);
@@ -113,18 +119,19 @@ const GiftEngine = (() => {
       if (ids.includes(gift.id)) result -= 24 * (index+1) / memory.history.length;
     });
     const entries = memory.feedback[profileKey(profile)] || [];
-    let preferenceBonus = 0;
+    let preferenceBonus = 0, preferenceMalus = 0;
     for (const entry of entries) {
       const other = catalog.find(g => g.id === entry.id);
       if (!other) continue;
       if (entry.kind === 'style') {
         if (entry.id === gift.id) result -= 65;
-        else if (other.family === gift.family) result -= 8;
+        else preferenceMalus += Math.min(8, similarity(other, gift) * .7);
       }
-      if (entry.kind === 'good' && (other.univers === gift.univers ||
-        other.traits.some(t => !['passion','original','utile','pratique'].includes(t) && gift.traits.includes(t)))) preferenceBonus += 2;
+      if (entry.kind === 'good') preferenceBonus += entry.id === gift.id ? 2 : similarity(other, gift);
+      // Un cadeau possédé n'est pas un désaveu de son thème.
     }
-    return result + Math.min(8,preferenceBonus) + random()*4;
+    // Bornes : un avis ne peut ni écraser les critères choisis ni vider un profil.
+    return result + Math.min(18,preferenceBonus) - Math.min(16,preferenceMalus) + random()*4;
   }
   function select(catalog, profile, memory, {limit=10, rejected=new Set(), exclude=[], random=Math.random} = {}) {
     const interests = (profile.interets || []).filter(i => i in INTERESTS);

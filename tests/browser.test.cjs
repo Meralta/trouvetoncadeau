@@ -52,6 +52,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  assert.ok(savedFavorites.length);
  await page.locator('#cardsGrid .gift-card').first().locator('.btn-feedback').first().click();
  assert.ok(await page.evaluate(()=>Object.values(recommendationMemory.feedback).flat().some(e=>e.kind==='good')));
+ assert.ok(await page.evaluate(id=>likedIds.has(id),initial[0]));
  const owned=Number(await page.locator('#cardsGrid .gift-card').nth(1).getAttribute('data-gift-id'));
  await page.locator('#cardsGrid .gift-card').nth(1).locator('.btn-feedback').nth(1).click();
  await page.waitForTimeout(350);
@@ -62,6 +63,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  await page.evaluate(()=>regenerateResults());
  assert.ok(!(await page.evaluate(()=>displayedIds)).includes(owned));
  assert.ok(!(await page.evaluate(()=>displayedIds)).includes(style));
+ assert.ok(!(await page.evaluate(()=>displayedIds)).includes(initial[0]));
  assert.notDeepEqual(await page.evaluate(()=>displayedIds),initial);
  const links=await page.locator('#cardsGrid .btn-buy').evaluateAll(elements=>elements.map(el=>({href:el.href,rel:el.rel})));
  for(const link of links){assert.match(link.href,/\/dp\/[A-Z0-9]{10}\?tag=trouvetonca05-21/);assert.equal(link.rel,'noopener noreferrer sponsored');}
