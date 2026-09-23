@@ -1,0 +1,194 @@
+{
+  "56": {
+    "desc": "Des jeux et petites récompenses à partager avec son chien. À choisir selon sa taille, ses habitudes de mastication et ses éventuelles restrictions alimentaires."
+  },
+  "59": {
+    "desc": "Pour organiser les repas de son animal lorsque les horaires changent. Vérifier la compatibilité avec sa nourriture et ne pas le substituer à une présence régulière."
+  },
+  "61": {
+    "desc": "Un livre à feuilleter pour mieux observer les postures et les réactions de son chien, avec des repères à mettre en pratique au quotidien."
+  },
+  "62": {
+    "desc": "Pour varier les exercices de renforcement à la maison sans multiplier les haltères. Le poids et la prise en main doivent correspondre à la personne."
+  },
+  "65": {
+    "desc": "Pour découvrir l’équilibre en plein air, avec une installation basse et adaptée. Une idée à offrir avec le temps de lire les consignes et de s’exercer progressivement."
+  },
+  "69": {
+    "desc": "Pour suivre sa fréquence cardiaque pendant l’entraînement avec un appareil compatible. Vérifier les connexions prises en charge avant de l’offrir."
+  },
+  "70": {
+    "interets": [
+      "musique"
+    ]
+  },
+  "71": {
+    "desc": "Pour retrouver Discovery sur une platine vinyle et prendre le temps d’écouter l’album. Une attention à réserver à quelqu’un qui possède le matériel adapté."
+  },
+  "72": {
+    "desc": "Pour emporter de la musique d’une pièce à l’autre ou en déplacement, sans installer un système audio encombrant."
+  },
+  "73": {
+    "desc": "Pour improviser des duos et des soirées chantées à la maison. Les deux microphones permettent de partager le moment plutôt que d’attendre son tour."
+  },
+  "75": {
+    "desc": "Pour enregistrer sa voix ou essayer le chant sur ordinateur. Une porte d’entrée pratique pour quelqu’un qui aime créer ses propres morceaux."
+  },
+  "77": {
+    "desc": "Pour retrouver les deux sagas lors de soirées cinéma à la maison. Vérifier que la personne dispose d’un lecteur Blu-ray compatible."
+  },
+  "79": {
+    "desc": "Pour confronter ses souvenirs de films et discuter cinéma autour d’une partie. Une petite attention facile à sortir entre passionnés."
+  },
+  "80": {
+    "desc": "Pour parcourir l’histoire du cinéma à travers ses images et ses grandes étapes, en découvrant de nouvelles pistes de films à regarder."
+  },
+  "81": {
+    "desc": "Pour préparer du popcorn avant de lancer un film et donner un petit rituel aux soirées cinéma à la maison."
+  },
+  "82": {
+    "desc": "Pour donner du caractère à son espace d’écriture tout en tapant sur un clavier Bluetooth. Vérifier la disposition des touches et la compatibilité avec ses appareils.",
+    "interets": [
+      "lecture",
+      "technologie"
+    ],
+    "univers": "lecture"
+  },
+  "83": {
+    "desc": "Pour transformer une idée ou un souvenir en affiche de cinéma à personnaliser. Prévoir les éléments demandés par le vendeur et vérifier le délai de fabrication."
+  },
+  "85": {
+    "desc": "Pour préparer une raclette ou une fondue à partager à table. Une idée pour les personnes qui aiment recevoir et cuisiner sans quitter leurs invités.",
+    "interets": [
+      "cuisine"
+    ]
+  },
+  "86": {
+    "desc": "Pour s’initier au façonnage de l’argile à la maison et expérimenter ensemble. Vérifier les fournitures nécessaires et le mode de séchage des créations.",
+    "interets": [
+      "creatif-diy"
+    ],
+    "univers": "creatif-diy",
+    "traits": [
+      "original",
+      "passion",
+      "creatif"
+    ]
+  },
+  "88": {
+    "desc": "Pour faciliter l’ouverture et le service des bouteilles lors d’un repas. Un ensemble d’accessoires à offrir à quelqu’un qui apprécie les arts de la table.",
+    "interets": [
+      "cuisine"
+    ]
+  },
+  "89": {
+    "desc": "Pour installer un moment de détente sur un siège compatible. Consulter les dimensions, les précautions et les contre-indications de la notice avant usage.",
+    "interets": [],
+    "univers": "attention",
+    "traits": []
+  },
+  "95": {
+    "interets": [
+      "sport"
+    ],
+    "traits": [
+      "passion"
+    ]
+  },
+  "101": {
+    "desc": "Pour explorer l’univers de Kubrick à travers un ouvrage illustré que l’on peut consulter film après film."
+  },
+  "102": {
+    "desc": "Pour découvrir plusieurs thés et comparer leurs parfums au fil des pauses. Une attention pour quelqu’un qui aime prendre le temps de préparer sa tasse."
+  },
+  "103": {
+    "desc": "Pour explorer les pays, les reliefs et les cartes du monde depuis son fauteuil. Un bel objet à consulter par curiosité ou avant un voyage."
+  },
+  "104": {
+    "desc": "Pour aménager une pause détente à la maison autour d’un bain de pieds. Vérifier les fonctions et précautions de la notice, sans attendre un effet thérapeutique.",
+    "interets": [],
+    "univers": "attention",
+    "traits": []
+  },
+  "109": {
+    "desc": "Pour accompagner une soirée calme d’une lumière douce. À choisir en tenant compte des parfums appréciés et à utiliser sous surveillance."
+  },
+  "118": {
+    "desc": "Pour découvrir ou pratiquer la balade sur l’eau avec un équipement transportable. Vérifier les dimensions, la charge admise et le matériel de sécurité nécessaire."
+  },
+  "119": {
+    "desc": "Pour organiser quelques bouteilles dans un espace dédié à la maison. Vérifier l’encombrement et les conditions d’installation avant de l’offrir.",
+    "interets": [
+      "cuisine"
+    ]
+  },
+  "120": {
+    "desc": "Pour mettre un souvenir commun en valeur sur une grande toile. Une photo suffisamment définie et un format adapté au mur feront toute la différence."
+  },
+  "122": {
+    "desc": "Pour essayer un rituel de détente à la maison avec un tapis et son coussin. Consulter les précautions du fabricant ; aucun bénéfice médical n’est promis.",
+    "interets": [],
+    "univers": "attention",
+    "traits": []
+  },
+  "123": {
+    "desc": "Pour colorier des personnages et des scènes inspirés du manga, en choisissant librement ses associations de couleurs."
+  },
+  "126": {
+    "desc": "Pour commencer ou reprendre une langue avec un support que l’on peut utiliser à son rythme. Vérifier la langue étudiée et le niveau du coffret."
+  },
+  "127": {
+    "desc": "Pour apprendre à assembler et présenter des boissons avec un shaker et des recettes. Une activité à essayer ensemble, selon les goûts de chacun.",
+    "interets": [
+      "cuisine"
+    ]
+  },
+  "128": {
+    "desc": "Pour exercer son nez à reconnaître différents arômes et comparer ses impressions à plusieurs. Un coffret de découverte plutôt qu’une bouteille supplémentaire.",
+    "interets": [
+      "cuisine"
+    ]
+  },
+  "133": {
+    "desc": "Pour faire une pause avec un coussin massant que l’on installe selon sa notice. Vérifier les zones d’usage autorisées et les contre-indications."
+  },
+  "135": {
+    "desc": "Pour écouter de la musique ou un livre audio avec un bandeau plutôt qu’un casque classique. À choisir selon les habitudes et le confort recherchés."
+  },
+  "138": {
+    "desc": "Pour quelqu’un qui apprécie les mécanismes horlogers et le style vintage. Vérifier le diamètre, le bracelet et les consignes d’entretien du modèle."
+  },
+  "141": {
+    "desc": "Pour parcourir des collections et préparer de futures visites depuis chez soi. Une idée pour les amateurs de beaux livres et de découvertes culturelles.",
+    "interets": [
+      "lecture",
+      "voyage"
+    ]
+  },
+  "144": {
+    "desc": "Pour afficher son attachement au PSG les jours de match. Vérifier la saison du modèle et la taille souhaitée avant de commander."
+  },
+  "145": {
+    "desc": "Pour servir une dégustation dans des verres dédiés et prendre le temps de comparer les impressions autour d’une table."
+  },
+  "146": {
+    "desc": "Pour résoudre ensemble des enquêtes en observant une grande carte illustrée. Un jeu coopératif à sortir lors d’une soirée, en vérifiant les thèmes et l’âge indiqué.",
+    "genre": [
+      "couple",
+      "homme",
+      "femme"
+    ]
+  },
+  "155": {
+    "desc": "Pour relier un casque à une source USB compatible et compléter une installation d’écoute. Vérifier les connecteurs et appareils pris en charge."
+  },
+  "157": {
+    "desc": "Pour s’accorder une pause avec un coussin massant utilisé selon les indications du fabricant. Vérifier les précautions et le confort avant de l’adopter."
+  },
+  "160": {
+    "desc": "Pour présenter et partager une dégustation avec une carafe et des verres assortis. Un cadeau centré sur le service et les arts de la table.",
+    "interets": [
+      "cuisine"
+    ]
+  }
+}

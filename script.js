@@ -20,7 +20,7 @@
      interets    : string[]      — centres d'intérêt correspondants
      originalite : number        — score 1-10
      image       : string        — URL image produit (optionnel, '' si vide)
-     affiliateLink: string       — lien affilié (optionnel, '' = Google Search fallback)
+     affiliateLink: string       — lien affilié (optionnel, '' = recherche Amazon)
    }
    budget : '<20' | '20-50' | '50-100' | '>100'
    genre  : 'homme' | 'femme' | 'couple' | 'enfant'
@@ -29,25 +29,25 @@ const CADEAUX = [
 
   /* ── JEUX VIDÉO ── */
   { id:1, titre:"Manette DualSense PS5", emoji:"🎮", desc:"La manette emblématique de la PS5 avec retour haptique et gâchettes adaptatives pour une immersion totale.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["jeux-video"], originalite:7 },
-  { id:2, titre:"Manette sans fil Xbox officielle", emoji:"🕹️", desc:"Manette sans fil Xbox officielle : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["jeux-video"], originalite:6 },
-  { id:3, titre:"Clavier mécanique gaming AZERTY", emoji:"🖥️", desc:"Clavier mécanique gaming AZERTY : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["jeux-video"], originalite:5 },
+  { id:2, titre:"Manette sans fil Xbox officielle", emoji:"🕹️", desc:"Une deuxième manette pour jouer ensemble ou remplacer celle du quotidien. Vérifier la compatibilité avec la console ou le PC utilisé.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["jeux-video"], originalite:6 },
+  { id:3, titre:"Clavier mécanique gaming AZERTY", emoji:"🖥️", desc:"Pour une personne qui apprécie la sensation des touches mécaniques pendant le jeu. Vérifier la disposition AZERTY et le type de connexion avant de choisir.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["jeux-video"], originalite:5 },
   { id:4, titre:"Nintendo Switch Lite", emoji:"🎯", desc:"Console portable légère et colorée, parfaite pour jouer partout. Large catalogue de jeux exclusifs.", genre:["homme","femme","enfant"], age:["18-25","26-35","36-50"], budget:">100", interets:["jeux-video"], originalite:7 },
   { id:5, titre:"Figurine Amiibo collector", emoji:"🏆", desc:"Figurines NFC officielles Nintendo qui débloquent des bonus dans les jeux. Un objet de collection autant que fonctionnel.", genre:["homme","femme"], age:["18-25","26-35"], budget:"20-50", interets:["jeux-video"], originalite:8 },
   { id:6, titre:"Chaise gaming ergonomique", emoji:"🪑", desc:"Siège conçu pour les longues sessions de jeu avec soutien lombaire et accoudoirs réglables.", genre:["homme"], age:["18-25","26-35","36-50"], budget:">100", interets:["jeux-video"], originalite:5 },
   { id:7, titre:"Casque gaming sans fil", emoji:"🎧", desc:"Son surround immersif et micro intégré pour communiquer avec son équipe. Compatible PC, console et mobile.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["jeux-video","musique"], originalite:6 },
   { id:8, titre:"Tapis de souris XXL gaming", emoji:"🖱️", desc:"Surface ultra-lisse de grande taille pour des mouvements précis. Design cool et bordures anti-effilochage.", genre:["homme"], age:["18-25","26-35"], budget:"<20", interets:["jeux-video","technologie"], originalite:5 },
-  { id:9, titre:"Jeu de société Minecraft Builders & Biomes", emoji:"🎲", desc:"Jeu de société Minecraft Builders & Biomes : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["jeux-video"], originalite:6 },
-  { id:10, titre:"Beau livre illustré sur l’histoire des jeux vidéo", emoji:"📖", desc:"Beau livre illustré sur l’histoire des jeux vidéo : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50"], budget:"20-50", interets:["jeux-video","lecture"], originalite:7 },
+  { id:9, titre:"Jeu de société Minecraft Builders & Biomes", emoji:"🎲", desc:"L’univers Minecraft autour d’une table, pour partager une partie sans écran. Vérifier l’âge recommandé et le nombre de joueurs de cette édition.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["jeux-video"], originalite:6 },
+  { id:10, titre:"Beau livre illustré sur l’histoire des jeux vidéo", emoji:"📖", desc:"Pour retrouver les consoles, les jeux et les moments qui ont marqué sa passion, à travers un livre à feuilleter tranquillement.", genre:["homme","femme"], age:["26-35","36-50"], budget:"20-50", interets:["jeux-video","lecture"], originalite:7 },
 
   /* ── MANGA / ANIME ── */
-  { id:11, titre:"Coffret manga One Piece", emoji:"📦", desc:"Coffret manga One Piece : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["manga"], originalite:8 },
-  { id:12, titre:"Figurine Funko Pop Naruto Uzumaki", emoji:"🗿", desc:"Figurine Funko Pop Naruto Uzumaki : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:"<20", interets:["manga"], originalite:6 },
-  { id:13, titre:"Coffret Dragon Ball intégrale Box 2", emoji:"🍜", desc:"Coffret Dragon Ball intégrale Box 2 : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["manga","cinema"], originalite:7 },
+  { id:11, titre:"Coffret manga One Piece", emoji:"📦", desc:"Pour poursuivre sa découverte de One Piece ou compléter sa bibliothèque. Vérifier les tomes inclus afin de ne pas offrir ceux que la personne possède déjà.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["manga"], originalite:8 },
+  { id:12, titre:"Figurine Funko Pop Naruto Uzumaki", emoji:"🗿", desc:"Une figurine à exposer pour une personne qui aime Naruto. Vérifier le personnage, l’édition et les doublons dans sa collection.", genre:["homme","femme"], age:["18-25","26-35"], budget:"<20", interets:["manga"], originalite:6 },
+  { id:13, titre:"Coffret Dragon Ball intégrale Box 2", emoji:"🍜", desc:"Pour retrouver Dragon Ball dans un coffret à conserver. Vérifier les épisodes inclus, la langue et le support compatible avec son lecteur.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["manga","cinema"], originalite:7 },
   { id:14, titre:"Artbook Akira Toriyama The World", emoji:"🐉", desc:"Un artbook japonais consacré à l'univers graphique d'Akira Toriyama, avec illustrations et travaux emblématiques.", genre:["homme","femme"], age:["26-35","36-50"], budget:"20-50", interets:["manga","lecture"], originalite:9 },
-  { id:15, titre:"T-shirt manga Naruto officiel", emoji:"👕", desc:"T-shirt manga Naruto officiel : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:"20-50", interets:["manga"], originalite:6 },
+  { id:15, titre:"T-shirt manga Naruto officiel", emoji:"👕", desc:"Une façon de porter son attachement à Naruto au quotidien. Choisir la taille et le motif selon les goûts de la personne.", genre:["homme","femme"], age:["18-25","26-35"], budget:"20-50", interets:["manga"], originalite:6 },
   { id:16, titre:"Tasse thermo manga", emoji:"☕", desc:"Tasse à café qui révèle un dessin de manga lorsqu'elle est chaude. Original et pratique pour les fans.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["manga"], originalite:8 },
-  { id:17, titre:"Coffret de marqueurs pour dessin manga", emoji:"✏️", desc:"Coffret de marqueurs pour dessin manga : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:"20-50", interets:["manga"], originalite:9 },
-  { id:18, titre:"Coussin-peluche Totoro", emoji:"🛏️", desc:"Coussin-peluche Totoro : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme"], age:["18-25"], budget:"20-50", interets:["manga"], originalite:7 },
+  { id:17, titre:"Coffret de marqueurs pour dessin manga", emoji:"✏️", desc:"Pour mettre en couleur ses personnages et pratiquer le dessin manga. Vérifier les pointes et utiliser un papier adapté aux marqueurs.", genre:["homme","femme"], age:["18-25","26-35"], budget:"20-50", interets:["manga"], originalite:9 },
+  { id:18, titre:"Coussin-peluche Totoro", emoji:"🛏️", desc:"Pour ajouter une touche Totoro à un canapé ou à une chambre. Vérifier les dimensions et les consignes d’âge pour un enfant.", genre:["femme"], age:["18-25"], budget:"20-50", interets:["manga"], originalite:7 },
 
   /* ── TECHNOLOGIE ── */
   { id:19, titre:"Écouteurs Bluetooth ANC", emoji:"🎵", desc:"Réduction de bruit active, autonomie 30h et son cristallin. Parfait pour le télétravail et les transports.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["technologie","musique"], originalite:6 },
@@ -56,20 +56,20 @@ const CADEAUX = [
   { id:22, titre:"Enceinte Bluetooth étanche", emoji:"🔊", desc:"Son puissant à 360°, résistante à l'eau IPX7, autonomie 24h. La compagne idéale des aventures extérieures.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["technologie","musique","voyage"], originalite:6 },
   { id:23, titre:"Mini projecteur portable", emoji:"📽️", desc:"Projecteur de poche qui diffuse jusqu'à 100 pouces d'image. Parfait pour les soirées cinéma improvisées.", genre:["homme","femme","couple"], age:["26-35","36-50"], budget:">100", interets:["technologie","cinema"], originalite:9 },
   { id:24, titre:"Lampe LED bureau connectée", emoji:"💡", desc:"Éclairage intelligent réglable via smartphone avec modes focus, lecture et ambiance. Économise l'énergie.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["technologie"], originalite:6 },
-  { id:25, titre:"Kit domotique Matter pour débuter", emoji:"🏠", desc:"Kit domotique Matter pour débuter : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme"], age:["26-35","36-50"], budget:"50-100", interets:["technologie"], originalite:7 },
+  { id:25, titre:"Kit domotique Matter pour débuter", emoji:"🏠", desc:"Pour découvrir la maison connectée avec du matériel Matter. Vérifier les appareils inclus et les équipements nécessaires à leur installation.", genre:["homme"], age:["26-35","36-50"], budget:"50-100", interets:["technologie"], originalite:7 },
   { id:26, titre:"Câble USB-C 3-en-1 renforcé", emoji:"🔌", desc:"Câble ultra-résistant compatible Lightning, USB-C et micro-USB. Ne jamais rompre en plein voyage.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["technologie","voyage"], originalite:4 },
   { id:27, titre:"Disque dur SSD externe 1To", emoji:"💾", desc:"Stockage ultra-rapide et compact pour sauvegarder photos, vidéos et projets. Résistant aux chocs.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["technologie"], originalite:5 },
   { id:28, titre:"Robot aspirateur connecté", emoji:"🤖", desc:"Cartographie intelligente de votre logement et nettoyage autonome programmable depuis l'appli.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:["technologie"], originalite:8 },
 
   /* ── VOYAGE ── */
   { id:29, titre:"Valise cabine ultra-légère", emoji:"🧳", desc:"Bagage à main en polycarbonate ultra-résistant avec roulettes 360° silencieuses. Coloris tendance.", genre:["homme","femme"], age:["26-35","36-50"], budget:">100", interets:["voyage"], originalite:6 },
-  { id:30, titre:"Livre 1000 idées de vacances en France", emoji:"🗺️", desc:"Livre 1000 idées de vacances en France : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["voyage","lecture"], originalite:5 },
+  { id:30, titre:"Livre 1000 idées de vacances en France", emoji:"🗺️", desc:"Des pistes à feuilleter pour imaginer sa prochaine escapade en France, du court séjour aux vacances plus longues.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["voyage","lecture"], originalite:5 },
   { id:31, titre:"Sac à dos voyage anti-vol", emoji:"🎒", desc:"Sac 30L avec compartiments cachés, port USB intégré et tissu anti-coupure. Sécurité en voyage garantie.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["voyage","sport"], originalite:7 },
   { id:32, titre:"Carte du monde à gratter", emoji:"🌍", desc:"Poster doré à gratter au fil de ses voyages pour visualiser tous les pays visités. Déco murale unique.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["voyage"], originalite:8 },
   { id:33, titre:"Adaptateur universel de voyage", emoji:"🔌", desc:"Un seul adaptateur pour voyager dans 150 pays avec 4 ports USB et 1 USB-C intégrés.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["voyage","technologie"], originalite:5 },
   { id:34, titre:"Trousse de toilette voyage nomade", emoji:"🧴", desc:"Set compact avec flacons TSA-approved, pochette waterproof et miroir pliable. Tout pour voyager léger.", genre:["homme","femme"], age:["26-35","36-50"], budget:"20-50", interets:["voyage"], originalite:6 },
-  { id:35, titre:"Caméra d’action 4K étanche", emoji:"🪂", desc:"Caméra d’action 4K étanche : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35"], budget:">100", interets:["voyage","sport"], originalite:10 },
-  { id:36, titre:"Set de deux valises rigides COOLIFE", emoji:"🛁", desc:"Set de deux valises rigides COOLIFE : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:7 },
+  { id:35, titre:"Caméra d’action 4K étanche", emoji:"🪂", desc:"Pour rapporter des images de sorties sportives et de voyages. Vérifier les fixations, les accessoires et les conditions d’étanchéité du modèle.", genre:["homme","femme"], age:["18-25","26-35"], budget:">100", interets:["voyage","sport"], originalite:10 },
+  { id:36, titre:"Set de deux valises rigides COOLIFE", emoji:"🛁", desc:"Deux bagages pour préparer les voyages à partager. Vérifier les dimensions acceptées par les compagnies et le contenu exact du lot.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:7 },
   { id:37, titre:"Carnet de voyage cuir personnalisé", emoji:"📒", desc:"Carnet relié en cuir gravé avec ses initiales, avec pochettes et rubans marque-pages. Élégant et pratique.", genre:["femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["voyage","lecture"], originalite:8 },
 
   /* ── LECTURE ── */
@@ -79,154 +79,154 @@ const CADEAUX = [
   { id:41, titre:"Marque-pages personnalisé gravé", emoji:"🔖", desc:"Marque-pages en métal gravé avec un message, une date ou un prénom. Cadeau intime et élégant.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:["lecture"], originalite:7 },
   { id:42, titre:"Coffret illustré La Belle et la Bête", emoji:"🏪", desc:"Une édition illustrée présentée en coffret, pensée comme un bel objet à offrir aux amateurs de classiques.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["lecture"], originalite:6 },
   { id:43, titre:"Lampe de lecture à clip rechargeable", emoji:"🔦", desc:"Mini lampe LED ultra-fine qui s'adapte sur tous les livres. Lire la nuit sans déranger personne.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"<20", interets:["lecture"], originalite:6 },
-  { id:44, titre:"Dictionnaire illustré Larousse", emoji:"📕", desc:"Dictionnaire illustré Larousse : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["36-50","50+"], budget:"50-100", interets:["lecture"], originalite:5 },
-  { id:45, titre:"Harry Potter illustré par MinaLima", emoji:"✍️", desc:"Harry Potter illustré par MinaLima : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["lecture"], originalite:9 },
+  { id:44, titre:"Dictionnaire illustré Larousse", emoji:"📕", desc:"Pour une personne curieuse des mots qui apprécie un ouvrage de référence à feuilleter. Vérifier l’édition et l’année proposées.", genre:["homme","femme"], age:["36-50","50+"], budget:"50-100", interets:["lecture"], originalite:5 },
+  { id:45, titre:"Harry Potter illustré par MinaLima", emoji:"✍️", desc:"Pour redécouvrir Harry Potter à travers le travail graphique de MinaLima. Vérifier le tome et la langue pour compléter la bonne collection.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["lecture"], originalite:9 },
 
   /* ── CUISINE ── */
-  { id:46, titre:"Robot pâtissier multifonction", emoji:"👨‍🍳", desc:"Robot pâtissier multifonction : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:["cuisine"], originalite:9 },
-  { id:47, titre:"Grand livre de cuisine du monde", emoji:"🌏", desc:"Grand livre de cuisine du monde : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine","voyage"], originalite:7 },
+  { id:46, titre:"Robot pâtissier multifonction", emoji:"👨‍🍳", desc:"Pour préparer plus facilement pâtes et pâtisseries à la maison. Vérifier la capacité, les accessoires et l’espace disponible sur le plan de travail.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:["cuisine"], originalite:9 },
+  { id:47, titre:"Grand livre de cuisine du monde", emoji:"🌏", desc:"Des recettes pour explorer d’autres cuisines et imaginer de prochains repas, seul ou avec des proches.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine","voyage"], originalite:7 },
   { id:48, titre:"Robot cuiseur multifonction", emoji:"🥘", desc:"Cuisine, mixe, pétrit, cuit à la vapeur. Le compagnon idéal pour cuisiner plus vite et mieux.", genre:["femme","homme"], age:["26-35","36-50","50+"], budget:">100", interets:["cuisine"], originalite:6 },
   { id:49, titre:"Set de couteaux japonais", emoji:"🔪", desc:"Coffret de 3 couteaux en acier japonais VG-10 avec étui en bois. Précision et esthétique à la japonaise.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine"], originalite:8 },
-  { id:50, titre:"Coffret de 24 épices du monde", emoji:"🌶️", desc:"Coffret de 24 épices du monde : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine","voyage"], originalite:9 },
+  { id:50, titre:"Coffret de 24 épices du monde", emoji:"🌶️", desc:"Pour explorer de nouveaux assaisonnements et varier ses recettes. Vérifier les épices du coffret et les éventuels allergènes.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine","voyage"], originalite:9 },
   { id:51, titre:"Machine à pâtes fraîches", emoji:"🍝", desc:"Lamineuse à pâtes en inox chromé pour faire ses propres spaghettis, tagliatelles et ravioles maison.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine"], originalite:7 },
   { id:52, titre:"Tablier de cuisine personnalisé", emoji:"👨‍🍳", desc:"Tablier en coton épais brodé avec son prénom ou une citation amusante. Cadeau utile et original.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:7 },
   { id:53, titre:"Coffret dégustation huiles d'olive", emoji:"🫒", desc:"5 huiles d'olive d'exception de différentes régions avec carnet de dégustation et guide de présentation.", genre:["homme","femme"], age:["36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:9 },
   { id:54, titre:"Wok pro en fonte émaillée", emoji:"🥣", desc:"Wok 32cm en fonte avec couvercle, idéal pour la cuisine asiatique. Chauffe uniformément et dure toute une vie.", genre:["homme","femme"], age:["26-35","36-50"], budget:"50-100", interets:["cuisine"], originalite:6 },
 
   /* ── ANIMAUX ── */
-  { id:55, titre:"Caméra Reolink 4K avec détection des animaux", emoji:"📸", desc:"Caméra Reolink 4K avec détection des animaux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["animaux"], originalite:10 },
-  { id:56, titre:"Coffret de jouets et friandises pour chien", emoji:"🐾", desc:"Coffret de jouets et friandises pour chien : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:7 },
+  { id:55, titre:"Caméra Reolink 4K avec détection des animaux", emoji:"📸", desc:"Pour un propriétaire qui souhaite observer ses animaux à distance. Vérifier l’installation, la connexion et les fonctions incluses sans abonnement.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["animaux"], originalite:10 },
+  { id:56, titre:"Coffret de jouets et friandises pour chien", emoji:"🐾", desc:"Des jeux et petites récompenses à partager avec son chien. À choisir selon sa taille, ses habitudes de mastication et ses éventuelles restrictions alimentaires.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:7 },
   { id:57, titre:"Samsung Galaxy SmartTag2", emoji:"📍", desc:"Une balise Bluetooth compacte à glisser dans un support de collier compatible pour retrouver plus facilement le compagnon équipé.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["animaux","technologie"], originalite:8 },
-  { id:58, titre:"Kit d’empreinte de patte avec cadre", emoji:"🎨", desc:"Kit d’empreinte de patte avec cadre : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:10 },
-  { id:59, titre:"Distributeur automatique de nourriture pour animaux", emoji:"🥣", desc:"Distributeur automatique de nourriture pour animaux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:4 },
+  { id:58, titre:"Kit d’empreinte de patte avec cadre", emoji:"🎨", desc:"Pour garder un souvenir de son compagnon avec une empreinte à encadrer. Suivre la notice et respecter le confort de l’animal.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:10 },
+  { id:59, titre:"Distributeur automatique de nourriture pour animaux", emoji:"🥣", desc:"Pour organiser les repas de son animal lorsque les horaires changent. Vérifier la compatibilité avec sa nourriture et ne pas le substituer à une présence régulière.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["animaux"], originalite:4 },
   { id:60, titre:"Fontaine à eau pour chat", emoji:"💧", desc:"Fontaine filtrante à circulation d'eau pour encourager l'hydratation du chat. Design élégant et silencieux.", genre:["femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["animaux","technologie"], originalite:6 },
-  { id:61, titre:"Guide illustré du langage du chien", emoji:"📘", desc:"Guide illustré du langage du chien : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"<20", interets:["animaux","lecture"], originalite:6 },
+  { id:61, titre:"Guide illustré du langage du chien", emoji:"📘", desc:"Un livre à feuilleter pour mieux observer les postures et les réactions de son chien, avec des repères à mettre en pratique au quotidien.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"<20", interets:["animaux","lecture"], originalite:6 },
 
   /* ── SPORT ── */
-  { id:62, titre:"Haltères réglables pour musculation", emoji:"💪", desc:"Haltères réglables pour musculation : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["sport"], originalite:5 },
+  { id:62, titre:"Haltères réglables pour musculation", emoji:"💪", desc:"Pour varier les exercices de renforcement à la maison sans multiplier les haltères. Le poids et la prise en main doivent correspondre à la personne.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["sport"], originalite:5 },
   { id:63, titre:"Montre GPS de running", emoji:"🏃", desc:"Analyse de la foulée, suivi du rythme cardiaque, plans d'entraînement. L'outil des coureurs sérieux.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["sport","technologie"], originalite:7 },
   { id:64, titre:"Tapis de yoga premium antidérapant", emoji:"🧘", desc:"Tapis 6mm en caoutchouc naturel avec sac de transport. Grip parfait même en séance intense.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["sport"], originalite:5 },
-  { id:65, titre:"Kit de slackline pour débuter", emoji:"🧗", desc:"Kit de slackline pour débuter : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["sport"], originalite:8 },
+  { id:65, titre:"Kit de slackline pour débuter", emoji:"🧗", desc:"Pour découvrir l’équilibre en plein air, avec une installation basse et adaptée. Une idée à offrir avec le temps de lire les consignes et de s’exercer progressivement.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["sport"], originalite:8 },
   { id:66, titre:"Foam roller massage musculaire", emoji:"🏋️", desc:"Rouleau de massage musculaire professionnel pour récupérer après l'effort et libérer les tensions.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["sport"], originalite:6 },
   { id:67, titre:"Vélo électrique pliable", emoji:"🚴", desc:"Vélo électrique 250W avec batterie amovible, pliable en 15 secondes. Révolutionnaire pour les trajets urbains.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:">100", interets:["sport","technologie","voyage"], originalite:9 },
   { id:68, titre:"Kit musculation résistances élastiques", emoji:"🏅", desc:"Set de 5 bandes élastiques de résistances variées pour s'entraîner efficacement n'importe où.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["sport"], originalite:5 },
-  { id:69, titre:"Ceinture cardio Bluetooth et ANT+", emoji:"📊", desc:"Ceinture cardio Bluetooth et ANT+ : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["sport","technologie"], originalite:7 },
+  { id:69, titre:"Ceinture cardio Bluetooth et ANT+", emoji:"📊", desc:"Pour suivre sa fréquence cardiaque pendant l’entraînement avec un appareil compatible. Vérifier les connexions prises en charge avant de l’offrir.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["sport","technologie"], originalite:7 },
 
   /* ── MUSIQUE ── */
   { id:70, titre:"Ukulélé soprano débutant", emoji:"🎸", desc:"Petit instrument facile à apprendre avec accordeur et médiators inclus. Parfait pour débuter la musique.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["musique"], originalite:8 },
-  { id:71, titre:"Vinyle Discovery de Daft Punk", emoji:"💿", desc:"Vinyle Discovery de Daft Punk : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["musique"], originalite:8 },
-  { id:72, titre:"Mini-enceinte Bluetooth portable", emoji:"🎧", desc:"Mini-enceinte Bluetooth portable : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["musique"], originalite:4 },
-  { id:73, titre:"Enceinte karaoké avec deux microphones", emoji:"🎤", desc:"Enceinte karaoké avec deux microphones : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["musique"], originalite:9 },
+  { id:71, titre:"Vinyle Discovery de Daft Punk", emoji:"💿", desc:"Pour retrouver Discovery sur une platine vinyle et prendre le temps d’écouter l’album. Une attention à réserver à quelqu’un qui possède le matériel adapté.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["musique"], originalite:8 },
+  { id:72, titre:"Mini-enceinte Bluetooth portable", emoji:"🎧", desc:"Pour emporter de la musique d’une pièce à l’autre ou en déplacement, sans installer un système audio encombrant.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["musique"], originalite:4 },
+  { id:73, titre:"Enceinte karaoké avec deux microphones", emoji:"🎤", desc:"Pour improviser des duos et des soirées chantées à la maison. Les deux microphones permettent de partager le moment plutôt que d’attendre son tour.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["musique"], originalite:9 },
   { id:74, titre:"Platine vinyle Audio-Technica Bluetooth", emoji:"📻", desc:"Une platine à entraînement direct avec Bluetooth et USB pour écouter et numériser sa collection de vinyles.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:">100", interets:["musique","technologie"], originalite:8 },
-  { id:75, titre:"Kit microphone USB pour le chant", emoji:"🎵", desc:"Kit microphone USB pour le chant : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["musique"], originalite:9 },
+  { id:75, titre:"Kit microphone USB pour le chant", emoji:"🎵", desc:"Pour enregistrer sa voix ou essayer le chant sur ordinateur. Une porte d’entrée pratique pour quelqu’un qui aime créer ses propres morceaux.", genre:["femme","homme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["musique"], originalite:9 },
   { id:76, titre:"Enceinte portable rétro Bluetooth", emoji:"📯", desc:"Enceinte vintage style années 60 avec son stéréo puissant et connexion Bluetooth moderne.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["musique","technologie"], originalite:7 },
 
   /* ── CINÉMA ── */
-  { id:77, titre:"Coffret Blu-ray Le Hobbit et Le Seigneur des Anneaux", emoji:"📺", desc:"Coffret Blu-ray Le Hobbit et Le Seigneur des Anneaux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["cinema"], originalite:4 },
+  { id:77, titre:"Coffret Blu-ray Le Hobbit et Le Seigneur des Anneaux", emoji:"📺", desc:"Pour retrouver les deux sagas lors de soirées cinéma à la maison. Vérifier que la personne dispose d’un lecteur Blu-ray compatible.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["cinema"], originalite:4 },
   { id:78, titre:"Coffret Blu-Ray saga Star Wars", emoji:"🚀", desc:"L'intégrale des 9 films + les films dérivés en Blu-Ray avec documentaires exclusifs sur la création.", genre:["homme","femme"], age:["26-35","36-50"], budget:"50-100", interets:["cinema"], originalite:7 },
-  { id:79, titre:"Jeu de quiz sur le cinéma", emoji:"🎟️", desc:"Jeu de quiz sur le cinéma : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["cinema"], originalite:6 },
-  { id:80, titre:"Beau livre illustré sur l’histoire du cinéma", emoji:"📽️", desc:"Beau livre illustré sur l’histoire du cinéma : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cinema","lecture"], originalite:7 },
-  { id:81, titre:"Machine à popcorn rétro", emoji:"🍿", desc:"Machine à popcorn rétro : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme"], age:["18-25","26-35"], budget:"20-50", interets:["cinema"], originalite:8 },
-  { id:82, titre:"Clavier Bluetooth rétro pour écrire", emoji:"🎬", desc:"Clavier Bluetooth rétro pour écrire : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["cinema","lecture"], originalite:9 },
-  { id:83, titre:"Affiche de film personnalisée", emoji:"🖼️", desc:"Affiche de film personnalisée : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cinema"], originalite:9 },
+  { id:79, titre:"Jeu de quiz sur le cinéma", emoji:"🎟️", desc:"Pour confronter ses souvenirs de films et discuter cinéma autour d’une partie. Une petite attention facile à sortir entre passionnés.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["cinema"], originalite:6 },
+  { id:80, titre:"Beau livre illustré sur l’histoire du cinéma", emoji:"📽️", desc:"Pour parcourir l’histoire du cinéma à travers ses images et ses grandes étapes, en découvrant de nouvelles pistes de films à regarder.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cinema","lecture"], originalite:7 },
+  { id:81, titre:"Machine à popcorn rétro", emoji:"🍿", desc:"Pour préparer du popcorn avant de lancer un film et donner un petit rituel aux soirées cinéma à la maison.", genre:["femme"], age:["18-25","26-35"], budget:"20-50", interets:["cinema"], originalite:8 },
+  { id:82, titre:"Clavier Bluetooth rétro pour écrire", emoji:"🎬", desc:"Pour donner du caractère à son espace d’écriture tout en tapant sur un clavier Bluetooth. Vérifier la disposition des touches et la compatibilité avec ses appareils.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["lecture","technologie"], originalite:9 },
+  { id:83, titre:"Affiche de film personnalisée", emoji:"🖼️", desc:"Pour transformer une idée ou un souvenir en affiche de cinéma à personnaliser. Prévoir les éléments demandés par le vendeur et vérifier le délai de fabrication.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cinema"], originalite:9 },
 
   /* ── COUPLES ── */
-  { id:84, titre:"Panier pique-nique premium pour deux", emoji:"🏡", desc:"Panier pique-nique premium pour deux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:8 },
-  { id:85, titre:"Appareil à raclette et fondue familial", emoji:"🍷", desc:"Appareil à raclette et fondue familial : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:["cuisine","voyage"], originalite:8 },
-  { id:86, titre:"Tour de potier de table avec accessoires", emoji:"🏺", desc:"Tour de potier de table avec accessoires : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple"], age:["26-35","36-50"], budget:"50-100", interets:["cuisine"], originalite:9 },
-  { id:87, titre:"Coffret de jeux d’escape room", emoji:"🔐", desc:"Coffret de jeux d’escape room : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["jeux-video"], originalite:8 },
-  { id:88, titre:"Coffret sommelier électrique 5-en-1", emoji:"🍾", desc:"Coffret sommelier électrique 5-en-1 : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine","voyage"], originalite:7 },
-  { id:89, titre:"Siège massant shiatsu chauffant", emoji:"💆", desc:"Siège massant shiatsu chauffant : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage","sport"], originalite:7 },
+  { id:84, titre:"Panier pique-nique premium pour deux", emoji:"🏡", desc:"Pour préparer une sortie à deux avec la vaisselle réunie dans un panier. Vérifier le contenu et l’encombrement avant de l’offrir.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:8 },
+  { id:85, titre:"Appareil à raclette et fondue familial", emoji:"🍷", desc:"Pour préparer une raclette ou une fondue à partager à table. Une idée pour les personnes qui aiment recevoir et cuisiner sans quitter leurs invités.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:["cuisine"], originalite:8 },
+  { id:86, titre:"Tour de potier de table avec accessoires", emoji:"🏺", desc:"Pour s’initier au façonnage de l’argile à la maison et expérimenter ensemble. Vérifier les fournitures nécessaires et le mode de séchage des créations.", genre:["couple"], age:["26-35","36-50"], budget:"50-100", interets:["creatif-diy"], originalite:9 },
+  { id:87, titre:"Coffret de jeux d’escape room", emoji:"🔐", desc:"Des énigmes à résoudre ensemble à la maison, sans réserver de sortie. Vérifier le nombre de joueurs et les scénarios déjà connus.", genre:["couple","homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["jeux-video"], originalite:8 },
+  { id:88, titre:"Coffret sommelier électrique 5-en-1", emoji:"🍾", desc:"Pour faciliter l’ouverture et le service des bouteilles lors d’un repas. Un ensemble d’accessoires à offrir à quelqu’un qui apprécie les arts de la table.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine"], originalite:7 },
+  { id:89, titre:"Siège massant shiatsu chauffant", emoji:"💆", desc:"Pour installer un moment de détente sur un siège compatible. Consulter les dimensions, les précautions et les contre-indications de la notice avant usage.", genre:["couple"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:7 },
   { id:90, titre:"Bracelet femme personnalisé en argent 925", emoji:"💍", desc:"Un bracelet en argent avec prénoms gravés et pierres de naissance pour une attention vraiment personnelle.", genre:["couple","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:[], originalite:8 },
 
   /* ── ENFANTS ── */
   { id:91, titre:"LEGO Technic Ferrari FXX K 10+", emoji:"🧱", desc:"Une voiture de course LEGO Technic avec moteur V12 et mécanismes mobiles, adaptée dès 10 ans.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["technologie","jeux-video"], originalite:6 },
   { id:92, titre:"Microscope junior éducatif", emoji:"🔬", desc:"Microscope 40-400x avec préparations, plaque LED et livret d'expériences. Éveiller la curiosité scientifique.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["technologie","lecture"], originalite:9 },
   { id:93, titre:"Kit robotique débutant", emoji:"🤖", desc:"Robot programmable par blocs visuels pour initier les enfants au code de façon ludique et progressive.", genre:["enfant"], age:["18-25"], budget:">100", interets:["technologie","jeux-video"], originalite:9 },
-  { id:94, titre:"Encyclopédie pop-up des animaux", emoji:"📗", desc:"Encyclopédie pop-up des animaux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:["lecture","animaux"], originalite:8 },
-  { id:95, titre:"Set de snorkeling pour enfant", emoji:"🏊", desc:"Set de snorkeling pour enfant : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["sport"], originalite:6 },
+  { id:94, titre:"Encyclopédie pop-up des animaux", emoji:"📗", desc:"Pour découvrir les animaux en explorant les pages animées avec un adulte. Choisir selon l’âge conseillé et manipuler les éléments délicats avec soin.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:["lecture","animaux"], originalite:8 },
+  { id:95, titre:"Set de snorkeling pour enfant", emoji:"🏊", desc:"Pour découvrir l’observation sous l’eau lors d’une sortie encadrée. Vérifier la taille, l’âge du fabricant et les consignes ; ce matériel n’est pas un équipement de sécurité.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["sport"], originalite:6 },
   { id:96, titre:"Tente de jeu intérieure", emoji:"⛺", desc:"Tipi ou château de tente qui se monte en 2 minutes. Un espace d'imagination et de jeu pour les enfants.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:[], originalite:7 },
-  { id:97, titre:"Chevalet et coffret de peinture lavable", emoji:"🎨", desc:"Chevalet et coffret de peinture lavable : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:["manga"], originalite:7 },
+  { id:97, titre:"Chevalet et coffret de peinture lavable", emoji:"🎨", desc:"Un espace pour peindre et expérimenter les couleurs. Vérifier les dimensions, l’âge recommandé et protéger le sol pendant l’activité.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:["manga"], originalite:7 },
   { id:98, titre:"Rollers enfant réglables lumineux", emoji:"🚲", desc:"Des rollers ajustables avec roues lumineuses et maintien renforcé pour accompagner la progression de l'enfant.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["sport"], originalite:5 },
   { id:99, titre:"Coffret magie (50 tours)", emoji:"🪄", desc:"Kit du magicien avec baguette, cartes truquées, livret explicatif et costume. Émerveiller petits et grands.", genre:["enfant"], age:["18-25"], budget:"20-50", interets:["cinema","jeux-video"], originalite:8 },
   { id:100, titre:"Table lumineuse de dessin A3", emoji:"✏️", desc:"Tablette LED pour dessiner, calquer et tracer. Idéale pour les enfants créatifs et passionnés de dessin.", genre:["enfant"], age:["18-25"], budget:"50-100", interets:["manga","lecture"], originalite:7 },
 
   /* ── 50 ANS ET + ── */
-  { id:101, titre:"Beau livre The Stanley Kubrick Archives", emoji:"🖌️", desc:"Beau livre The Stanley Kubrick Archives : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["50+"], budget:"50-100", interets:["lecture","cinema"], originalite:8 },
-  { id:102, titre:"Coffret de thés du monde", emoji:"🍵", desc:"Coffret de thés du monde : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme"], age:["36-50","50+"], budget:"20-50", interets:["voyage","cuisine"], originalite:8 },
-  { id:103, titre:"Grand Atlas géographique du monde", emoji:"📰", desc:"Grand Atlas géographique du monde : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["36-50","50+"], budget:"50-100", interets:["lecture"], originalite:4 },
-  { id:104, titre:"Bain de pieds massant premium", emoji:"🌊", desc:"Bain de pieds massant premium : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","couple"], age:["36-50","50+"], budget:">100", interets:["voyage","sport"], originalite:7 },
+  { id:101, titre:"Beau livre The Stanley Kubrick Archives", emoji:"🖌️", desc:"Pour explorer l’univers de Kubrick à travers un ouvrage illustré que l’on peut consulter film après film.", genre:["femme","homme"], age:["50+"], budget:"50-100", interets:["lecture","cinema"], originalite:8 },
+  { id:102, titre:"Coffret de thés du monde", emoji:"🍵", desc:"Pour découvrir plusieurs thés et comparer leurs parfums au fil des pauses. Une attention pour quelqu’un qui aime prendre le temps de préparer sa tasse.", genre:["femme"], age:["36-50","50+"], budget:"20-50", interets:["voyage","cuisine"], originalite:8 },
+  { id:103, titre:"Grand Atlas géographique du monde", emoji:"📰", desc:"Pour explorer les pays, les reliefs et les cartes du monde depuis son fauteuil. Un bel objet à consulter par curiosité ou avant un voyage.", genre:["homme","femme"], age:["36-50","50+"], budget:"50-100", interets:["lecture"], originalite:4 },
+  { id:104, titre:"Bain de pieds massant premium", emoji:"🌊", desc:"Pour aménager une pause détente à la maison autour d’un bain de pieds. Vérifier les fonctions et précautions de la notice, sans attendre un effet thérapeutique.", genre:["femme","couple"], age:["36-50","50+"], budget:">100", interets:[], originalite:7 },
   { id:105, titre:"Refroidisseur électrique et carafe à décanter", emoji:"🍷", desc:"Un appareil de service avec contrôle de température, aérateur et carafe en verre pour les amateurs d'œnologie.", genre:["homme","femme"], age:["50+"], budget:">100", interets:["cuisine"], originalite:10 },
-  { id:106, titre:"Mini-serre de semis avec éclairage", emoji:"🌱", desc:"Deux plateaux de culture avec couvercles ventilés et éclairage horticole pour démarrer ses semis à l'intérieur.", genre:["femme","homme"], age:["36-50","50+"], budget:"20-50", interets:["cuisine","animaux"], originalite:8 },
+  { id:106, titre:"Mini-serre de semis avec éclairage", emoji:"🌱", desc:"Deux plateaux de culture avec couvercles ventilés et éclairage horticole pour démarrer ses semis à l'intérieur.", genre:["femme","homme"], age:["36-50","50+"], budget:"20-50", interets:["jardinage"], originalite:8 },
   { id:107, titre:"Puzzle 1000 pièces panoramique", emoji:"🧩", desc:"Puzzle de grande taille représentant un paysage spectaculaire. Des heures de détente et de concentration.", genre:["femme","homme"], age:["36-50","50+"], budget:"<20", interets:["lecture"], originalite:5 },
   { id:108, titre:"Radio DAB+ design rétro", emoji:"📻", desc:"Poste de radio design avec réception FM et DAB+ numérique, son chaud et excellent. Style intemporel.", genre:["homme","femme"], age:["36-50","50+"], budget:"50-100", interets:["musique"], originalite:7 },
 
   /* ── PETITS BUDGETS (<20€) UNIVERSELS ── */
-  { id:109, titre:"Coffret de bougies en cire végétale", emoji:"🕯️", desc:"Coffret de bougies en cire végétale : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:[], originalite:5 },
+  { id:109, titre:"Coffret de bougies en cire végétale", emoji:"🕯️", desc:"Pour accompagner une soirée calme d’une lumière douce. À choisir en tenant compte des parfums appréciés et à utiliser sous surveillance.", genre:["femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:[], originalite:5 },
   { id:110, titre:"Porte-monnaie cuir mini", emoji:"👛", desc:"Porte-cartes compact en cuir pleine fleur avec protection RFID. Design minimaliste et chic.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:[], originalite:4 },
   { id:111, titre:"Mug personnalisé avec message", emoji:"☕", desc:"Grande tasse en céramique avec un message ou une illustration choisie. Cadeau intime et quotidien.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:[], originalite:5 },
   { id:112, titre:"Carnet bullet journal pointé", emoji:"📔", desc:"Carnet pointé A5 de qualité avec couverture souple et papier 100g. Parfait pour l'organisation créative.", genre:["femme","homme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["lecture"], originalite:5 },
   { id:113, titre:"Set de stylos calligraphie", emoji:"✒️", desc:"Coffret de 6 stylos de calligraphie avec différentes pointes. Apprendre l'art de la belle écriture.", genre:["femme"], age:["18-25","26-35","36-50"], budget:"<20", interets:["lecture","manga"], originalite:7 },
-  { id:114, titre:"Mangeoire en bois pour oiseaux", emoji:"🌵", desc:"Mangeoire en bois pour oiseaux : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:["animaux"], originalite:5 },
+  { id:114, titre:"Mangeoire en bois pour oiseaux", emoji:"🌵", desc:"Pour observer les oiseaux du jardin et suivre leurs habitudes. Installer la mangeoire à un emplacement adapté et l’entretenir régulièrement.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"<20", interets:["animaux"], originalite:5 },
   { id:115, titre:"Carte scratch « 100 films à voir »", emoji:"🎥", desc:"Affiche à gratter au fil des films vus. Un défi cinéphile affiché au mur et à compléter tout au long de l'année.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"<20", interets:["cinema"], originalite:8 },
 
   /* ── GRANDS BUDGETS (>100€) ORIGINAUX ── */
-  { id:116, titre:"Volant de simulation avec pédalier", emoji:"🏎️", desc:"Volant de simulation avec pédalier : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme"], age:["26-35","36-50","50+"], budget:">100", interets:["technologie","sport","voyage"], originalite:10 },
-  { id:117, titre:"Jumelles de voyage premium", emoji:"🎈", desc:"Jumelles de voyage premium : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","femme","homme"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:10 },
-  { id:118, titre:"Paddle gonflable complet", emoji:"🏄", desc:"Paddle gonflable complet : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["sport","voyage"], originalite:9 },
-  { id:119, titre:"Cave à vin compacte", emoji:"🍇", desc:"Cave à vin compacte : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","homme","femme"], age:["36-50","50+"], budget:">100", interets:["cuisine","voyage"], originalite:9 },
-  { id:120, titre:"Toile photo personnalisée grand format", emoji:"🖼️", desc:"Toile photo personnalisée grand format : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:8 },
+  { id:116, titre:"Volant de simulation avec pédalier", emoji:"🏎️", desc:"Pour retrouver des sensations de conduite dans ses jeux de course. Vérifier la compatibilité console ou PC et la fixation au bureau.", genre:["homme"], age:["26-35","36-50","50+"], budget:">100", interets:["jeux-video","auto-moto","technologie"], originalite:10 },
+  { id:117, titre:"Jumelles de voyage premium", emoji:"🎈", desc:"Pour observer les paysages et les animaux au cours d’une promenade. Vérifier le poids et le grossissement ; ne jamais regarder le soleil.", genre:["couple","femme","homme"], age:["26-35","36-50","50+"], budget:">100", interets:["voyage"], originalite:10 },
+  { id:118, titre:"Paddle gonflable complet", emoji:"🏄", desc:"Pour découvrir ou pratiquer la balade sur l’eau avec un équipement transportable. Vérifier les dimensions, la charge admise et le matériel de sécurité nécessaire.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["sport","voyage"], originalite:9 },
+  { id:119, titre:"Cave à vin compacte", emoji:"🍇", desc:"Pour organiser quelques bouteilles dans un espace dédié à la maison. Vérifier l’encombrement et les conditions d’installation avant de l’offrir.", genre:["couple","homme","femme"], age:["36-50","50+"], budget:">100", interets:["cuisine"], originalite:9 },
+  { id:120, titre:"Toile photo personnalisée grand format", emoji:"🖼️", desc:"Pour mettre un souvenir commun en valeur sur une grande toile. Une photo suffisamment définie et un format adapté au mur feront toute la différence.", genre:["homme","femme","couple"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:8 },
 
   /* ── BONUS : idées génériques multi-profils ── */
   { id:121, titre:"Pochette isotherme lunch box", emoji:"🍱", desc:"Sac repas thermique élégant pour emporter son déjeuner au bureau. Mode et pratique à la fois.", genre:["homme","femme"], age:["26-35","36-50"], budget:"<20", interets:["cuisine","sport"], originalite:5 },
-  { id:122, titre:"Tapis d’acupression avec coussin", emoji:"🌿", desc:"Tapis d’acupression avec coussin : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["sport","animaux"], originalite:6 },
-  { id:123, titre:"Livre de coloriage manga tout public", emoji:"🖍️", desc:"Livre de coloriage manga tout public : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["26-35","36-50","50+"], budget:"<20", interets:["lecture","manga"], originalite:6 },
+  { id:122, titre:"Tapis d’acupression avec coussin", emoji:"🌿", desc:"Pour essayer un rituel de détente à la maison avec un tapis et son coussin. Consulter les précautions du fabricant ; aucun bénéfice médical n’est promis.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:[], originalite:6 },
+  { id:123, titre:"Livre de coloriage manga tout public", emoji:"🖍️", desc:"Pour colorier des personnages et des scènes inspirés du manga, en choisissant librement ses associations de couleurs.", genre:["femme","homme"], age:["26-35","36-50","50+"], budget:"<20", interets:["lecture","manga"], originalite:6 },
   { id:124, titre:"Coffret bain premium (sels, huiles)", emoji:"🛁", desc:"Set de bain luxueux avec sels de l'Himalaya, huile de bain aromatique et gant de gommage.", genre:["femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:[], originalite:5 },
-  { id:125, titre:"Micro-cravate pour smartphone", emoji:"🎙️", desc:"Micro-cravate pour smartphone : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50"], budget:"<20", interets:["lecture","cinema","musique"], originalite:6 },
-  { id:126, titre:"Coffret d’apprentissage d’une langue", emoji:"🗣️", desc:"Coffret d’apprentissage d’une langue : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["voyage","lecture"], originalite:7 },
-  { id:127, titre:"Coffret de recettes cocktails avec shaker", emoji:"🍹", desc:"Coffret de recettes cocktails avec shaker : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["cuisine","cinema"], originalite:7 },
-  { id:128, titre:"Coffret d’arômes pour apprendre la dégustation", emoji:"🌾", desc:"Coffret d’arômes pour apprendre la dégustation : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine","voyage"], originalite:9 },
+  { id:125, titre:"Micro-cravate pour smartphone", emoji:"🎙️", desc:"Pour enregistrer plus clairement une voix pendant une vidéo ou une interview. Vérifier la connectique et la compatibilité du téléphone.", genre:["homme","femme"], age:["26-35","36-50"], budget:"<20", interets:["photo-video","musique","technologie"], originalite:6 },
+  { id:126, titre:"Coffret d’apprentissage d’une langue", emoji:"🗣️", desc:"Pour commencer ou reprendre une langue avec un support que l’on peut utiliser à son rythme. Vérifier la langue étudiée et le niveau du coffret.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"20-50", interets:["voyage","lecture"], originalite:7 },
+  { id:127, titre:"Coffret de recettes cocktails avec shaker", emoji:"🍹", desc:"Pour apprendre à assembler et présenter des boissons avec un shaker et des recettes. Une activité à essayer ensemble, selon les goûts de chacun.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["cuisine"], originalite:7 },
+  { id:128, titre:"Coffret d’arômes pour apprendre la dégustation", emoji:"🌾", desc:"Pour exercer son nez à reconnaître différents arômes et comparer ses impressions à plusieurs. Un coffret de découverte plutôt qu’une bouteille supplémentaire.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["cuisine"], originalite:9 },
   { id:129, titre:"Portefeuille minimaliste en cuir végétal", emoji:"👜", desc:"Portefeuille ultra-mince en cuir végétal certifié avec protection des cartes sans contact.", genre:["homme","femme"], age:["26-35","36-50"], budget:"50-100", interets:[], originalite:6 },
   { id:130, titre:"Kit cosmétiques bio DIY", emoji:"🧴", desc:"Coffret pour fabriquer ses propres crèmes et baumes naturels à la maison. Écologie et créativité.", genre:["femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["animaux","sport"], originalite:8 },
   { id:131, titre:"Drone photo/vidéo compact", emoji:"🚁", desc:"Mini drone pliable avec caméra 4K stabilisée. Pour filmer et photographier ses aventures du ciel.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["technologie","voyage","sport"], originalite:9 },
   { id:132, titre:"Sac à main femme en cuir pleine fleur", emoji:"👜", desc:"Un grand sac à main vintage en cuir pleine fleur avec bandoulière et cadre métallique.", genre:["femme"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:8 },
-  { id:133, titre:"Coussin massant shiatsu chauffant", emoji:"💆", desc:"Coussin massant shiatsu chauffant : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:"50-100", interets:["sport"], originalite:5 },
+  { id:133, titre:"Coussin massant shiatsu chauffant", emoji:"💆", desc:"Pour faire une pause avec un coussin massant que l’on installe selon sa notice. Vérifier les zones d’usage autorisées et les contre-indications.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:"50-100", interets:["sport"], originalite:5 },
   { id:134, titre:"Set écriture fontaine + encres", emoji:"🖊️", desc:"Stylo plume moyen de gamme avec 6 encres aux couleurs rares. La renaissance de l'écriture à la main.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["lecture"], originalite:8 },
-  { id:135, titre:"Bandeau audio Bluetooth confortable", emoji:"🎙️", desc:"Bandeau audio Bluetooth confortable : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["lecture","musique"], originalite:6 },
+  { id:135, titre:"Bandeau audio Bluetooth confortable", emoji:"🎙️", desc:"Pour écouter de la musique ou un livre audio avec un bandeau plutôt qu’un casque classique. À choisir selon les habitudes et le confort recherchés.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["lecture","musique"], originalite:6 },
   { id:136, titre:"Tableau ardoise personnalisé famille", emoji:"🏠", desc:"Grand tableau ardoise avec cadre en bois gravé du nom de famille. Pratique, déco et émouvant.", genre:["couple","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:[], originalite:7 },
   { id:137, titre:"Lunettes de soleil polarisées premium", emoji:"🕶️", desc:"Montures en acétate avec verres polarisés haute protection UV400. Style et fonctionnel sous le soleil.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"50-100", interets:["voyage","sport"], originalite:5 },
-  { id:138, titre:"Montre automatique au style vintage", emoji:"⌚", desc:"Montre automatique au style vintage : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:8 },
+  { id:138, titre:"Montre automatique au style vintage", emoji:"⌚", desc:"Pour quelqu’un qui apprécie les mécanismes horlogers et le style vintage. Vérifier le diamètre, le bracelet et les consignes d’entretien du modèle.", genre:["homme"], age:["26-35","36-50","50+"], budget:">100", interets:[], originalite:8 },
   { id:139, titre:"Carnet de recettes familiales personnalisé", emoji:"📓", desc:"Recueil relié où noter et transmettre les recettes de famille de génération en génération. Cadeau du cœur.", genre:["femme","homme"], age:["36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:9 },
-  { id:140, titre:"Cadre photo numérique Wi-Fi", emoji:"🎁", desc:"Cadre photo numérique Wi-Fi : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:[], originalite:7 },
+  { id:140, titre:"Cadre photo numérique Wi-Fi", emoji:"🎁", desc:"Pour faire défiler les souvenirs et renouveler facilement les photos affichées à la maison. Vérifier la connexion et les conditions de l’application.", genre:["homme","femme","couple"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:[], originalite:7 },
 
   /* ── IDÉES BONUS pour diversifier ── */
-  { id:141, titre:"Coffret de beaux livres sur les musées", emoji:"🏛️", desc:"Coffret de beaux livres sur les musées : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["lecture","cinema","voyage"], originalite:7 },
-  { id:142, titre:"Paire de bâtons de randonnée", emoji:"🏅", desc:"Paire de bâtons de randonnée : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["sport","voyage"], originalite:8 },
+  { id:141, titre:"Coffret de beaux livres sur les musées", emoji:"🏛️", desc:"Pour parcourir des collections et préparer de futures visites depuis chez soi. Une idée pour les amateurs de beaux livres et de découvertes culturelles.", genre:["homme","femme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["lecture","voyage"], originalite:7 },
+  { id:142, titre:"Paire de bâtons de randonnée", emoji:"🏅", desc:"Pour accompagner les sorties à pied avec des appuis supplémentaires. Vérifier le réglage, la taille et les conditions d’utilisation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["sport","voyage"], originalite:8 },
   { id:143, titre:"Powerbank solaire outdoor", emoji:"☀️", desc:"Batterie externe rechargeable au soleil, étanche et robuste. Indispensable pour les aventuriers connectés.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["technologie","voyage","sport"], originalite:7 },
-  { id:144, titre:"Maillot officiel du PSG", emoji:"⚽", desc:"Maillot officiel du PSG : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["sport"], originalite:6 },
-  { id:145, titre:"Coffret de verres de dégustation", emoji:"🍺", desc:"Coffret de verres de dégustation : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["cuisine"], originalite:7 },
-  { id:146, titre:"Jeu de société coopératif MicroMacro", emoji:"🎲", desc:"Jeu de société coopératif MicroMacro : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["couple","famille","homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["jeux-video"], originalite:8 },
+  { id:144, titre:"Maillot officiel du PSG", emoji:"⚽", desc:"Pour afficher son attachement au PSG les jours de match. Vérifier la saison du modèle et la taille souhaitée avant de commander.", genre:["homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["sport"], originalite:6 },
+  { id:145, titre:"Coffret de verres de dégustation", emoji:"🍺", desc:"Pour servir une dégustation dans des verres dédiés et prendre le temps de comparer les impressions autour d’une table.", genre:["homme","couple"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["cuisine"], originalite:7 },
+  { id:146, titre:"Jeu de société coopératif MicroMacro", emoji:"🎲", desc:"Pour résoudre ensemble des enquêtes en observant une grande carte illustrée. Un jeu coopératif à sortir lors d’une soirée, en vérifiant les thèmes et l’âge indiqué.", genre:["couple","homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["jeux-video"], originalite:8 },
   { id:147, titre:"Casque de réalité virtuelle standalone", emoji:"🥽", desc:"Immersion totale dans des univers virtuels : jeux, voyages, sport, créativité. La technologie de demain.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["technologie","jeux-video","cinema"], originalite:9 },
   { id:148, titre:"Kit aquarelle professionnelle", emoji:"🎨", desc:"Set complet : 24 pigments fins, pinceaux différents, papier grain, bloc et palette en céramique.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["manga","lecture"], originalite:7 },
-  { id:149, titre:"Stabilisateur trois axes pour smartphone", emoji:"📱", desc:"Stabilisateur trois axes pour smartphone : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["voyage","technologie"], originalite:8 },
-  { id:150, titre:"Kit d’outils pour bonsaï", emoji:"🌸", desc:"Kit d’outils pour bonsaï : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["36-50","50+"], budget:"20-50", interets:["animaux","voyage"], originalite:7 },
-  { id:151, titre:"Kit de pâtisserie pour macarons", emoji:"🍬", desc:"Kit de pâtisserie pour macarons : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:7 },
+  { id:149, titre:"Stabilisateur trois axes pour smartphone", emoji:"📱", desc:"Pour réaliser des vidéos au téléphone avec des mouvements plus réguliers. Vérifier le poids et le format du smartphone pris en charge.", genre:["femme","homme"], age:["18-25","26-35","36-50","50+"], budget:"50-100", interets:["voyage","technologie"], originalite:8 },
+  { id:150, titre:"Kit d’outils pour bonsaï", emoji:"🌸", desc:"Pour entretenir un bonsaï avec des outils adaptés aux petits gestes de taille. À offrir à une personne qui possède déjà cet arbre ou souhaite apprendre à en prendre soin.", genre:["femme","homme"], age:["36-50","50+"], budget:"20-50", interets:["jardinage"], originalite:7 },
+  { id:151, titre:"Kit de pâtisserie pour macarons", emoji:"🍬", desc:"Pour essayer les macarons à la maison avec des accessoires dédiés. Vérifier le contenu du kit et prévoir les ingrédients séparément.", genre:["femme","couple"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:7 },
   { id:152, titre:"Station de recharge rapide pour manette PS5", emoji:"🎮", desc:"Un support de charge rapide assorti à la DualSense pour ranger et recharger une manette entre deux parties.", genre:["homme","femme"], age:["18-25","26-35"], budget:"50-100", interets:["jeux-video"], originalite:5 },
   { id:153, titre:"Aquarium nano 9 L avec éclairage LED", emoji:"🐠", desc:"Un aquarium compact avec filtration intégrée et éclairage LED pour créer un petit espace aquatique à la maison.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"50-100", interets:["animaux","technologie"], originalite:8 },
   { id:154, titre:"Livre recettes boulangerie artisanale", emoji:"🥖", desc:"Guide complet pour faire ses propres pains, croissants et viennoiseries maison comme un boulanger.", genre:["femme","homme"], age:["26-35","36-50","50+"], budget:"<20", interets:["cuisine"], originalite:6 },
-  { id:155, titre:"Mini DAC USB pour casque", emoji:"🎼", desc:"Mini DAC USB pour casque : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["musique","technologie"], originalite:6 },
-  { id:156, titre:"Jardin aromatique intérieur", emoji:"🫧", desc:"Jardin aromatique intérieur : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["cuisine","animaux"], originalite:9 },
-  { id:157, titre:"Coussin shiatsu chauffant pour dos et épaules", emoji:"💼", desc:"Coussin shiatsu chauffant pour dos et épaules : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["femme","homme"], age:["36-50","50+"], budget:"50-100", interets:["sport"], originalite:6 },
-  { id:158, titre:"Fujifilm Instax Mini avec films", emoji:"📷", desc:"Fujifilm Instax Mini avec films : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["voyage","cinema","technologie"], originalite:9 },
+  { id:155, titre:"Mini DAC USB pour casque", emoji:"🎼", desc:"Pour relier un casque à une source USB compatible et compléter une installation d’écoute. Vérifier les connecteurs et appareils pris en charge.", genre:["homme","femme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["musique","technologie"], originalite:6 },
+  { id:156, titre:"Jardin aromatique intérieur", emoji:"🫧", desc:"Pour cultiver des aromatiques à portée de la cuisine. Vérifier les consommables nécessaires, l’éclairage et la place disponible.", genre:["femme","homme"], age:["18-25","26-35","36-50"], budget:"20-50", interets:["jardinage","cuisine"], originalite:9 },
+  { id:157, titre:"Coussin shiatsu chauffant pour dos et épaules", emoji:"💼", desc:"Pour s’accorder une pause avec un coussin massant utilisé selon les indications du fabricant. Vérifier les précautions et le confort avant de l’adopter.", genre:["femme","homme"], age:["36-50","50+"], budget:"50-100", interets:["sport"], originalite:6 },
+  { id:158, titre:"Fujifilm Instax Mini avec films", emoji:"📷", desc:"Pour prendre des photos instantanées et conserver des souvenirs sur papier. Vérifier la quantité de films incluse et leur coût de renouvellement.", genre:["homme","femme"], age:["18-25","26-35","36-50"], budget:">100", interets:["voyage","cinema","technologie"], originalite:9 },
   { id:159, titre:"Panneau lumineux LED personnalisé", emoji:"💡", desc:"Enseigne lumineuse LED avec un mot, prénom ou slogan choisi. Décoration unique et moderne.", genre:["femme","homme"], age:["18-25","26-35"], budget:"50-100", interets:["cinema","musique"], originalite:8 },
-  { id:160, titre:"Coffret carafe et verres à whisky", emoji:"🥃", desc:"Coffret carafe et verres à whisky : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["homme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine","voyage"], originalite:8 },
+  { id:160, titre:"Coffret carafe et verres à whisky", emoji:"🥃", desc:"Pour présenter et partager une dégustation avec une carafe et des verres assortis. Un cadeau centré sur le service et les arts de la table.", genre:["homme"], age:["26-35","36-50","50+"], budget:"20-50", interets:["cuisine"], originalite:8 },
 
   /* ── COMPLÉMENTS ENFANT V1.2 ── */
   { id:161, titre:"Livre d'éveil sensoriel", emoji:"📘", desc:"Livre souple avec textures, couleurs contrastées et activités adaptées aux premières découvertes.", genre:["enfant"], age:["0-3"], budget:"<20", interets:["lecture"], originalite:7 },
   { id:162, titre:"Porteur évolutif enfant", emoji:"🚗", desc:"Porteur stable et transformable pour développer l'équilibre et accompagner les premières aventures.", genre:["enfant"], age:["0-3","4-7"], budget:"50-100", interets:["sport"], originalite:7 },
   { id:163, titre:"Tour d'observation Montessori", emoji:"🪜", desc:"Marchepied sécurisé et réglable pour participer aux activités du quotidien à hauteur d'adulte.", genre:["enfant"], age:["0-3","4-7"], budget:">100", interets:["cuisine"], originalite:8 },
-  { id:164, titre:"Coffret créatif lavable", emoji:"🖍️", desc:"Coffret créatif lavable : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["enfant"], age:["4-7","8-12"], budget:"<20", interets:["manga"], originalite:7 },
-  { id:165, titre:"Blocs de construction en mousse modulables", emoji:"🏠", desc:"Blocs de construction en mousse modulables : un cadeau physique précis, sélectionné pour conserver le profil, le budget et les centres d’intérêt de la recommandation.", genre:["enfant"], age:["4-7","8-12"], budget:">100", interets:[], originalite:8 },
+  { id:164, titre:"Coffret créatif lavable", emoji:"🖍️", desc:"Pour proposer une activité manuelle adaptée aux plus jeunes. Vérifier l’âge minimal, les matériaux et les consignes de nettoyage du coffret.", genre:["enfant"], age:["4-7","8-12"], budget:"<20", interets:["manga"], originalite:7 },
+  { id:165, titre:"Blocs de construction en mousse modulables", emoji:"🏠", desc:"De grands éléments en mousse à assembler pour imaginer des constructions. Vérifier l’âge recommandé, l’espace et les conditions de surveillance.", genre:["enfant"], age:["4-7","8-12"], budget:">100", interets:[], originalite:8 },
 
 ];
 
@@ -457,6 +457,9 @@ const ADULT_AGES = ['18-25','26-35','36-50','50+'];
 const CHILD_AGES = ['0-3','4-7','8-12','13-17'];
 
 function normalizeGiftDatabase() {
+  if (typeof EXTRA_GIFTS !== 'undefined') {
+    EXTRA_GIFTS.forEach(g => { if (!CADEAUX.some(c => c.id === g.id)) CADEAUX.push(g); });
+  }
   CADEAUX.forEach(gift => {
     if (!('image' in gift)) gift.image = '';
     gift.affiliateLink = AMAZON_PRODUCT_LINKS[gift.id] || gift.affiliateLink || '';
@@ -471,6 +474,13 @@ function normalizeGiftDatabase() {
     if (CHILD_COMPATIBLE_GIFTS[gift.id]) {
       if (!gift.genre.includes('enfant')) gift.genre.push('enfant');
       gift.age = [...new Set([...gift.age, ...CHILD_COMPATIBLE_GIFTS[gift.id]])];
+    }
+    Object.assign(gift, GiftEngine.enrich(gift));
+    // Corrections éditoriales ciblées après l’enrichissement historique, sans changer le moteur.
+    if (gift.id === 70) gift.interets = gift.interets.filter(i => i !== 'nature-outdoor');
+    if (gift.id === 95) {
+      gift.interets = gift.interets.filter(i => i !== 'creatif-diy');
+      gift.traits = gift.traits.filter(t => t !== 'creatif');
     }
   });
 }
@@ -652,6 +662,7 @@ const TITLE_KEYWORDS = [
  */
 function getGiftImage(gift) {
   if (gift.image && gift.image !== '') return gift.image;
+  if (gift.imageFallback) return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg"/>');
 
   let keyword = null;
   for (const [regex, kw] of TITLE_KEYWORDS) {
@@ -717,8 +728,17 @@ const state = {
   genre: null,
   age: null,
   budget: null,
-  interets: []
+  interets: [],
+  occasion: null,
+  unknownInterests: false,
+  mode: 'quiz'
 };
+let recommendationMemory;
+try { recommendationMemory = GiftEngine.load(localStorage); }
+catch { recommendationMemory = {history:[], feedback:{}}; }
+function saveRecommendationMemory() {
+  try { return GiftEngine.persist(localStorage,recommendationMemory); } catch { return false; }
+}
 
 let quizStarted = false;
 
@@ -819,12 +839,18 @@ function selectOption(btn, key, value) {
  * Bascule un centre d'intérêt (multi-sélect)
  */
 function toggleInterest(btn, value) {
-  btn.classList.toggle('selected');
-  if (btn.classList.contains('selected')) {
-    state.interets.push(value);
+  if (value === 'unknown') {
+    state.unknownInterests = !state.unknownInterests;
+    state.interets = [];
   } else {
-    state.interets = state.interets.filter(i => i !== value);
+    state.unknownInterests = false;
+    state.interets = state.interets.includes(value) ? state.interets.filter(i => i !== value) : [...state.interets,value];
   }
+  document.querySelectorAll('.interest-btn').forEach(button => {
+    const selected = button.dataset.value === 'unknown' ? state.unknownInterests : state.interets.includes(button.dataset.value);
+    button.classList.toggle('selected',selected);
+    button.setAttribute('aria-pressed',String(selected));
+  });
 }
 
 /**
@@ -919,36 +945,7 @@ function submitQuiz() {
  * @returns {number} score (plus élevé = plus pertinent)
  */
 function scoreGift(cadeau) {
-  let score = 0;
-
-  // Genre (obligatoire)
-  if (cadeau.genre.includes(state.genre)) score += 30;
-  else return -1; // Exclusion stricte
-
-  // Budget (obligatoire)
-  if (cadeau.budget === state.budget) score += 25;
-  else return -1; // Exclusion stricte
-
-  // Âge (obligatoire pour éviter les recommandations incohérentes)
-  if (cadeau.age.includes(state.age)) score += 20;
-  else return -1;
-
-  // Intérêts (bonus)
-  if (state.interets.length > 0) {
-    const matchCount = state.interets.filter(i => cadeau.interets.includes(i)).length;
-    score += matchCount * 15;
-  } else {
-    // Sans filtre intérêt : pas de pénalité
-    score += 5;
-  }
-
-  // Bonus originalité (légère influence)
-  score += cadeau.originalite * 0.5;
-
-  // Légère randomisation pour variété
-  score += Math.random() * 5;
-
-  return score;
+  return GiftEngine.score(cadeau,state,recommendationMemory,CADEAUX);
 }
 
 /**
@@ -957,18 +954,37 @@ function scoreGift(cadeau) {
  * @returns {Array} liste de cadeaux (10 premiers)
  */
 function computeResults() {
-  const scored = CADEAUX
-    .map(c => ({ ...c, score: scoreGift(c) }))
-    .filter(c => c.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  // Mémoriser le pool complet (réserve pour "Pas pour moi")
-  resultsPool = scored;
-
-  // Retourner les 10 premiers
-  const top10 = scored.slice(0, 10);
-  displayedIds = top10.map(c => c.id);
-  return top10;
+  const selection = GiftEngine.select(CADEAUX,state,recommendationMemory,{rejected:rejectedIds});
+  resultsPool = selection.pool;
+  displayedIds = selection.results.map(c => c.id);
+  GiftEngine.remember(recommendationMemory,selection.results);
+  saveRecommendationMemory();
+  return selection.results;
+}
+function regenerateResults() {
+  if (state.genre && state.age && state.budget) showResults(computeResults());
+}
+function resetRecommendationPreferences() {
+  recommendationMemory = {history:[],feedback:{}};
+  rejectedIds.clear();
+  saveRecommendationMemory();
+  document.querySelectorAll('.gift-feedback [aria-pressed]').forEach(btn => {
+    btn.setAttribute('aria-pressed','false');
+    btn.textContent = '❤️ Bonne idée';
+  });
+  showFavToast('Préférences réinitialisées. Vos favoris sont conservés.');
+}
+function giveGiftFeedback(id,kind,btn) {
+  if (btn.closest('.gift-card')?.classList.contains('replacing')) return;
+  GiftEngine.feedback(recommendationMemory,state,id,kind);
+  const saved = saveRecommendationMemory();
+  if (kind === 'good') {
+    btn.setAttribute('aria-pressed','true');
+    btn.textContent = '❤️ Noté !';
+    showFavToast(saved ? 'Bonne idée retenue pour ce profil.' : 'Avis retenu pour cette visite (stockage indisponible).');
+  } else {
+    skipCard(id,btn);
+  }
 }
 
 /* =========================================================
@@ -1001,6 +1017,13 @@ function genreLabel(g) {
 /**
  * Affiche la section résultats
  */
+function updateSelectionNote(results) {
+  const matched = results.filter(g => !state.interets.length || state.interets.some(i => g.interets.includes(i))).length;
+  document.getElementById('selectionNote').textContent =
+    (state.interets.length && matched < results.length ? `${matched} idée(s) liée(s) à vos intérêts, complétées par des alternatives compatibles. ` : '') +
+    'Budgets indicatifs : vérifiez les prix sur Amazon. Les avis sont liés au destinataire et à sa tranche d’âge ; réinitialisez-les pour une autre personne du même profil.';
+}
+
 function showResults(results) {
   document.getElementById('loading-section').classList.add('hidden');
 
@@ -1016,6 +1039,8 @@ function showResults(results) {
 
   // Résumé de la recherche
   summary.textContent = `Pour un·e ${genreLabel(state.genre)} · Budget ${budgetLabel(state.budget)}${state.interets.length ? ' · ' + state.interets.length + ' intérêt(s) sélectionné(s)' : ''}`;
+
+  updateSelectionNote(results);
 
   // Vider la grille
   grid.innerHTML = '';
@@ -1086,8 +1111,8 @@ function createCard(gift, num, inModal = false) {
       </button>
     </div>` : `
     <div class="card-actions">
-      <button class="btn-skip" onclick="skipCard(${gift.id}, this)" aria-label="Remplacer cette idée">
-        ❌ Pas pour moi
+      <button class="btn-skip" onclick="giveGiftFeedback(${gift.id}, 'style', this)" aria-label="Pas son style, remplacer cette idée">
+        ❌ Pas son style
       </button>
       <a class="btn-buy" href="${productUrl}" target="_blank" rel="noopener noreferrer sponsored" aria-label="Voir le produit ${gift.titre} sur Amazon">
         🛒 Voir sur Amazon
@@ -1109,6 +1134,7 @@ function createCard(gift, num, inModal = false) {
     </div>
     <div class="card-body">
       <h3 class="card-title">${gift.titre}</h3>
+      ${!inModal && gift.selectionLabel ? `<p class="selection-label">${gift.selectionLabel}</p>` : ''}
       <p class="card-desc">${gift.desc}</p>
       ${whyHTML}
       <div class="card-footer">
@@ -1120,9 +1146,14 @@ function createCard(gift, num, inModal = false) {
         </div>
       </div>
       ${actionsHTML}
+      ${inModal ? '' : `<div class="gift-feedback" aria-label="Votre avis sur ce cadeau">
+        <button type="button" class="btn-feedback" aria-pressed="${GiftEngine.feedbackFor(recommendationMemory,state,gift.id) === 'good'}" onclick="giveGiftFeedback(${gift.id}, 'good', this)">❤️ Bonne idée</button>
+        <button type="button" class="btn-feedback" onclick="giveGiftFeedback(${gift.id}, 'owned', this)">✓ Il/elle l’a déjà</button>
+      </div>`}
     </div>
   `;
 
+  if (gift.imageFallback) card.querySelector('.card-image').classList.add('img-fallback');
   const amazonLink = card.querySelector('.btn-buy');
   if (amazonLink) {
     amazonLink.addEventListener('click', () => {
@@ -1143,12 +1174,7 @@ function createCard(gift, num, inModal = false) {
  */
 function buildWhyReasons(gift) {
   const reasons = [];
-  const INTERESTS_FR = {
-    'jeux-video':'les jeux vidéo', 'manga':'les mangas et les anime',
-    'technologie':'la technologie', 'voyage':'le voyage',
-    'lecture':'la lecture', 'cuisine':'la cuisine', 'animaux':'les animaux',
-    'sport':'le sport', 'musique':'la musique', 'cinema':'le cinéma'
-  };
+  const INTERESTS_FR = GiftEngine.INTERESTS;
 
   // Intérêts communs
   if (state.interets && state.interets.length > 0) {
@@ -1166,22 +1192,22 @@ function buildWhyReasons(gift) {
     reasons.push('Peut créer un moment à partager plutôt qu’un simple objet à ranger');
   } else if (state.genre === 'enfant') {
     reasons.push('Choisi pour rester accessible et stimulant à cette étape de l’enfance');
-  } else if (gift.interets.length > 0) {
+  } else if (!state.interets.length && gift.interets.length > 0) {
     const firstInterest = INTERESTS_FR[gift.interets[0]];
-    if (firstInterest) reasons.push(`S’intègre facilement au quotidien de quelqu’un qui aime ${firstInterest}`);
-  } else {
+    if (firstInterest) reasons.push(`Une piste à explorer si la personne apprécie ${firstInterest}`);
+  } else if (!state.interets.length) {
     reasons.push('Une attention facile à offrir et à utiliser au quotidien');
   }
 
   // Niveau de surprise
   if (gift.originalite >= 8) {
     reasons.push('Assez inattendu pour créer une vraie surprise sans être un gadget gratuit');
-  } else {
+  } else if (gift.traits.includes('valeur_sure')) {
     reasons.push('Une valeur sûre qui mise davantage sur l’usage que sur l’effet de mode');
   }
 
   // Budget formulé comme un bénéfice concret, sans inventer de prix exact
-  reasons.push(`Reste cohérent avec l’enveloppe choisie (${budgetLabel(gift.budget)})`);
+  reasons.push(`Repère de budget : ${budgetLabel(gift.budget)} ; prix actuel à vérifier`);
 
   return reasons.slice(0, 4);
 }
@@ -1196,7 +1222,7 @@ function buildWhyReasons(gift) {
  */
 function skipCard(giftId, btn) {
   const card = btn.closest('.gift-card');
-  if (!card) return;
+  if (!card || card.classList.contains('replacing')) return;
 
   rejectedIds.add(giftId);
   const rejectedGift = CADEAUX.find(c => c.id === giftId);
@@ -1206,15 +1232,17 @@ function skipCard(giftId, btn) {
   });
 
   // Chercher un remplaçant dans le pool (non affiché, non encore rejeté)
-  const visibleIds = card.closest('#cardsGrid')
-    ? Array.from(card.closest('#cardsGrid').querySelectorAll('[data-gift-id]'))
-        .map(el => Number(el.dataset.giftId))
-    : displayedIds.slice();
-
-  const replacement = resultsPool.find(c => !visibleIds.includes(c.id) && !rejectedIds.has(c.id));
+  const visibleIds = displayedIds.slice();
+  const replacement = GiftEngine.select(CADEAUX,state,recommendationMemory,
+    {limit:1,rejected:rejectedIds,exclude:visibleIds}).results[0];
 
   if (!replacement) {
-    showFavToast('😔 Plus aucune autre idée disponible pour ce profil !');
+    displayedIds = displayedIds.filter(id => id !== giftId);
+    card.remove();
+    document.getElementById('resultsTitle').textContent = `Vos ${displayedIds.length} idées cadeaux`;
+    updateSelectionNote(CADEAUX.filter(g => displayedIds.includes(g.id)));
+    if (!displayedIds.length) showResults([]);
+    showFavToast('Avis retenu. Plus d’alternative compatible pour le moment.');
     return;
   }
 
@@ -1224,6 +1252,10 @@ function skipCard(giftId, btn) {
 
   // Animation de sortie/entrée
   card.classList.add('replacing');
+  const reservedIndex = displayedIds.indexOf(giftId);
+  if (reservedIndex !== -1) displayedIds[reservedIndex] = replacement.id;
+  GiftEngine.remember(recommendationMemory,[replacement]);
+  saveRecommendationMemory();
 
   setTimeout(() => {
     // Mettre à jour displayedIds
@@ -1235,6 +1267,7 @@ function skipCard(giftId, btn) {
     newCard.dataset.giftId = replacement.id;
     newCard.style.animationDelay = '0s';
     card.replaceWith(newCard);
+    updateSelectionNote(CADEAUX.filter(g => displayedIds.includes(g.id)));
   }, 220); // mi-chemin de l'animation cardOut
 }
 
@@ -1391,7 +1424,7 @@ function showFavToast(msg) {
 function surpriseMe() {
   const genres   = ['homme','femme','couple','enfant'];
   const budgets  = ['<20','20-50','50-100','>100'];
-  const interets = ['jeux-video','manga','technologie','voyage','lecture','cuisine','animaux','sport','musique','cinema'];
+  const interets = Object.keys(GiftEngine.INTERESTS);
 
   // Ne retenir que les profils capables de fournir 10 résultats cohérents.
   const validProfiles = [];
@@ -1399,9 +1432,7 @@ function surpriseMe() {
     getAgesForGenre(genre).forEach(age => {
       budgets.forEach(budget => {
         const count = CADEAUX.filter(gift =>
-          gift.genre.includes(genre) &&
-          gift.age.includes(age) &&
-          gift.budget === budget
+          GiftEngine.eligible(gift, {genre, age, budget}, recommendationMemory)
         ).length;
         if (count >= 10) validProfiles.push({ genre, age, budget });
       });
@@ -1414,9 +1445,12 @@ function surpriseMe() {
   state.age    = profile.age;
   state.budget = profile.budget;
 
-  // 1 à 3 intérêts aléatoires
-  const shuffled = [...interets].sort(() => Math.random() - .5);
-  state.interets = shuffled.slice(0, 1 + Math.floor(Math.random() * 3));
+  // Ne choisir que des intérêts représentés dans ce profil.
+  const available = interets.filter(i => CADEAUX.some(g => GiftEngine.eligible(g,state,recommendationMemory) && g.interets.includes(i)));
+  state.interets = available.length ? [available[Math.floor(Math.random()*available.length)]] : [];
+  state.occasion = null;
+  state.unknownInterests = false;
+  state.mode = 'surprise';
   rejectedIds.clear();
   trackEvent('surprise_click', { genre: state.genre, age: state.age, budget: state.budget });
 
@@ -1488,6 +1522,9 @@ function restartQuiz() {
   state.age    = null;
   state.budget = null;
   state.interets = [];
+  state.occasion = null;
+  state.mode = 'quiz';
+  state.unknownInterests = false;
 
   // Réinitialiser les pools de résultats (Amélioration N°1)
   displayedIds = [];
@@ -1497,7 +1534,7 @@ function restartQuiz() {
 
   // Désélectionner toutes les options
   document.querySelectorAll('.option-btn.selected, .interest-btn.selected')
-    .forEach(b => b.classList.remove('selected'));
+    .forEach(b => { b.classList.remove('selected'); b.setAttribute('aria-pressed', 'false'); });
 
   // Désactiver boutons suivant
   ['next-1','next-2','next-3'].forEach(id => {
@@ -1545,7 +1582,7 @@ function renderGiftOfDay() {
   const img  = getGiftImage(gift);
 
   wrap.innerHTML = `
-    <div class="gotd-image">
+    <div class="gotd-image${gift.imageFallback ? ' img-fallback' : ''}">
       <img src="${img}" alt="${gift.titre}" loading="lazy" onerror="this.closest('.gotd-image').classList.add('img-fallback')">
       <span class="gotd-emoji">${gift.emoji}</span>
     </div>
@@ -1622,6 +1659,9 @@ function quickOccasion(key) {
   state.age     = '26-35';
   state.budget  = occ.profile.budget;
   state.interets = [];
+  state.occasion = key;
+  state.mode = 'occasion';
+  state.unknownInterests = false;
   rejectedIds.clear();
   trackEvent('quiz_start', { source: 'occasion', occasion: key });
   trackEvent('quiz_complete', { source: 'occasion', occasion: key, genre: state.genre, age: state.age, budget: state.budget });
@@ -1654,9 +1694,8 @@ function renderTrending() {
     const url = getProductUrl(g);
     return `
       <a class="trend-card" data-gift-id="${g.id}" href="${url}" target="_blank" rel="noopener noreferrer sponsored" aria-label="${g.titre}">
-        <div class="trend-img"><img src="${img}" alt="${g.titre}" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')"><span>${g.emoji}</span></div>
+        <div class="trend-img${g.imageFallback ? ' img-fallback' : ''}"><img src="${img}" alt="${g.titre}" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')"><span>${g.emoji}</span></div>
         <p class="trend-title">${g.titre}</p>
-        <span class="trend-stars">${genStars(g.originalite)}</span>
       </a>`;
   }).join('');
 
@@ -1674,9 +1713,10 @@ function renderTrending() {
 const THEME_KEY = 'ttc_theme';
 
 function initDarkMode() {
-  const saved = localStorage.getItem(THEME_KEY);
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch {}
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = saved || (prefersDark ? 'dark' : 'light');
+  const theme = ['light','dark'].includes(saved) ? saved : (prefersDark ? 'dark' : 'light');
   applyTheme(theme);
 
   const btn = document.getElementById('themeToggle');
@@ -1688,7 +1728,7 @@ function initDarkMode() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem(THEME_KEY, theme);
+  try { localStorage.setItem(THEME_KEY, theme); } catch {}
   const btn = document.getElementById('themeToggle');
   if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
@@ -1758,7 +1798,7 @@ const LEGAL_CONTENT = {
   },
   confidentialite: {
     title: '🔒 Confidentialité',
-    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveUnCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème. Ces informations restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
+    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveUnCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème, les douze dernières sélections (au plus 120 identifiants de cadeaux) et vos avis (« Bonne idée », « Pas son style », « Déjà possédé »). Les avis sont regroupés par type de destinataire et tranche d’âge, avec un maximum de 24 groupes et 100 avis par groupe. Aucun nom de personne n’est demandé. Le bouton « Réinitialiser les préférences » efface cet historique et ces avis sans supprimer vos favoris. Le moteur n’envoie pas ces registres d’historique et d’avis à un serveur. Les événements Google Analytics déjà présents peuvent toutefois signaler une action de refus avec l’identifiant et le titre du cadeau, selon les réglages applicables. Les registres complets restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
            <p><strong>Mesure d'audience :</strong> le site utilise Google Analytics afin de comprendre son utilisation et d'améliorer l'expérience proposée. Ce service peut déposer ou lire des cookies et traiter des données techniques, notamment des informations relatives au navigateur, à l'appareil et aux pages consultées.</p>
            <p><strong>Publicité :</strong> le site utilise Google AdSense. Google et ses partenaires peuvent utiliser des cookies ou technologies similaires pour diffuser, mesurer et personnaliser des annonces, selon vos choix de consentement et les réglages applicables.</p>
            <p><strong>Affiliation Amazon :</strong> certains liens vers Amazon sont des liens affiliés. Lorsque vous les utilisez, Amazon peut traiter des données conformément à sa propre politique de confidentialité. En tant que Partenaire Amazon, TrouveUnCadeau réalise un bénéfice sur les achats remplissant les conditions requises, sans modifier le prix payé.</p>
@@ -1854,5 +1894,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const newsletterForm = document.getElementById('newsletterForm');
   if (newsletterForm) newsletterForm.addEventListener('submit', submitNewsletter);
 
-  console.log(`🎁 TrouveUnCadeau V1.2 — ${CADEAUX.length} idées cadeaux chargées.`);
+  console.log(`🎁 TrouveUnCadeau V2 — passe 1 — ${CADEAUX.length} idées cadeaux chargées.`);
 });

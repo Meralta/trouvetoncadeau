@@ -1647,7 +1647,7 @@ body:has(#homeSections.hidden) .site-main > .container > .trending-section { dis
 }
 .guide-hero .editorial-kicker { color: #F4C77D; }
 .guide-hero h1 { margin-bottom: 14px; color: #fff; font-size: clamp(2rem, 5vw, 3rem); }
-.guide-hero p { max-width: 680px; opacity: .92; font-size: 1rem; }
+.guide-hero p { max-width: 680px; opacity: .92; font-size: 1rem; color: #fff; }
 .guide-content {
   padding: 42px 48px;
   background: var(--clr-surface);
@@ -1793,6 +1793,16 @@ body:has(#homeSections.hidden) .site-main > .container > .trending-section { dis
 :root[data-theme="dark"] .modal-overlay { background: rgba(2,7,14,.76); }
 
 /* ── Responsive additions ── */
+/* V2 : actions compactes, palette et dimensions générales conservées. */
+[hidden] { display: none !important; }
+.gift-feedback { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.btn-feedback { font: inherit; font-size: .76rem; color: var(--clr-primary); background: var(--clr-primary-l); border: 1px solid var(--clr-border); border-radius: var(--radius-sm); padding: 7px 10px; cursor: pointer; }
+.btn-feedback:hover, .btn-feedback[aria-pressed="true"] { border-color: var(--clr-primary); }
+.selection-note { font-size: .76rem; color: var(--clr-muted); margin: 12px auto; max-width: 660px; }
+.selection-note a { color: var(--clr-primary); }
+.guide-content a:not(.guide-cta) { color: var(--clr-primary); }
+.guide-content a:not(.guide-cta):hover { color: var(--clr-primary-d); }
+.selection-label { color: var(--clr-primary); font-size: .76rem; font-weight: 600; margin-bottom: 8px; }
 @media (max-width: 640px) {
   .occasions-section { margin-bottom: 16px; }
   .gotd-card { flex-direction: column; }

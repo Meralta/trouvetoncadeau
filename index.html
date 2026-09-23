@@ -214,7 +214,7 @@
         <!-- Étape 3 : Budget -->
         <div class="quiz-step" id="step-3">
           <h2 class="step-question">Quel est votre budget ?</h2>
-          <p class="step-hint">Toutes les idées respecteront votre enveloppe</p>
+          <p class="step-hint">Budgets indicatifs : vérifiez le prix actuel avant l’achat</p>
           <div class="options-grid" role="group" aria-label="Budget">
             <button class="option-btn" data-key="budget" data-value="<20" onclick="selectOption(this, 'budget', '<20')">
               <span class="option-icon">💶</span>
@@ -254,6 +254,14 @@
             <button class="interest-btn" data-value="sport" onclick="toggleInterest(this, 'sport')">⚽ Sport</button>
             <button class="interest-btn" data-value="musique" onclick="toggleInterest(this, 'musique')">🎵 Musique</button>
             <button class="interest-btn" data-value="cinema" onclick="toggleInterest(this, 'cinema')">🎬 Cinéma</button>
+            <button class="interest-btn" data-value="bricolage" onclick="toggleInterest(this, 'bricolage')">🔨 Bricolage</button>
+            <button class="interest-btn" data-value="jardinage" onclick="toggleInterest(this, 'jardinage')">🌱 Jardinage</button>
+            <button class="interest-btn" data-value="auto-moto" onclick="toggleInterest(this, 'auto-moto')">🚗 Auto / Moto</button>
+            <button class="interest-btn" data-value="creatif-diy" onclick="toggleInterest(this, 'creatif-diy')">🎨 Créatif / DIY</button>
+            <button class="interest-btn" data-value="maison-deco" onclick="toggleInterest(this, 'maison-deco')">🏠 Maison / Déco</button>
+            <button class="interest-btn" data-value="photo-video" onclick="toggleInterest(this, 'photo-video')">📷 Photo / Vidéo</button>
+            <button class="interest-btn" data-value="nature-outdoor" onclick="toggleInterest(this, 'nature-outdoor')">🏕️ Nature / Outdoor</button>
+            <button class="interest-btn" data-value="unknown" aria-pressed="false" onclick="toggleInterest(this, 'unknown')">🤷 Je ne sais pas</button>
           </div>
           <div class="step-nav">
             <button class="btn-back" onclick="prevStep(3)">← Retour</button>
@@ -281,6 +289,7 @@
         <div class="results-header">
           <h2 class="results-title" id="resultsTitle">🎉 Vos idées cadeaux</h2>
           <p class="results-subtitle" id="resultsSummary"></p>
+          <p class="selection-note" id="selectionNote"></p>
           <div class="results-actions">
             <button class="btn-share" onclick="shareResults()">📤 Partager</button>
             <!-- AMÉLIORATION N°4 : bouton Voir mes favoris -->
@@ -288,7 +297,9 @@
               ❤️ Mes favoris <span class="fav-count" id="favCount"></span>
             </button>
             <button class="btn-restart" onclick="restartQuiz()">🔄 Nouvelle recherche</button>
+            <button class="btn-share" onclick="regenerateResults()">🎲 D’autres idées</button>
           </div>
+          <p class="selection-note"><button class="btn-feedback" onclick="resetRecommendationPreferences()">Réinitialiser les préférences</button> · <a href="guides.html">Besoin d’aide pour choisir ?</a></p>
         </div>
 
         <!-- PUB MILIEU (entre résultats) -->
@@ -407,6 +418,7 @@
             <a href="cadeau-femme.html">Cadeaux femme</a>
             <a href="cadeau-couple.html">Cadeaux couple</a>
             <a href="cadeau-enfant.html">Cadeaux enfant</a>
+            <a href="guides.html">Tous nos conseils</a>
           </nav>
         </aside>
       </section>
@@ -440,7 +452,7 @@
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>Répondez à 4 questions rapides (destinataire, âge, budget, centres d'intérêt) et notre algorithme sélectionne jusqu'à 10 idées cadeaux adaptées parmi plus de 160 références, classées par pertinence et originalité.</p>
+          <p>Répondez à 4 questions rapides (destinataire, âge, budget, centres d'intérêt). Le générateur propose jusqu'à 10 idées compatibles, diversifie les usages et tient compte des suggestions récentes ainsi que de vos avis. Les budgets sont des repères : vérifiez le prix actuel sur la fiche Amazon.</p>
         </div>
       </div>
 
@@ -547,6 +559,8 @@
     </div>
   </div>
 
+  <script src="catalog-extra.js"></script>
+  <script src="recommendations.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

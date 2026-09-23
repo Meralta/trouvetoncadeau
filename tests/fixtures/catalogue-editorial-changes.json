@@ -1,0 +1,65 @@
+{
+  "descriptions": {
+    "2": "Une deuxième manette pour jouer ensemble ou remplacer celle du quotidien. Vérifier la compatibilité avec la console ou le PC utilisé.",
+    "3": "Pour une personne qui apprécie la sensation des touches mécaniques pendant le jeu. Vérifier la disposition AZERTY et le type de connexion avant de choisir.",
+    "9": "L’univers Minecraft autour d’une table, pour partager une partie sans écran. Vérifier l’âge recommandé et le nombre de joueurs de cette édition.",
+    "10": "Pour retrouver les consoles, les jeux et les moments qui ont marqué sa passion, à travers un livre à feuilleter tranquillement.",
+    "11": "Pour poursuivre sa découverte de One Piece ou compléter sa bibliothèque. Vérifier les tomes inclus afin de ne pas offrir ceux que la personne possède déjà.",
+    "12": "Une figurine à exposer pour une personne qui aime Naruto. Vérifier le personnage, l’édition et les doublons dans sa collection.",
+    "13": "Pour retrouver Dragon Ball dans un coffret à conserver. Vérifier les épisodes inclus, la langue et le support compatible avec son lecteur.",
+    "15": "Une façon de porter son attachement à Naruto au quotidien. Choisir la taille et le motif selon les goûts de la personne.",
+    "17": "Pour mettre en couleur ses personnages et pratiquer le dessin manga. Vérifier les pointes et utiliser un papier adapté aux marqueurs.",
+    "18": "Pour ajouter une touche Totoro à un canapé ou à une chambre. Vérifier les dimensions et les consignes d’âge pour un enfant.",
+    "25": "Pour découvrir la maison connectée avec du matériel Matter. Vérifier les appareils inclus et les équipements nécessaires à leur installation.",
+    "30": "Des pistes à feuilleter pour imaginer sa prochaine escapade en France, du court séjour aux vacances plus longues.",
+    "35": "Pour rapporter des images de sorties sportives et de voyages. Vérifier les fixations, les accessoires et les conditions d’étanchéité du modèle.",
+    "36": "Deux bagages pour préparer les voyages à partager. Vérifier les dimensions acceptées par les compagnies et le contenu exact du lot.",
+    "44": "Pour une personne curieuse des mots qui apprécie un ouvrage de référence à feuilleter. Vérifier l’édition et l’année proposées.",
+    "45": "Pour redécouvrir Harry Potter à travers le travail graphique de MinaLima. Vérifier le tome et la langue pour compléter la bonne collection.",
+    "46": "Pour préparer plus facilement pâtes et pâtisseries à la maison. Vérifier la capacité, les accessoires et l’espace disponible sur le plan de travail.",
+    "47": "Des recettes pour explorer d’autres cuisines et imaginer de prochains repas, seul ou avec des proches.",
+    "50": "Pour explorer de nouveaux assaisonnements et varier ses recettes. Vérifier les épices du coffret et les éventuels allergènes.",
+    "55": "Pour un propriétaire qui souhaite observer ses animaux à distance. Vérifier l’installation, la connexion et les fonctions incluses sans abonnement.",
+    "58": "Pour garder un souvenir de son compagnon avec une empreinte à encadrer. Suivre la notice et respecter le confort de l’animal.",
+    "84": "Pour préparer une sortie à deux avec la vaisselle réunie dans un panier. Vérifier le contenu et l’encombrement avant de l’offrir.",
+    "87": "Des énigmes à résoudre ensemble à la maison, sans réserver de sortie. Vérifier le nombre de joueurs et les scénarios déjà connus.",
+    "94": "Pour découvrir les animaux en explorant les pages animées avec un adulte. Choisir selon l’âge conseillé et manipuler les éléments délicats avec soin.",
+    "95": "Pour découvrir l’observation sous l’eau lors d’une sortie encadrée. Vérifier la taille, l’âge du fabricant et les consignes ; ce matériel n’est pas un équipement de sécurité.",
+    "97": "Un espace pour peindre et expérimenter les couleurs. Vérifier les dimensions, l’âge recommandé et protéger le sol pendant l’activité.",
+    "114": "Pour observer les oiseaux du jardin et suivre leurs habitudes. Installer la mangeoire à un emplacement adapté et l’entretenir régulièrement.",
+    "116": "Pour retrouver des sensations de conduite dans ses jeux de course. Vérifier la compatibilité console ou PC et la fixation au bureau.",
+    "117": "Pour observer les paysages et les animaux au cours d’une promenade. Vérifier le poids et le grossissement ; ne jamais regarder le soleil.",
+    "125": "Pour enregistrer plus clairement une voix pendant une vidéo ou une interview. Vérifier la connectique et la compatibilité du téléphone.",
+    "140": "Pour faire défiler les souvenirs et renouveler facilement les photos affichées à la maison. Vérifier la connexion et les conditions de l’application.",
+    "142": "Pour accompagner les sorties à pied avec des appuis supplémentaires. Vérifier le réglage, la taille et les conditions d’utilisation.",
+    "149": "Pour réaliser des vidéos au téléphone avec des mouvements plus réguliers. Vérifier le poids et le format du smartphone pris en charge.",
+    "150": "Pour entretenir un bonsaï avec des outils adaptés aux petits gestes de taille. À offrir à une personne qui possède déjà cet arbre ou souhaite apprendre à en prendre soin.",
+    "151": "Pour essayer les macarons à la maison avec des accessoires dédiés. Vérifier le contenu du kit et prévoir les ingrédients séparément.",
+    "156": "Pour cultiver des aromatiques à portée de la cuisine. Vérifier les consommables nécessaires, l’éclairage et la place disponible.",
+    "158": "Pour prendre des photos instantanées et conserver des souvenirs sur papier. Vérifier la quantité de films incluse et leur coût de renouvellement.",
+    "164": "Pour proposer une activité manuelle adaptée aux plus jeunes. Vérifier l’âge minimal, les matériaux et les consignes de nettoyage du coffret.",
+    "165": "De grands éléments en mousse à assembler pour imaginer des constructions. Vérifier l’âge recommandé, l’espace et les conditions de surveillance."
+  },
+  "interets": {
+    "106": [
+      "jardinage"
+    ],
+    "116": [
+      "jeux-video",
+      "auto-moto",
+      "technologie"
+    ],
+    "125": [
+      "photo-video",
+      "musique",
+      "technologie"
+    ],
+    "150": [
+      "jardinage"
+    ],
+    "156": [
+      "jardinage",
+      "cuisine"
+    ]
+  }
+}
