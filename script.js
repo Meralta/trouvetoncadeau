@@ -1858,6 +1858,42 @@ function initFooter() {
   if (disclosure) disclosure.classList.toggle('hidden', !AMAZON_AFFILIATE_TAG);
 }
 
+/**
+ * Applique les critères explicitement transmis par un guide éditorial.
+ * Le questionnaire reste la source de vérité : aucun résultat n'est lancé
+ * automatiquement et chaque choix peut encore être modifié par l'utilisateur.
+ */
+function applyGuidePreset() {
+  const params = new URLSearchParams(window.location.search);
+  const genre = params.get('genre');
+  const age = params.get('age');
+  const interest = params.get('interet');
+  const validGenres = ['homme','femme','couple','enfant'];
+  const validAges = [...ADULT_AGES,...CHILD_AGES];
+
+  if (validGenres.includes(genre)) {
+    const genreButton = document.querySelector(`.option-btn[data-key="genre"][data-value="${genre}"]`);
+    if (genreButton) selectOption(genreButton,'genre',genre);
+  }
+
+  if (genre && validAges.includes(age) && getAgesForGenre(genre).includes(age)) {
+    const ageButton = document.querySelector(`#ageOptions .option-btn[data-value="${age}"]`);
+    if (ageButton) selectOption(ageButton,'age',age);
+  }
+
+  if (interest && Object.prototype.hasOwnProperty.call(GiftEngine.INTERESTS,interest)) {
+    state.interets = [interest];
+    state.unknownInterests = false;
+    document.querySelectorAll('.interest-btn').forEach(button => {
+      const selected = button.dataset.value === interest;
+      button.classList.toggle('selected',selected);
+      button.setAttribute('aria-pressed',String(selected));
+    });
+  }
+
+  if (genre && age && state.genre === genre && state.age === age) nextStep(3);
+}
+
 /* =========================================================
    INITIALISATION
    ========================================================= */
@@ -1890,6 +1926,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTrending();
   initStickyCta();
   initFooter();
+  applyGuidePreset();
 
   const newsletterForm = document.getElementById('newsletterForm');
   if (newsletterForm) newsletterForm.addEventListener('submit', submitNewsletter);

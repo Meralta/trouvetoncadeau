@@ -12,12 +12,12 @@ const context = vm.createContext({document:{addEventListener(){}},console,URL,lo
 for (const f of ['recommendations.js','catalog-extra.js','script.js']) vm.runInContext(read(f),context,{filename:f});
 vm.runInContext('normalizeGiftDatabase()',context);
 const catalog = JSON.parse(vm.runInContext('JSON.stringify(CADEAUX)',context));
-const baselineSource=cp.execFileSync('git',['show','HEAD:script.js'],{encoding:'utf8'});
 const oldContext=vm.createContext({document:{addEventListener(){}},console,URL});
-vm.runInContext(baselineSource,oldContext);
+for(const f of ['recommendations.js','catalog-extra.js','script.js'])
+ vm.runInContext(cp.execFileSync('git',['show','HEAD:'+f],{encoding:'utf8'}),oldContext);
 vm.runInContext('normalizeGiftDatabase()',oldContext);
 const baseline=JSON.parse(vm.runInContext('JSON.stringify(CADEAUX)',oldContext));
-assert.equal(baseline.length,165);
+assert.equal(baseline.length,320);
 assert.equal(catalog.length,Number(process.env.TTC_CATALOG_COUNT || 320));
 assert.equal(new Set(catalog.map(g=>g.id)).size,catalog.length);
 assert.equal(new Set(catalog.map(g=>new URL(g.affiliateLink).pathname)).size,catalog.length);
@@ -29,15 +29,9 @@ for(const g of catalog){
  assert.ok(g.family && g.univers && Array.isArray(g.traits));
  assert.ok(g.interets.every(i=>i in engine.INTERESTS));
 }
-const editorial=JSON.parse(read('tests/fixtures/catalogue-editorial-changes.json'));
-const finalization=JSON.parse(read('tests/fixtures/catalogue-passe1.6-changes.json'));
 for(const b of baseline){
  const g=catalog.find(g=>g.id===b.id);
- for(const key of ['titre','desc','emoji','budget','genre','age','image','affiliateLink'])
-   assert.deepEqual(g[key],Object.hasOwn(finalization[b.id]||{},key)?finalization[b.id][key]:key==='desc' && editorial.descriptions[b.id] || b[key],'Référence existante modifiée : '+b.id+' '+key);
- if(finalization[b.id]?.interets) assert.deepEqual(g.interets,finalization[b.id].interets);
- else if(editorial.interets[b.id]) assert.deepEqual(g.interets,[...engine.enrich({...b,interets:editorial.interets[b.id]}).interets]);
- else assert.ok(b.interets.every(i=>g.interets.includes(i)));
+ assert.deepEqual(g,b,'Référence du checkpoint modifiée : '+b.id);
 }
 assert.match(vm.runInContext("getProductUrl({titre:'Cadeau test',affiliateLink:''})",context),/amazon\.fr\/s\?/);
 assert.equal(new URL(vm.runInContext("getProductUrl({titre:'Cadeau test',affiliateLink:''})",context)).searchParams.get('tag'),'trouvetonca05-21');
@@ -84,7 +78,7 @@ let seed=42;const random=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/429
 function measure(profile,modern){
  const mem={history:[],feedback:{}};let previous=[],repeats=0,slots=0,distinct=new Set(),interestMatches=0;
  // Comparaison à catalogue constant : seules les 165 références historiques sont utilisées.
- const gifts=modern?catalog.filter(g=>g.id<=165):baseline;
+ const gifts=modern?catalog.filter(g=>g.id<=165):baseline.filter(g=>g.id<=165);
  for(let n=0;n<40;n++){
   let results;
   if(modern){results=engine.select(gifts,profile,mem,{random}).results;engine.remember(mem,results);}
@@ -109,7 +103,9 @@ for(const file of protectedFiles)assert.equal(read(file).replace(/\r\n/g,'\n'),c
 const originalIndex=cp.execFileSync('git',['show','HEAD:index.html'],{encoding:'utf8'});
 const scripts=s=>[...s.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/g)].map(m=>m[0]).filter(t=>/google|gtag|consent|fundingchoices|__tcfapi/i.test(t)).map(t=>t.replace(/\r\n/g,'\n'));
 assert.deepEqual(scripts(read('index.html')),scripts(originalIndex));
-for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html'))){
+const htmlFiles=fs.readdirSync(root).filter(f=>f.endsWith('.html'));
+const seoTitles=new Set(),seoDescriptions=new Set(),seoCanonicals=new Set();
+for(const file of htmlFiles){
  const html=read(file);
  for(const match of html.matchAll(/(?:href|src)="([^"]+)"/g)){
   const link=match[1]; if(/^(https?:|mailto:|data:|#)/.test(link))continue;
@@ -118,9 +114,17 @@ for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html'))){
  }
  assert.equal((html.match(/<h1\b/g)||[]).length,1,file+' H1');
  assert.ok(html.includes('rel="canonical"'),file+' canonical');
+ const title=(html.match(/<title>([^<]+)<\/title>/)||[])[1];
+ const description=(html.match(/<meta name="description" content="([^"]+)"/)||[])[1];
+ const canonical=(html.match(/<link rel="canonical" href="([^"]+)"/)||[])[1];
+ assert.ok(title&&description&&canonical,file+' métadonnées SEO');
+ assert.ok(!seoTitles.has(title),file+' title dupliqué');seoTitles.add(title);
+ assert.ok(!seoDescriptions.has(description),file+' description dupliquée');seoDescriptions.add(description);
+ assert.ok(!seoCanonicals.has(canonical),file+' canonical dupliqué');seoCanonicals.add(canonical);
+ assert.doesNotMatch(html,/noindex/i,file+' ne doit pas être noindex');
 }
 const sitemap=read('sitemap.xml');
-for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&f!=='index.html'))assert.ok(sitemap.includes('/'+file),file+' sitemap');
+for(const file of htmlFiles.filter(f=>f!=='index.html'))assert.ok(sitemap.includes('/'+file),file+' sitemap');
 const start=performance.now();
 for(let i=0;i<100;i++)engine.select(catalog,p,memory);
 const result={catalog:catalog.length,uniqueAsins:new Set(catalog.map(g=>new URL(g.affiliateLink).pathname)).size,profilesTested:tested,statistics,averageSelectionMs:+((performance.now()-start)/100).toFixed(2),byInterest:Object.fromEntries(Object.keys(engine.INTERESTS).map(i=>[i,catalog.filter(g=>g.interets.includes(i)).length])),byBudget:Object.fromEntries(['<20','20-50','50-100','>100'].map(b=>[b,catalog.filter(g=>g.budget===b).length])),sparse};

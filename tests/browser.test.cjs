@@ -107,16 +107,25 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
   assert.ok(await page.locator('#cardsGrid .gift-card').count()>0);
   await overflow();await page.evaluate(()=>restartQuiz());
  }
- for(const file of fs.readdirSync(path.resolve(__dirname,'..')).filter(f=>f.endsWith('.html')&&f!=='index.html')){
-  for(const theme of ['light','dark']){
-   await page.evaluate(t=>localStorage.setItem('ttc_theme',t),theme);
-   await page.goto(url+file);
-   assert.equal(await page.locator('h1').count(),1);
-   assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
-   await overflow();
-   if(file==='guides.html')await shot('390-'+theme+'-guides');
-  }
+ const guideFiles=fs.readdirSync(path.resolve(__dirname,'..')).filter(f=>f.endsWith('.html')&&f!=='index.html');
+ for(const width of [390,768,1280])for(const file of guideFiles)for(const theme of ['light','dark']){
+  await page.setViewportSize({width,height:844});
+  await page.evaluate(t=>localStorage.setItem('ttc_theme',t),theme);
+  await page.goto(url+file);
+  assert.equal(await page.locator('h1').count(),1);
+  assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
+  assert.match(await page.locator('link[rel="canonical"]').getAttribute('href'),/^https:\/\/trouveuncadeau\.fr\//);
+  assert.ok((await page.locator('.guide-cta').last().getAttribute('href')).includes('index.html'));
+  await overflow();
+  if(file==='guides.html'&&width===390)await shot('390-'+theme+'-guides');
  }
+ await page.goto(url+'index.html?interet=bricolage#quiz-section');
+ await page.waitForFunction(()=>typeof CADEAUX!=='undefined'&&CADEAUX.length===320);
+ assert.deepEqual(await page.evaluate(()=>state.interets),['bricolage']);
+ assert.equal(await page.locator('.interest-btn[data-value="bricolage"]').getAttribute('aria-pressed'),'true');
+ await page.goto(url+'index.html?genre=enfant&age=13-17#quiz-section');
+ await page.waitForFunction(()=>typeof CADEAUX!=='undefined'&&CADEAUX.length===320);
+ assert.deepEqual(await page.evaluate(()=>({genre:state.genre,age:state.age,step:state.currentStep})),{genre:'enfant',age:'13-17',step:3});
  await page.goto(url);await page.evaluate(()=>{localStorage.setItem('ttc_favorites_v1','{bad');localStorage.setItem('ttc_recent_gifts_v2','{bad');localStorage.setItem('ttc_gift_feedback_v2','{bad');});
  await page.reload();
  assert.deepEqual(await page.evaluate(()=>getFavoriteIds()),[]);
