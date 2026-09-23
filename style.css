@@ -1848,6 +1848,36 @@ body:has(#homeSections.hidden) .site-main > .container > .trending-section { dis
 .guide-content a:not(.guide-cta) { color: var(--clr-primary); }
 .guide-content a:not(.guide-cta):hover { color: var(--clr-primary-d); }
 .selection-label { color: var(--clr-primary); font-size: .76rem; font-weight: 600; margin-bottom: 8px; }
+.card-decision-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.btn-decision {
+  flex: 1; min-width: 0; padding: 7px 10px; border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm); background: var(--clr-surface); color: var(--clr-primary);
+  font: 600 .76rem var(--font-body); cursor: pointer; text-align: center;
+}
+.btn-decision:hover, .btn-decision:focus-visible { border-color: var(--clr-primary); background: var(--clr-primary-l); }
+.btn-decision.selected { border-color: var(--clr-primary); background: var(--clr-primary-l); }
+:root[data-theme="dark"] .btn-decision.selected { background: #285681; color: #fff; border-color: #3972A7; }
+.final-choice-box { padding: 12px 14px; margin-bottom: 16px; border: 1px solid var(--clr-border); border-radius: var(--radius-md); background: var(--clr-primary-l); }
+.final-choice-box p { margin: 0 0 6px; color: var(--clr-text); }
+.final-choice-box a, .final-choice-box button { color: var(--clr-primary); font: 600 .8rem var(--font-body); }
+.final-choice-box button { margin-left: 12px; border: 0; background: transparent; cursor: pointer; text-decoration: underline; }
+.compare-modal-box { max-width: 920px; }
+.compare-intro, .compare-empty { color: var(--clr-muted); font-size: .82rem; margin-bottom: 14px; }
+.compare-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.compare-card { min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--clr-border); border-radius: var(--radius-md); background: var(--clr-bg); }
+.compare-card-image { position: relative; height: 100px; border-radius: var(--radius-sm); overflow: hidden; background: var(--clr-primary-l); }
+.compare-card-image img { width: 100%; height: 100%; object-fit: cover; }
+.compare-card-image span { display: none; }
+.compare-card-image.img-fallback { display: flex; align-items: center; justify-content: center; }
+.compare-card-image.img-fallback img { display: none; }
+.compare-card-image.img-fallback span { display: block; font-size: 2rem; }
+.compare-card h3 { font-size: .92rem; line-height: 1.3; color: var(--clr-text); }
+.compare-card dl { flex: 1; min-width: 0; }
+.compare-card dt { font-size: .7rem; color: var(--clr-muted); margin-top: 7px; }
+.compare-card dd { font-size: .8rem; color: var(--clr-text); overflow-wrap: anywhere; }
+.compare-card .btn-buy { flex: none; }
+@media (max-width: 800px) { .compare-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .occasions-section { margin-bottom: 16px; }
   .gotd-card { flex-direction: column; }

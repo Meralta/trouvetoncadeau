@@ -1094,6 +1094,7 @@ function showResults(results) {
   }
   // Mettre à jour le compteur de favoris dans le bouton
   refreshFavCount();
+  refreshDecisionControls();
 
   section.classList.remove('hidden');
   section.scrollIntoView({ behavior:'smooth', block:'start' });
@@ -1113,7 +1114,7 @@ function createCard(gift, num, inModal = false) {
   card.dataset.giftId = gift.id;
 
   // ── AMÉLIORATION N°3 : Raisons dynamiques ──
-  const whyItems = buildWhyReasons(gift);
+  const whyItems = buildWhyReasons(gift,!inModal);
   const whyHTML = whyItems.length ? `
     <div class="card-why">
       <p class="card-why-title">Pourquoi ce cadeau ?</p>
@@ -1183,6 +1184,10 @@ function createCard(gift, num, inModal = false) {
         </div>
       </div>
       ${actionsHTML}
+      <div class="card-decision-actions">
+        <button type="button" class="btn-decision btn-compare-gifts${comparisonIds.includes(gift.id) ? ' selected' : ''}" data-decision-id="${gift.id}" aria-pressed="${comparisonIds.includes(gift.id)}" onclick="toggleCompareGift(${gift.id})">${comparisonIds.includes(gift.id) ? '✓ À comparer' : '⚖️ Comparer'}</button>
+        <button type="button" class="btn-decision btn-final-choice${getFinalChoiceId() === gift.id ? ' selected' : ''}" data-decision-id="${gift.id}" aria-pressed="${getFinalChoiceId() === gift.id}" onclick="toggleFinalChoice(${gift.id})">${getFinalChoiceId() === gift.id ? '✓ Mon choix' : '☆ Mon choix'}</button>
+      </div>
       ${inModal ? '' : `<div class="gift-feedback" aria-label="Votre avis sur ce cadeau">
         <button type="button" class="btn-feedback" aria-pressed="${GiftEngine.feedbackFor(recommendationMemory,state,gift.id) === 'good'}" onclick="giveGiftFeedback(${gift.id}, 'good', this)">❤️ Bonne idée</button>
         <button type="button" class="btn-feedback" onclick="giveGiftFeedback(${gift.id}, 'owned', this)">✓ Il/elle l’a déjà</button>
@@ -1209,44 +1214,18 @@ function createCard(gift, num, inModal = false) {
  * @param {Object} gift
  * @returns {string[]}
  */
-function buildWhyReasons(gift) {
+function buildWhyReasons(gift, useProfile = true) {
   const reasons = [];
   const INTERESTS_FR = GiftEngine.INTERESTS;
-
-  // Intérêts communs
-  if (state.interets && state.interets.length > 0) {
-    const matches = state.interets
-      .filter(i => gift.interets.includes(i))
-      .map(i => INTERESTS_FR[i] || i);
-
-    if (matches.length > 0) {
-      reasons.push(`Prolonge un intérêt déjà présent pour ${matches.join(' et ')}`);
-    }
-  }
-
-  // Usage cohérent avec le profil sélectionné
-  if (state.genre === 'couple') {
-    reasons.push('Peut créer un moment à partager plutôt qu’un simple objet à ranger');
-  } else if (state.genre === 'enfant') {
-    reasons.push('Choisi pour rester accessible et stimulant à cette étape de l’enfance');
-  } else if (!state.interets.length && gift.interets.length > 0) {
-    const firstInterest = INTERESTS_FR[gift.interets[0]];
-    if (firstInterest) reasons.push(`Une piste à explorer si la personne apprécie ${firstInterest}`);
-  } else if (!state.interets.length) {
-    reasons.push('Une attention facile à offrir et à utiliser au quotidien');
-  }
-
-  // Niveau de surprise
-  if (gift.originalite >= 8) {
-    reasons.push('Assez inattendu pour créer une vraie surprise sans être un gadget gratuit');
-  } else if (gift.traits.includes('valeur_sure')) {
-    reasons.push('Une valeur sûre qui mise davantage sur l’usage que sur l’effet de mode');
-  }
-
-  // Budget formulé comme un bénéfice concret, sans inventer de prix exact
-  reasons.push(`Repère de budget : ${budgetLabel(gift.budget)} ; prix actuel à vérifier`);
-
-  return reasons.slice(0, 4);
+  const matches = useProfile ? (state.interets || []).filter(i => gift.interets.includes(i)) : [];
+  if (matches.length) reasons.push(`Correspond à : ${matches.map(i => INTERESTS_FR[i] || i).join(' · ')}`);
+  else if (gift.interets.length) reasons.push(`Univers : ${gift.interets.slice(0,2).map(i => INTERESTS_FR[i] || i).join(' · ')}`);
+  const traits = [['utile','Utile'],['original','Original'],['decouverte','À découvrir'],
+    ['creatif','Créatif'],['decoration','Décoration'],['sentimental','Personnel']]
+    .filter(([key]) => gift.traits.includes(key)).map(([,label]) => label);
+  if (traits.length) reasons.push(`Type d’idée : ${traits.slice(0,2).join(' · ')}`);
+  if (!reasons.length && useProfile) reasons.push('Compatible avec le destinataire, l’âge et le budget choisis');
+  return reasons.slice(0,2);
 }
 
 /* =========================================================
@@ -1306,6 +1285,128 @@ function skipCard(giftId, btn) {
     card.replaceWith(newCard);
     updateSelectionNote(CADEAUX.filter(g => displayedIds.includes(g.id)));
   }, 220); // mi-chemin de l'animation cardOut
+}
+
+/* =========================================================
+   AIDE À LA DÉCISION — comparaison temporaire et choix final local
+   ========================================================= */
+const comparisonIds = [];
+const FINAL_CHOICE_KEY = 'ttc_final_choice_v1';
+let finalChoiceId = null;
+let previousCompareFocus = null;
+try {
+  const savedChoice = localStorage.getItem(FINAL_CHOICE_KEY);
+  if (savedChoice && /^\d+$/.test(savedChoice)) finalChoiceId = Number(savedChoice);
+} catch {}
+
+function getFinalChoiceId() {
+  return CADEAUX.some(gift => gift.id === finalChoiceId) ? finalChoiceId : null;
+}
+
+function refreshDecisionControls() {
+  document.querySelectorAll('.btn-compare-gifts').forEach(btn => {
+    const selected = comparisonIds.includes(Number(btn.dataset.decisionId));
+    btn.classList.toggle('selected', selected);
+    btn.setAttribute('aria-pressed',String(selected));
+    btn.textContent = selected ? '✓ À comparer' : '⚖️ Comparer';
+  });
+  document.querySelectorAll('.btn-final-choice').forEach(btn => {
+    const selected = getFinalChoiceId() === Number(btn.dataset.decisionId);
+    btn.classList.toggle('selected', selected);
+    btn.setAttribute('aria-pressed',String(selected));
+    btn.textContent = selected ? '✓ Mon choix' : '☆ Mon choix';
+  });
+  for (const id of ['compareResultsBtn','compareFavoritesBtn']) {
+    const btn = document.getElementById(id);
+    if (!btn) continue;
+    btn.classList.toggle('hidden',comparisonIds.length === 0);
+    btn.querySelector('.compare-count').textContent = `(${comparisonIds.length}/3)`;
+  }
+}
+
+function toggleCompareGift(id) {
+  if (!CADEAUX.some(gift => gift.id === id)) return;
+  const index = comparisonIds.indexOf(id);
+  if (index >= 0) comparisonIds.splice(index,1);
+  else if (comparisonIds.length >= 3) {
+    showFavToast('3 cadeaux maximum : retirez-en un avant d’en ajouter un autre.');
+    return;
+  } else comparisonIds.push(id);
+  refreshDecisionControls();
+  if (!document.getElementById('compareModal').classList.contains('hidden')) renderCompareModal();
+  else showFavToast(index >= 0 ? 'Cadeau retiré de la comparaison.' : 'Ajouté à la comparaison.');
+}
+
+function renderCompareModal() {
+  const grid = document.getElementById('compareGrid');
+  grid.innerHTML = comparisonIds.length ? comparisonIds.map(id => {
+    const gift = CADEAUX.find(item => item.id === id);
+    if (!gift) return '';
+    const interests = gift.interets.map(i => GiftEngine.INTERESTS[i] || i).join(' · ') || 'Non précisé';
+    const family = gift.family && !gift.family.startsWith('type-') ? gift.family.replaceAll('-',' ') : 'Non précisé';
+    const why = buildWhyReasons(gift,false).join(' · ') || 'Métadonnées limitées pour cette idée';
+    const img = getGiftImage(gift);
+    return `<article class="compare-card">
+      <div class="compare-card-image${gift.imageFallback ? ' img-fallback' : ''}"><img src="${img}" alt="${gift.titre}" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')"><span>${gift.emoji}</span></div>
+      <h3>${gift.titre}</h3>
+      <dl><dt>Budget éditorial</dt><dd>${budgetLabel(gift.budget)}</dd>
+      <dt>Intérêts</dt><dd>${interests}</dd>
+      <dt>Type</dt><dd>${family}</dd>
+      <dt>Originalité éditoriale</dt><dd>${gift.originalite}/10</dd>
+      <dt>Pourquoi cette idée ?</dt><dd>${why}</dd></dl>
+      <a class="btn-buy" href="${getProductUrl(gift)}" target="_blank" rel="noopener noreferrer sponsored">🛒 Voir sur Amazon</a>
+      <button type="button" class="btn-decision compare-final-choice${getFinalChoiceId() === id ? ' selected' : ''}" data-decision-id="${id}" aria-pressed="${getFinalChoiceId() === id}" onclick="toggleFinalChoice(${id})">${getFinalChoiceId() === id ? '✓ Mon choix' : '☆ Mon choix'}</button>
+      <button type="button" class="btn-decision" onclick="toggleCompareGift(${id})">Retirer de la comparaison</button>
+    </article>`;
+  }).join('') : '<p class="compare-empty">Aucun cadeau à comparer. Ajoutez-en depuis les résultats ou vos favoris.</p>';
+}
+
+function openCompareModal() {
+  if (!comparisonIds.length) return;
+  previousCompareFocus = document.activeElement;
+  renderCompareModal();
+  document.getElementById('favModal').inert = true;
+  document.getElementById('compareModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  document.querySelector('#compareModal .modal-close').focus();
+}
+function closeCompareModal() {
+  document.getElementById('compareModal').classList.add('hidden');
+  document.getElementById('favModal').inert = false;
+  if (document.getElementById('favModal').classList.contains('hidden') &&
+      document.getElementById('legalModal').classList.contains('hidden')) document.body.style.overflow = '';
+  if (previousCompareFocus?.isConnected && !previousCompareFocus.classList.contains('hidden')) previousCompareFocus.focus();
+  previousCompareFocus = null;
+}
+
+function toggleFinalChoice(id) {
+  const gift = CADEAUX.find(item => item.id === id);
+  if (!gift) return;
+  const fromCompare = document.activeElement?.classList.contains('compare-final-choice');
+  finalChoiceId = getFinalChoiceId() === id ? null : id;
+  let saved = true;
+  try {
+    if (finalChoiceId === null) localStorage.removeItem(FINAL_CHOICE_KEY);
+    else localStorage.setItem(FINAL_CHOICE_KEY,String(finalChoiceId));
+  } catch { saved = false; }
+  refreshDecisionControls();
+  renderFinalChoiceSummary();
+  if (!document.getElementById('compareModal').classList.contains('hidden')) {
+    renderCompareModal();
+    if (fromCompare) document.querySelector(`#compareModal .compare-final-choice[data-decision-id="${id}"]`)?.focus();
+  }
+  showFavToast(finalChoiceId === null ? 'Choix final retiré.' :
+    (saved ? `✓ « ${gift.titre} » est votre choix. Vous pouvez le changer.` : 'Choix retenu pour cette visite (stockage indisponible).'));
+}
+
+function renderFinalChoiceSummary() {
+  const box = document.getElementById('finalChoiceBox');
+  const gift = CADEAUX.find(item => item.id === getFinalChoiceId());
+  box.classList.toggle('hidden',!gift);
+  if (!gift) { box.innerHTML = ''; return; }
+  box.innerHTML = `<p><strong>✓ Mon choix :</strong> ${gift.titre}</p>
+    <a href="${getProductUrl(gift)}" target="_blank" rel="noopener noreferrer sponsored">Voir sur Amazon</a>
+    <button type="button" onclick="toggleFinalChoice(${gift.id})">Retirer mon choix</button>`;
 }
 
 /* =========================================================
@@ -1409,6 +1510,7 @@ function openFavoritesModal() {
   const favs    = getFavorites();
 
   grid.innerHTML = '';
+  renderFinalChoiceSummary();
 
   if (favs.length === 0) {
     emptyEl.classList.remove('hidden');
@@ -1422,12 +1524,13 @@ function openFavoritesModal() {
 
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden'; // bloquer le scroll fond
+  refreshDecisionControls();
 }
 
 /** Ferme le modal favoris */
 function closeFavoritesModal() {
   document.getElementById('favModal').classList.add('hidden');
-  document.body.style.overflow = '';
+  if (document.getElementById('compareModal').classList.contains('hidden')) document.body.style.overflow = '';
 }
 
 /** Efface tous les favoris */
@@ -1841,7 +1944,7 @@ const LEGAL_CONTENT = {
   },
   confidentialite: {
     title: '🔒 Confidentialité',
-    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveUnCadeau utilise le stockage local pour mémoriser vos favoris et votre préférence de thème, les douze dernières sélections (au plus 120 identifiants de cadeaux) et vos avis (« Bonne idée », « Pas son style », « Déjà possédé »). Les avis sont regroupés par type de destinataire et tranche d’âge, avec un maximum de 24 groupes et 100 avis par groupe. Aucun nom de personne n’est demandé. Le bouton « Réinitialiser les préférences » efface cet historique et ces avis sans supprimer vos favoris. Le moteur n’envoie pas ces registres d’historique et d’avis à un serveur. Les événements Google Analytics déjà présents peuvent toutefois signaler une action de refus avec l’identifiant et le titre du cadeau, selon les réglages applicables. Les registres complets restent dans votre navigateur et peuvent être supprimées en effaçant les données du site.</p>
+    body: `<p><strong>Données enregistrées dans votre navigateur :</strong> TrouveUnCadeau utilise le stockage local pour mémoriser vos favoris, le cadeau marqué « Mon choix » et votre préférence de thème, les douze dernières sélections (au plus 120 identifiants de cadeaux) et vos avis (« Bonne idée », « Pas son style », « Déjà possédé »). Les avis sont regroupés par type de destinataire et tranche d’âge, avec un maximum de 24 groupes et 100 avis par groupe. Aucun nom de personne n’est demandé. Le bouton « Réinitialiser les préférences » efface cet historique et ces avis sans supprimer vos favoris ni votre choix final. Le moteur n’envoie pas ces registres d’historique et d’avis ni votre choix final à un serveur. Les événements Google Analytics déjà présents peuvent toutefois signaler une action de refus avec l’identifiant et le titre du cadeau, selon les réglages applicables. Les registres complets restent dans votre navigateur et peuvent être supprimés en effaçant les données du site.</p>
            <p><strong>Mesure d'audience :</strong> le site utilise Google Analytics afin de comprendre son utilisation et d'améliorer l'expérience proposée. Ce service peut déposer ou lire des cookies et traiter des données techniques, notamment des informations relatives au navigateur, à l'appareil et aux pages consultées.</p>
            <p><strong>Publicité :</strong> le site utilise Google AdSense. Google et ses partenaires peuvent utiliser des cookies ou technologies similaires pour diffuser, mesurer et personnaliser des annonces, selon vos choix de consentement et les réglages applicables.</p>
            <p><strong>Affiliation Amazon :</strong> certains liens vers Amazon sont des liens affiliés. Lorsque vous les utilisez, Amazon peut traiter des données conformément à sa propre politique de confidentialité. En tant que Partenaire Amazon, TrouveUnCadeau réalise un bénéfice sur les achats remplissant les conditions requises, sans modifier le prix payé.</p>
@@ -1951,12 +2054,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Fermeture du modal favoris avec la touche Escape ──
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeFavoritesModal(); closeLegalModal(); }
+    if (e.key === 'Tab' && !document.getElementById('compareModal').classList.contains('hidden')) {
+      const buttons = [...document.querySelectorAll('#compareModal button, #compareModal a[href]')];
+      const first = buttons[0], last = buttons.at(-1);
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      else if (!buttons.includes(document.activeElement)) { e.preventDefault(); first.focus(); }
+    }
+    if (e.key === 'Escape') {
+      if (!document.getElementById('compareModal').classList.contains('hidden')) closeCompareModal();
+      else if (!document.getElementById('favModal').classList.contains('hidden')) closeFavoritesModal();
+      else closeLegalModal();
+    }
   });
 
   // ── Clic sur l'overlay du modal pour le fermer ──
   document.getElementById('favModal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeFavoritesModal();
+  });
+  document.getElementById('compareModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeCompareModal();
   });
   const legalModalEl = document.getElementById('legalModal');
   if (legalModalEl) legalModalEl.addEventListener('click', e => {

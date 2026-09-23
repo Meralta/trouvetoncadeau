@@ -319,6 +319,7 @@
             </button>
             <button class="btn-restart" onclick="restartQuiz()">🔄 Nouvelle recherche</button>
             <button class="btn-share" onclick="regenerateResults()">🎲 D’autres idées</button>
+            <button class="btn-favorites hidden" id="compareResultsBtn" onclick="openCompareModal()">⚖️ Comparer <span class="compare-count"></span></button>
           </div>
           <p class="selection-note"><button class="btn-feedback" onclick="resetRecommendationPreferences()">Réinitialiser les préférences</button> · <a href="guides.html">Besoin d’aide pour choisir ?</a></p>
         </div>
@@ -570,13 +571,29 @@
         <button class="modal-close" onclick="closeFavoritesModal()" aria-label="Fermer">✕</button>
       </div>
       <div class="modal-body">
+        <div class="final-choice-box hidden" id="finalChoiceBox"></div>
         <div id="favGrid" class="fav-grid"></div>
         <p class="fav-empty hidden" id="favEmpty">Vous n'avez pas encore de favoris.<br>Cliquez sur ❤️ sous une idée cadeau pour la sauvegarder !</p>
       </div>
       <div class="modal-footer">
         <button class="btn-restart" onclick="closeFavoritesModal()">Fermer</button>
+        <button class="btn-favorites hidden" id="compareFavoritesBtn" onclick="openCompareModal()">⚖️ Comparer <span class="compare-count"></span></button>
         <button class="btn-clear-favs" onclick="clearAllFavorites()">🗑️ Tout effacer</button>
       </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="compareModal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <div class="modal-box compare-modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="compareTitle">⚖️ Comparer mes idées</h2>
+        <button class="modal-close" onclick="closeCompareModal()" aria-label="Fermer la comparaison">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="compare-intro">Jusqu’à 3 cadeaux · budgets et originalité éditoriaux, prix actuels à vérifier sur Amazon.</p>
+        <div id="compareGrid" class="compare-grid"></div>
+      </div>
+      <div class="modal-footer"><button class="btn-restart" onclick="closeCompareModal()">Fermer</button></div>
     </div>
   </div>
 
