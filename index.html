@@ -263,6 +263,27 @@
             <button class="interest-btn" data-value="nature-outdoor" onclick="toggleInterest(this, 'nature-outdoor')">🏕️ Nature / Outdoor</button>
             <button class="interest-btn" data-value="unknown" aria-pressed="false" onclick="toggleInterest(this, 'unknown')">🤷 Je ne sais pas</button>
           </div>
+          <div class="unknown-followup hidden" id="unknownFollowup">
+            <div class="unknown-question">
+              <p>Cette personne est plutôt… <span>(facultatif)</span></p>
+              <div class="unknown-options" role="group" aria-label="Tendance de la personne">
+                <button type="button" class="unknown-option-btn" data-unknown-key="person" data-value="creative" aria-pressed="false" onclick="chooseUnknownPreference(this, 'person', 'creative')">Manuelle / créative</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="person" data-value="tech" aria-pressed="false" onclick="chooseUnknownPreference(this, 'person', 'tech')">Tech</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="person" data-value="cuisine" aria-pressed="false" onclick="chooseUnknownPreference(this, 'person', 'cuisine')">Gourmande</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="person" data-value="outdoor" aria-pressed="false" onclick="chooseUnknownPreference(this, 'person', 'outdoor')">Sport / plein air</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="person" data-value="none" aria-pressed="false" onclick="chooseUnknownPreference(this, 'person', 'none')">🤷 Difficile à dire</button>
+              </div>
+            </div>
+            <div class="unknown-question">
+              <p>Tu aimerais plutôt offrir… <span>(facultatif)</span></p>
+              <div class="unknown-options" role="group" aria-label="Type de cadeau souhaité">
+                <button type="button" class="unknown-option-btn" data-unknown-key="gift" data-value="useful" aria-pressed="false" onclick="chooseUnknownPreference(this, 'gift', 'useful')">Quelque chose d'utile</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="gift" data-value="original" aria-pressed="false" onclick="chooseUnknownPreference(this, 'gift', 'original')">Quelque chose d'original</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="gift" data-value="discovery" aria-pressed="false" onclick="chooseUnknownPreference(this, 'gift', 'discovery')">Quelque chose à découvrir</button>
+                <button type="button" class="unknown-option-btn" data-unknown-key="gift" data-value="none" aria-pressed="false" onclick="chooseUnknownPreference(this, 'gift', 'none')">Peu importe</button>
+              </div>
+            </div>
+          </div>
           <div class="step-nav">
             <button class="btn-back" onclick="prevStep(3)">← Retour</button>
             <button class="btn-next btn-submit" onclick="submitQuiz()">🔍 Trouver mes idées !</button>

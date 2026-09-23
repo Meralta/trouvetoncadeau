@@ -418,7 +418,7 @@ body {
   margin-bottom: 32px;
 }
 
-.interest-btn {
+.interest-btn, .unknown-option-btn {
   padding: 10px 18px;
   background: var(--clr-bg);
   border: 2px solid var(--clr-border);
@@ -431,13 +431,13 @@ body {
   color: var(--clr-text);
 }
 
-.interest-btn:hover {
+.interest-btn:hover, .unknown-option-btn:hover {
   border-color: var(--clr-primary);
   color: var(--clr-primary);
   background: var(--clr-primary-l);
 }
 
-.interest-btn.selected {
+.interest-btn.selected, .unknown-option-btn.selected {
   background: var(--clr-primary);
   border-color: var(--clr-primary);
   color: #fff;
@@ -483,6 +483,19 @@ body {
   transition: all var(--transition);
   box-shadow: 0 4px 18px rgba(233,145,26,.22);
 }
+
+.unknown-followup {
+  margin: -14px 0 26px;
+  padding: 14px;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  background: var(--clr-surface);
+}
+.unknown-question + .unknown-question { margin-top: 14px; }
+.unknown-question p { margin: 0 0 8px; color: var(--clr-text); font-size: .88rem; font-weight: 600; }
+.unknown-question p span { color: var(--clr-muted); font-weight: 400; }
+.unknown-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.unknown-option-btn { max-width: 100%; white-space: normal; padding: 7px 12px; font-size: .82rem; }
 
 .btn-next:hover:not(:disabled) {
   background: var(--clr-accent-d);
@@ -1786,6 +1799,7 @@ body:has(#homeSections.hidden) .site-main > .container > .trending-section { dis
 :root[data-theme="dark"] .occasion-days { color: #F3B95D; }
 :root[data-theme="dark"] .step-dot.active,
 :root[data-theme="dark"] .interest-btn.selected,
+:root[data-theme="dark"] .unknown-option-btn.selected,
 :root[data-theme="dark"] .btn-restart,
 :root[data-theme="dark"] .btn-newsletter {
   color: #FFFFFF;
@@ -1797,12 +1811,15 @@ body:has(#homeSections.hidden) .site-main > .container > .trending-section { dis
 :root[data-theme="dark"] .btn-next,
 :root[data-theme="dark"] .btn-submit { color: #17243A; }
 :root[data-theme="dark"] .option-btn,
-:root[data-theme="dark"] .interest-btn { background: #172538; }
+:root[data-theme="dark"] .interest-btn,
+:root[data-theme="dark"] .unknown-option-btn { background: #172538; }
 :root[data-theme="dark"] .option-btn:hover,
 :root[data-theme="dark"] .option-btn.selected,
-:root[data-theme="dark"] .interest-btn:hover { background: var(--clr-primary-l); }
+:root[data-theme="dark"] .interest-btn:hover,
+:root[data-theme="dark"] .unknown-option-btn:hover { background: var(--clr-primary-l); }
 :root[data-theme="dark"] .step-dot.active,
-:root[data-theme="dark"] .interest-btn.selected {
+:root[data-theme="dark"] .interest-btn.selected,
+:root[data-theme="dark"] .unknown-option-btn.selected {
   background: #285681;
   border-color: #3972A7;
 }

@@ -731,6 +731,8 @@ const state = {
   interets: [],
   occasion: null,
   unknownInterests: false,
+  unknownPerson: null,
+  unknownGift: null,
   mode: 'quiz'
 };
 let recommendationMemory;
@@ -848,8 +850,37 @@ function toggleInterest(btn, value) {
     state.unknownInterests = false;
     state.interets = state.interets.includes(value) ? state.interets.filter(i => i !== value) : [...state.interets,value];
   }
+  if (!state.unknownInterests) clearUnknownPreferences();
+  const followup = document.getElementById('unknownFollowup');
+  followup.classList.toggle('hidden',!state.unknownInterests);
+  if (state.unknownInterests) {
+    // Le dernier intérêt peut être tout en bas de l'écran : révéler aussi les questions.
+    const bounds = followup.getBoundingClientRect();
+    if (bounds.top < 0 || bounds.bottom > window.innerHeight) {
+      followup.scrollIntoView({behavior:'instant',block:'center'});
+    }
+  }
   document.querySelectorAll('.interest-btn').forEach(button => {
     const selected = button.dataset.value === 'unknown' ? state.unknownInterests : state.interets.includes(button.dataset.value);
+    button.classList.toggle('selected',selected);
+    button.setAttribute('aria-pressed',String(selected));
+  });
+}
+function clearUnknownPreferences() {
+  state.unknownPerson = null;
+  state.unknownGift = null;
+  document.getElementById('unknownFollowup').classList.add('hidden');
+  document.querySelectorAll('.unknown-option-btn').forEach(button => {
+    button.classList.remove('selected');
+    button.setAttribute('aria-pressed','false');
+  });
+}
+function chooseUnknownPreference(btn,key,value) {
+  if (!state.unknownInterests) return;
+  const field = key === 'person' ? 'unknownPerson' : 'unknownGift';
+  state[field] = state[field] === value ? null : value;
+  document.querySelectorAll(`.unknown-option-btn[data-unknown-key="${key}"]`).forEach(button => {
+    const selected = button.dataset.value === state[field];
     button.classList.toggle('selected',selected);
     button.setAttribute('aria-pressed',String(selected));
   });
@@ -1456,6 +1487,7 @@ function surpriseMe() {
   state.interets = available.length ? [available[Math.floor(Math.random()*available.length)]] : [];
   state.occasion = null;
   state.unknownInterests = false;
+  clearUnknownPreferences();
   state.mode = 'surprise';
   rejectedIds.clear();
   likedIds.clear();
@@ -1532,6 +1564,7 @@ function restartQuiz() {
   state.occasion = null;
   state.mode = 'quiz';
   state.unknownInterests = false;
+  clearUnknownPreferences();
 
   // Réinitialiser les pools de résultats (Amélioration N°1)
   displayedIds = [];
@@ -1670,6 +1703,7 @@ function quickOccasion(key) {
   state.occasion = key;
   state.mode = 'occasion';
   state.unknownInterests = false;
+  clearUnknownPreferences();
   rejectedIds.clear();
   likedIds.clear();
   trackEvent('quiz_start', { source: 'occasion', occasion: key });
@@ -1893,6 +1927,7 @@ function applyGuidePreset() {
   if (interest && Object.prototype.hasOwnProperty.call(GiftEngine.INTERESTS,interest)) {
     state.interets = [interest];
     state.unknownInterests = false;
+    clearUnknownPreferences();
     document.querySelectorAll('.interest-btn').forEach(button => {
       const selected = button.dataset.value === interest;
       button.classList.toggle('selected',selected);

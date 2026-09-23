@@ -11,6 +11,13 @@ const GiftEngine = (() => {
     'maison-deco':'la maison et la décoration', 'photo-video':'la photo et la vidéo',
     'nature-outdoor':'la nature et les activités de plein air'
   };
+  const UNKNOWN_PERSON_INTERESTS = {
+    creative:['bricolage','creatif-diy','jardinage'],
+    tech:['technologie','jeux-video','photo-video'],
+    cuisine:['cuisine'],
+    outdoor:['sport','nature-outdoor']
+  };
+  const UNKNOWN_GIFT_TRAITS = {useful:'utile',original:'original',discovery:'decouverte'};
   // Famille = usage réel, distinct de l'univers : deux variantes ne remplissent pas la sélection.
   const FAMILIES = [
     [/figurine|amiibo|funko/i,'collection-figurine'],
@@ -115,6 +122,11 @@ const GiftEngine = (() => {
     if (!interests.length) result += gift.traits.includes('valeur_sure') ? 10 : 0;
     if (profile.occasion && gift.occasions.includes(profile.occasion)) result += 7;
     if (profile.mode === 'surprise' && gift.traits.includes('decouverte')) result += 5;
+    // « Je ne sais pas » reste facultatif : deux indices modestes, jamais des filtres.
+    if (profile.unknownInterests && !interests.length) {
+      if (UNKNOWN_PERSON_INTERESTS[profile.unknownPerson]?.some(i => gift.interets.includes(i))) result += 6;
+      if (gift.traits.includes(UNKNOWN_GIFT_TRAITS[profile.unknownGift])) result += 5;
+    }
     memory.history.forEach((ids,index) => {
       if (ids.includes(gift.id)) result -= 24 * (index+1) / memory.history.length;
     });
